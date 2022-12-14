@@ -92,6 +92,5 @@ public class Manager {
                 y += panel.tileSize;
             }
         }
-
     }
 }
