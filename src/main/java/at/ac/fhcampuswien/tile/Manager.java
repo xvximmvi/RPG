@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class Manager {
     MyPanel panel;
@@ -28,13 +29,13 @@ public class Manager {
     public void tileImage(){        //same as Player
         try {
             tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResource("/Tiles/Boden.png"));
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Tiles/Boden.png")));
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResource("/Tiles/WandSchlafzimmer.png"));
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Tiles/WandSchlafzimmer.png")));
 
             tile[2] = new Tile();
-            tile[2].image = ImageIO.read(getClass().getResource("/Tiles/Outlines.png"));
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Tiles/Outlines.png")));
 
         }catch (IOException e){
             e.printStackTrace();
@@ -43,29 +44,30 @@ public class Manager {
 
     public void loadMap(){
         try{
-            InputStream is = getClass().getResourceAsStream("/Maps/Bedroom.txt");
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+            InputStream is = getClass().getResourceAsStream("/Maps/Bedroom.txt");   //Input Mapping
+            assert is != null;      //means "a passed parameter must not be null": if it is null then the test case fails
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));  // Read Input (Map-Text)
 
-            int col = 0;
-            int row = 0;
+            int col = 0;    //Column of Map
+            int row = 0;    //Row of Map
 
-            while(col < panel.maxScreenCol && row < panel.maxScreenRow){
+            while(col < panel.maxScreenCol && row < panel.maxScreenRow){    //run while there ar still numbers to read
                 String line = bufferedReader.readLine();
 
                 while(col < panel.maxScreenCol){
-                    String[] numbers = line.split(" ");
+                    String[] numbers = line.split(" ");    //Space " " separates numbers -> go to next Column
 
-                    int num = Integer.parseInt(numbers[col]);
+                    int num = Integer.parseInt(numbers[col]);   //Number of current Column
 
-                    mapTilesNum[col][row] = num;
-                    col++;
+                    mapTilesNum[col][row] = num;                //Map-Matrix
+                    col++;                                      //Go to next Column
                 }
-                if(col == panel.maxScreenCol){
-                    col = 0;
-                    row++;
+                if(col == panel.maxScreenCol){                  //If Column reached the end...
+                    col = 0;                                    //... then reset Column back to beginning ...
+                    row++;                                      //... but next Row
                 }
             }
-            bufferedReader.close();
+            bufferedReader.close();     //After Matrix ended -> stop reading
 
         }catch (Exception e){
             e.printStackTrace();
@@ -80,7 +82,7 @@ public class Manager {
 
         while(col< panel.maxScreenCol && row < panel.maxScreenRow)  //instead of writing every tile
         {
-            int tileNum = mapTilesNum[col][row];
+            int tileNum = mapTilesNum[col][row];        //Draw number of each read Map-Matrix
             graphics2D.drawImage(tile[tileNum].image, x, y, panel.tileSize, panel.tileSize, null); //draw
             col++;                  //draw next tile
             x += panel.tileSize;    //next block

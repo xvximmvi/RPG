@@ -1,11 +1,13 @@
 package at.ac.fhcampuswien.entity;
 
-import at.ac.fhcampuswien.main.MyPanel;
 import at.ac.fhcampuswien.main.Handler;
+import at.ac.fhcampuswien.main.MyPanel;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Player extends Entity{
     MyPanel panel;
@@ -28,21 +30,22 @@ public class Player extends Entity{
 
     public void playerImage(){
         try{    //Gives every direction corresponding image
-            UP1 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Back_1.png"));
-            UP2 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Back_2.png"));
-            UP3 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Back_3.png"));
+            UP1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_B1.png")));
+            UP2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_B2.png")));
+            UP3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_B3.png")));
 
-            DOWN1 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Front_1.png"));
-            DOWN2 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Front_2.png"));
-            DOWN3 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Front_3.png"));
+            DOWN1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_F1.png")));
+            DOWN2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_F2.png")));
+            DOWN3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_F3.png")));
 
-            LEFT1 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Left_1.png"));
-            LEFT2 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Left_2.png"));
-            LEFT3 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Left_3.png"));
+            LEFT1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_L1.png")));
+            LEFT2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_L2.png")));
+            LEFT3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_L3.png")));
 
-            RIGHT1 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Right_1.png"));
-            RIGHT2 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Right_2.png"));
-            RIGHT3 = ImageIO.read(getClass().getResource("/Xeno/Xeno_Right_3.png"));
+            RIGHT1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_R1.png")));
+            RIGHT2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_R2.png")));
+            RIGHT3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_R3.png")));
+
 
         } catch (IOException e){
             e.printStackTrace();
@@ -83,44 +86,56 @@ public class Player extends Entity{
     }
 
     public void draw(Graphics2D graphics2D) {   //draw object with current information
-        //graphics2D.setColor(Color.white);     //<- for testing purposes
-        //graphics2D.fillRect(x, y, panel.tileSize, panel.tileSize);  //Rectangle (position x, position y, width, height)
+        /*graphics2D.setColor(Color.white);     <- for testing purposes
+        graphics2D.fillRect(x, y, panel.tileSize, panel.tileSize);  / Rectangle (position x, position y, width, height)*/
 
         BufferedImage image = null;
 
-        switch(direction) {         //each possible direction
-            case "UP":
-                if(spriteNum == 1){
-                    image = UP1;}
-                if(spriteNum == 2){
-                    image = UP2;}
-                if(spriteNum == 3){
-                    image = UP3;}
-                break;
-            case "DOWN":
-                if(spriteNum == 1){
-                    image = DOWN1;}
-                if(spriteNum == 2){
-                    image = DOWN2;}
-                if(spriteNum == 3){
-                    image = DOWN3;}
-                break;
-            case "LEFT":
-                if(spriteNum == 1){
-                    image = LEFT1;}
-                if(spriteNum == 2){
-                    image = LEFT2;}
-                if(spriteNum == 3){
-                    image = LEFT3;}
-                break;
-            case "RIGHT":
-                if(spriteNum == 1){
-                    image = RIGHT1;}
-                if(spriteNum == 2){
-                    image = RIGHT2;}
-                if(spriteNum == 3){
-                    image = RIGHT3;}
-                break;
+        switch (direction) {         //each possible direction
+            case "UP" -> {
+                if (spriteNum == 1) {
+                    image = UP1;
+                }
+                if (spriteNum == 2) {
+                    image = UP2;
+                }
+                if (spriteNum == 3) {
+                    image = UP3;
+                }
+            }
+            case "DOWN" -> {
+                if (spriteNum == 1) {
+                    image = DOWN1;
+                }
+                if (spriteNum == 2) {
+                    image = DOWN2;
+                }
+                if (spriteNum == 3) {
+                    image = DOWN3;
+                }
+            }
+            case "LEFT" -> {
+                if (spriteNum == 1) {
+                    image = LEFT1;
+                }
+                if (spriteNum == 2) {
+                    image = LEFT2;
+                }
+                if (spriteNum == 3) {
+                    image = LEFT3;
+                }
+            }
+            case "RIGHT" -> {
+                if (spriteNum == 1) {
+                    image = RIGHT1;
+                }
+                if (spriteNum == 2) {
+                    image = RIGHT2;
+                }
+                if (spriteNum == 3) {
+                    image = RIGHT3;
+                }
+            }
         }
         graphics2D.drawImage(image, playerX, playerY, panel.tileSize, panel.tileSize, null);    //null: image observer
     }
