@@ -12,23 +12,27 @@ public class MyPanel extends JPanel implements Runnable{
     //16x16 to small on modern screens (due to much higher resolution)
     final int scale = 3;            //multiply by 3
     //16*3 = 48 -> 48x48
-    public final int tileSize = originalTileSize*scale;    //48px
+    public int tileSize = originalTileSize*scale;    //48px
     public final int maxScreenCol = 16; //tiles displayed horizontally
     public final int maxScreenRow = 12; //tiles displayed vertically
     public final int ScreenWidth = tileSize*maxScreenCol;  //768px
     public final int ScreenHeight = tileSize*maxScreenRow; //576px
+
+    //MAP SETTINGS
+    public final int maxMapCol = 16;
+    public final int maxMapRow = 16;
+    public final int MapWidth = tileSize*maxMapCol;
+    public final int MapHeight = tileSize*maxMapRow;
 
     Handler handler = new Handler();    //add Handler
 
     //Time in Game for Animation
     Thread thread;      //implements Runnable (in public class)
 
-    Player player = new Player(this, this.handler);
+    public Player player = new Player(this, this.handler);  //public for Manager
     Manager manager = new Manager(this);
 
     int FPS = 60;           //FPS
-
-
 
     public MyPanel() {
         this.setPreferredSize(new Dimension(ScreenWidth, ScreenHeight));    //set the size of the class (JPanel)
@@ -68,7 +72,6 @@ public class MyPanel extends JPanel implements Runnable{
                 nextTime += timeInterval;           //0.01666 sec later
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                // haha heimliches comment von mir - C
             }
         }
     }
@@ -87,3 +90,40 @@ public class MyPanel extends JPanel implements Runnable{
         graphics2d.dispose();
     }
 }
+/*
+ public void draw(Graphics2D g2, GamePanel gp) {
+
+  int ScreenX = MapX - panel.player.MapX + gp.player.ScreenX;
+  int ScreenY = MapY - gp.player.MapY + gp.player.ScreenY;
+
+  // STOP MOVING CAMERA
+  if(panel.player.MapX < panel.player.ScreenX) {
+   ScreenX = MapX;
+  }
+  if(panel.player.MapY < panel.player.ScreenY) {
+   ScreenY = MapY;
+  }
+  int RightOffset = panel.ScreenWidth - panel.player.ScreenX;
+  if(RightOffset > panel.MapWidth - panel.player.MapX) {
+   ScreenX = panel.ScreenWidth - (panel.MapWidth - MapX);
+  }
+  int BottomOffset = panel.ScreenHeight - panel.player.ScreenY;
+  if(BottomOffset > panel.MapHeight - panel.player.MapY) {
+   ScreenY = panel.ScreenHeight - (panel.MapHeight - MapY);
+  }
+
+  if(MapX + panel.tileSize > panel.player.MapX - panel.player.ScreenX &&
+     MapX - panel.tileSize < panel.player.MapX + panel.player.ScreenX &&
+     MapY + panel.tileSize > panel.player.MapY - panel.player.ScreenY &&
+     MapY - panel.tileSize < panel.player.MapY + panel.player.ScreenY) {
+
+   g2.drawImage(image, ScreenX, ScreenY, panel.tileSize, panel.tileSize, null);
+  }
+  // If player is around the edge, draw everything
+  else if(panel.player.MapX < panel.player.ScreenX ||
+    panel.player.MapY < panel.player.ScreenY ||
+    rightOffset > panel.MapWidth - panel.player.MapX ||
+    bottomOffset > panel.MapHeight - panel.player.MapY) {
+   g2.drawImage(image, ScreenX, ScreenY, panel.tileSize, panel.tileSize, null);
+  }
+ }*/

@@ -13,17 +13,22 @@ public class Player extends Entity{
     MyPanel panel;
     Handler handler;
 
+    public final int ScreenX, ScreenY;
+
     public Player(MyPanel panel, Handler handler){
         this.panel = panel;
         this.handler = handler;
+
+        ScreenX = panel.ScreenWidth/2;
+        ScreenY = panel.ScreenHeight/2;
 
         setDefaultValues();     //call setDefaultValues()
         playerImage();          //call playerImage()
     }
 
     public void setDefaultValues(){
-        playerX = 100;        //position vertical
-        playerY = 100;        //position horizontal
+        MapX = panel.tileSize*12-(panel.tileSize/2);    //position vertical Center on Map
+        MapY = panel.tileSize*9-(panel.tileSize/2);     //position horizontal Center on Map
         Speed = 4;      //same as in Panel class
         direction = "DOWN";
     }
@@ -53,34 +58,29 @@ public class Player extends Entity{
     }
 
     public void update() {  //update current position of object
-        if(handler.UP || handler.DOWN || handler.LEFT || handler.RIGHT){    //don't move if no key is pressed
+        if(handler.UP || handler.DOWN || handler.LEFT || handler.RIGHT){    //move if any key is pressed
             if(handler.UP){   //if W (UP) is pressed (=true)
                 direction = "UP";   //change direction of position
-                playerY = playerY-Speed;  //-> change current position
+                MapY = MapY-Speed;  //-> change current position
             }
-            if(handler.DOWN){   //when going down/up-left/right, always up/down first then left so character looks to the side when going diagonal
+            if(handler.DOWN){   //when going down/up-left/right (diagonal), always up/down first then left/right so character looks to the side when going diagonal
                 direction = "DOWN";
-                playerY = playerY+Speed;
+                MapY = MapY+Speed;
             }
             if(handler.LEFT){
                 direction = "LEFT";
-                playerX = playerX-Speed;
+                MapX = MapX-Speed;
             }
             if(handler.RIGHT){
                 direction = "RIGHT";
-                playerX = playerX+Speed;
+                MapX = MapX+Speed;
             }
             spriteCounter++;
             if(spriteCounter>12){            //How fast to change
-                if (spriteNum == 1){
-                    spriteNum = 2;
-                } else if (spriteNum ==2){
-                    spriteNum = 3;
-                } else if (spriteNum == 3){
-                    spriteNum = 1;
-                }
+                if (spriteNum ==2)          spriteNum = 1;
+                else if (spriteNum == 1)    spriteNum = 3;
+                else if (spriteNum == 3)    spriteNum = 1;
                 spriteCounter = 0;
-
             }
         } else spriteNum = 2;       //if he stops moving go to basic position (Position 2)
     }
@@ -93,50 +93,45 @@ public class Player extends Entity{
 
         switch (direction) {         //each possible direction
             case "UP" -> {
-                if (spriteNum == 1) {
-                    image = UP1;
-                }
-                if (spriteNum == 2) {
-                    image = UP2;
-                }
-                if (spriteNum == 3) {
-                    image = UP3;
-                }
+                if (spriteNum == 1) image = UP1;
+                if (spriteNum == 2) image = UP2;
+                if (spriteNum == 3) image = UP3;
             }
             case "DOWN" -> {
-                if (spriteNum == 1) {
-                    image = DOWN1;
-                }
-                if (spriteNum == 2) {
-                    image = DOWN2;
-                }
-                if (spriteNum == 3) {
-                    image = DOWN3;
-                }
+                if (spriteNum == 1) image = DOWN1;
+                if (spriteNum == 2) image = DOWN2;
+                if (spriteNum == 3) image = DOWN3;
             }
             case "LEFT" -> {
-                if (spriteNum == 1) {
-                    image = LEFT1;
-                }
-                if (spriteNum == 2) {
-                    image = LEFT2;
-                }
-                if (spriteNum == 3) {
-                    image = LEFT3;
-                }
+                if (spriteNum == 1) image = LEFT1;
+                if (spriteNum == 2) image = LEFT2;
+                if (spriteNum == 3) image = LEFT3;
             }
             case "RIGHT" -> {
-                if (spriteNum == 1) {
-                    image = RIGHT1;
-                }
-                if (spriteNum == 2) {
-                    image = RIGHT2;
-                }
-                if (spriteNum == 3) {
-                    image = RIGHT3;
-                }
+                if (spriteNum == 1) image = RIGHT1;
+                if (spriteNum == 2) image = RIGHT2;
+                if (spriteNum == 3) image = RIGHT3;
             }
         }
-        graphics2D.drawImage(image, playerX, playerY, panel.tileSize, panel.tileSize, null);    //null: image observer
-    }
+
+        //Stop camera at the edge
+        int x = ScreenX;
+        int y = ScreenY;
+
+        if(ScreenX > MapX)
+            x = MapX;
+        if(ScreenY > MapY)
+            y = MapY;
+
+        //same as in Manager Class
+        int RightOffset = panel.ScreenWidth - ScreenX;
+        if(RightOffset > panel.MapWidth - MapX)
+            x = panel.ScreenWidth - (panel.MapWidth - MapX);
+
+        int BottomOffset = panel.ScreenHeight - ScreenY;
+        if(BottomOffset > panel.MapHeight - MapY)
+            y = panel.ScreenHeight - (panel.MapHeight - MapY);
+
+        graphics2D.drawImage(image, x, y, panel.tileSize+8, panel.tileSize+8, null);    //null: image observer  +8 to make character bigger
+    }                   //ScreenX and ScreenY don't change
 }
