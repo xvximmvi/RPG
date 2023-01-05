@@ -12,7 +12,7 @@ public class GameObject {
     public int ObjectHeight;
     public boolean collision = false;
     public int MapX, MapY;
-    public Rectangle Area;
+    public Rectangle Area;          //defined in each specific Object Class
     public int AreaDefaultX = 0;
     public int AreaDefaultY = 0;
 
