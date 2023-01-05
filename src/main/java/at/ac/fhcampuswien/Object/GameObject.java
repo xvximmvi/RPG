@@ -12,7 +12,7 @@ public class GameObject {
     public int ObjectHeight;
     public boolean collision = false;
     public int MapX, MapY;
-    public Rectangle Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
+    public Rectangle Area;
     public int AreaDefaultX = 0;
     public int AreaDefaultY = 0;
 

@@ -44,20 +44,24 @@ public class SetAsset {
         panel.object[7].MapY = 4 * panel.tileSize-20;
 
         panel.object[8] = new OBJECT_SideOutline();
-        panel.object[8].MapX = 0;
-        panel.object[8].MapY = 67;
+        panel.object[8].MapX = 10;
+        panel.object[8].MapY = 6 * panel.tileSize;
 
         panel.object[9] = new OBJECT_SideOutline();
-        panel.object[9].MapX = 16 * panel.tileSize -4;
-        panel.object[9].MapY = 67;
+        panel.object[9].MapX = 16 * panel.tileSize - 5;
+        panel.object[9].MapY = 6 * panel.tileSize;
 
         panel.object[10] = new OBJECT_BottomOutline();
         panel.object[10].MapX = 10 * panel.tileSize - 4;
         panel.object[10].MapY = 16 * panel.tileSize - 4;
 
-        panel.object[11] = new OBJECT_BottomDoor();
-        panel.object[11].MapX = 6 * panel.tileSize + 9;
+        panel.object[11] = new OBJECT_BottomOutline();
+        panel.object[11].MapX = 0;
         panel.object[11].MapY = 16 * panel.tileSize - 4;
+
+        panel.object[12] = new OBJECT_BottomDoor();
+        panel.object[12].MapX = 6 * panel.tileSize + 9;
+        panel.object[12].MapY = 16 * panel.tileSize - 3;
 
     }
 }

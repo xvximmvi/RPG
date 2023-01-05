@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.Object;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -9,6 +10,9 @@ public class OBJECT_BottomOutline extends GameObject{
         name = "BottomOutline";
         ObjectWidth = 288;      //Size in Pixels
         ObjectHeight = 4;     //Size in Pixels
+
+        Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
+
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/OBJECT_BottomOutline.png")));
         }catch(IOException e){
