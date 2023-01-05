@@ -9,8 +9,8 @@ public class Game {
         window.setResizable(false);         //no resizing of the window
         window.setTitle("GAME TITLE");      //Title of the Game
 
-        MyPanel myPanel = new MyPanel();
-        window.add(myPanel);                  //Add Panel Class to Window
+        MyPanel panel = new MyPanel();
+        window.add(panel);                  //Add Panel Class to Window
 
         window.pack();   //causes window to be sized to fit preferred size and layouts of "Panel"
 
@@ -18,6 +18,7 @@ public class Game {
         // => window will be displayed at the center of the screen
         window.setVisible(true);            //able to see the window
 
-        myPanel.startThread();               //start thread
+        panel.setUpGame();                  //start setting up the Game
+        panel.startThread();               //start thread
     }
 }

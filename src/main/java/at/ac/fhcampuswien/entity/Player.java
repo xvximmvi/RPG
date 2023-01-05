@@ -19,11 +19,21 @@ public class Player extends Entity{
         this.panel = panel;
         this.handler = handler;
 
-        ScreenX = panel.ScreenWidth/2;
+        ScreenX = panel.ScreenWidth/2;      //always in center
         ScreenY = panel.ScreenHeight/2;
 
-        setDefaultValues();     //call setDefaultValues()
-        playerImage();          //call playerImage()
+        Area = new Rectangle();     //create area of collision within the player character
+        //4 parameter (x, y, width, height) of player character: which part of the character has collision detection
+        Area.x = 18;
+        Area.y = 36;
+        AreaDefaultX = Area.x;
+        AreaDefaultY = Area.y;
+        Area.width = 38;    //48 pixels for 1 tile: is to precisely -> difficult to go through
+        Area.height = 38;
+
+
+        setDefaultValues();         //call setDefaultValues()
+        playerImage();              //call playerImage()
     }
 
     public void setDefaultValues(){
@@ -61,19 +71,37 @@ public class Player extends Entity{
         if(handler.UP || handler.DOWN || handler.LEFT || handler.RIGHT){    //move if any key is pressed
             if(handler.UP){   //if W (UP) is pressed (=true)
                 direction = "UP";   //change direction of position
-                MapY = MapY-Speed;  //-> change current position
+                //MapY = MapY-Speed;  //-> change current position
             }
             if(handler.DOWN){   //when going down/up-left/right (diagonal), always up/down first then left/right so character looks to the side when going diagonal
                 direction = "DOWN";
-                MapY = MapY+Speed;
+                //MapY = MapY+Speed;
             }
             if(handler.LEFT){
                 direction = "LEFT";
-                MapX = MapX-Speed;
+                //MapX = MapX-Speed;
             }
             if(handler.RIGHT){
                 direction = "RIGHT";
-                MapX = MapX+Speed;
+                //MapX = MapX+Speed;
+            }
+
+            //CHECK TILE COLLISION
+            collisionOn = false;
+            //player Class is a subclass of the Entity class
+            panel.collisionDetection.DetectTile(this);  //CollisionDetection receives Player class as Entity
+
+            //CHECK OBJECT COLLISION
+            int objectIndex = panel.collisionDetection.DetectObject(this, true);
+
+            //IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if(!collisionOn){
+                switch (direction) {
+                    case "UP" -> MapY = MapY - Speed;
+                    case "DOWN" -> MapY = MapY + Speed;
+                    case "LEFT" -> MapX = MapX - Speed;
+                    case "RIGHT" -> MapX = MapX + Speed;
+                }
             }
             spriteCounter++;
             if(spriteCounter>12){            //How fast to change
@@ -114,16 +142,17 @@ public class Player extends Entity{
             }
         }
 
-        //Stop camera at the edge
+        //STOP SCREEN AT EDGE OF MAP
         int x = ScreenX;
         int y = ScreenY;
 
+        //left side of Map
         if(ScreenX > MapX)
             x = MapX;
         if(ScreenY > MapY)
             y = MapY;
 
-        //same as in Manager Class
+        //same as in Manager Class  (Right side of Map)
         int RightOffset = panel.ScreenWidth - ScreenX;
         if(RightOffset > panel.MapWidth - MapX)
             x = panel.ScreenWidth - (panel.MapWidth - MapX);
@@ -132,6 +161,6 @@ public class Player extends Entity{
         if(BottomOffset > panel.MapHeight - MapY)
             y = panel.ScreenHeight - (panel.MapHeight - MapY);
 
-        graphics2D.drawImage(image, x, y, panel.tileSize+8, panel.tileSize+8, null);    //null: image observer  +8 to make character bigger
+        graphics2D.drawImage(image, x, y, panel.tileSize+20, panel.tileSize+20, null);    //null: image observer  +8 to make character bigger
     }                   //ScreenX and ScreenY don't change
 }

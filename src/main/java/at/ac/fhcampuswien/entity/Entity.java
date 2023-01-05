@@ -16,6 +16,9 @@ public class Entity {
 
     public int spriteCounter = 0;   //count up to change position
     public int spriteNum = 1;       //number of sprite
+    public Rectangle Area;          //Collision Area
+    public int AreaDefaultX, AreaDefaultY;
+    public boolean collisionOn = false;
 
     /*MyPanel panel;
 

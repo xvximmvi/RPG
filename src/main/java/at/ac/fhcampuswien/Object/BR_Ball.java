@@ -1,0 +1,19 @@
+package at.ac.fhcampuswien.Object;
+
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.util.Objects;
+
+public class BR_Ball extends GameObject{
+    public BR_Ball(){
+        name = "Ball";
+        ObjectWidth = 48;      //Size in Pixels
+        ObjectHeight = 48+10;     //Size in Pixels
+        try {
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/BR_Ball.png")));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        collision = true;
+    }
+}

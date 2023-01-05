@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.main;
 
+import at.ac.fhcampuswien.Object.GameObject;
 import at.ac.fhcampuswien.entity.Player;
 import at.ac.fhcampuswien.tile.Manager;
 
@@ -28,9 +29,11 @@ public class MyPanel extends JPanel implements Runnable{
 
     //Time in Game for Animation
     Thread thread;      //implements Runnable (in public class)
-
-    public Player player = new Player(this, this.handler);  //public for Manager
     Manager manager = new Manager(this);
+    public CollisionDetection collisionDetection = new CollisionDetection(this);    //public for Player
+    public SetAsset asset = new SetAsset(this);
+    public Player player = new Player(this, this.handler);  //public for Manager
+    public GameObject object[] = new GameObject[15];
 
     int FPS = 60;           //FPS
 
@@ -42,6 +45,10 @@ public class MyPanel extends JPanel implements Runnable{
 
         this.addKeyListener(handler);   //Panel can recognise Keyboard Input
         this.setFocusable(true);
+    }
+
+    public void setUpGame(){
+        asset.setObject();
     }
 
     public void startThread(){          //Thread
@@ -84,46 +91,20 @@ public class MyPanel extends JPanel implements Runnable{
         //"Graphics2D" provides more function for graphic (color, geometry,...)
         Graphics2D graphics2d = (Graphics2D)graphics;
 
-        //Layer: first written is under the second
+        //LAYER: first written is under the second
+
+        //TILE
         manager.draw(graphics2d);   //draw manager tiles
+
+        //OBJECT
+        for(int i = 0; i < object.length; i++){
+            if(object[i] != null){
+                object[i].draw(graphics2d, this);
+            }
+        }
+
+        //PLAYER
         player.draw(graphics2d);    //draw player character
         graphics2d.dispose();
     }
 }
-/*
- public void draw(Graphics2D g2, GamePanel gp) {
-
-  int ScreenX = MapX - panel.player.MapX + gp.player.ScreenX;
-  int ScreenY = MapY - gp.player.MapY + gp.player.ScreenY;
-
-  // STOP MOVING CAMERA
-  if(panel.player.MapX < panel.player.ScreenX) {
-   ScreenX = MapX;
-  }
-  if(panel.player.MapY < panel.player.ScreenY) {
-   ScreenY = MapY;
-  }
-  int RightOffset = panel.ScreenWidth - panel.player.ScreenX;
-  if(RightOffset > panel.MapWidth - panel.player.MapX) {
-   ScreenX = panel.ScreenWidth - (panel.MapWidth - MapX);
-  }
-  int BottomOffset = panel.ScreenHeight - panel.player.ScreenY;
-  if(BottomOffset > panel.MapHeight - panel.player.MapY) {
-   ScreenY = panel.ScreenHeight - (panel.MapHeight - MapY);
-  }
-
-  if(MapX + panel.tileSize > panel.player.MapX - panel.player.ScreenX &&
-     MapX - panel.tileSize < panel.player.MapX + panel.player.ScreenX &&
-     MapY + panel.tileSize > panel.player.MapY - panel.player.ScreenY &&
-     MapY - panel.tileSize < panel.player.MapY + panel.player.ScreenY) {
-
-   g2.drawImage(image, ScreenX, ScreenY, panel.tileSize, panel.tileSize, null);
-  }
-  // If player is around the edge, draw everything
-  else if(panel.player.MapX < panel.player.ScreenX ||
-    panel.player.MapY < panel.player.ScreenY ||
-    rightOffset > panel.MapWidth - panel.player.MapX ||
-    bottomOffset > panel.MapHeight - panel.player.MapY) {
-   g2.drawImage(image, ScreenX, ScreenY, panel.tileSize, panel.tileSize, null);
-  }
- }*/
