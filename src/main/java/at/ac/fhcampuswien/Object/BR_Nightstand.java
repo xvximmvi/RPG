@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class BR_Nightstand extends GameObject{
     public BR_Nightstand(){
+
         name = "Nightstand";
         ObjectWidth = 48*2+20;      //Size in Pixels
         ObjectHeight = 48*2+20;     //Size in Pixels
@@ -15,7 +16,7 @@ public class BR_Nightstand extends GameObject{
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/BR_Nightstand.png")));
-        }catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
         collision = true;

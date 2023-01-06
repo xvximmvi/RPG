@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.tile;
 
-
-import at.ac.fhcampuswien.main.MyPanel;
+import at.ac.fhcampuswien.main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,23 +10,47 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
-public class Manager {
-    MyPanel panel;          //draw the panel
-    public Tile[] tile;            //use tiles  (public for CollisionDetection)
-    public int[][] mapTilesNum;    //which tile to use  (public for CollisionDetection)
+// CLASS CONTENT
+/*
+    MANAGER CONSTRUCTOR
+        - Map Matrix
+        - call Tile Image Methode
+        - Load Map
 
-    public Manager(MyPanel panel){
+    TILE IMAGE
+        - List all Tiles
+
+    LOAD MAP
+        - Go through every Column and Row of Map-Matrix
+        - Read Map
+        - Enter Map in Map-Matrix
+
+    DRAW MAP
+        - Find out Tile Image
+        - Find out where to draw on the Screen (X- & Y-Coordinate)
+        - Stop Camera at Edge of Map
+ */
+
+public class Manager {
+    GamePanel panel;                //draw the panel
+    public Tile[] tile;             //use tiles  (public for CollisionDetection)
+    public int[][] mapTilesNum;     //which tile to use  (public for CollisionDetection)
+
+
+    // MANAGER CONSTRUCTOR
+    public Manager(GamePanel panel){
         this.panel = panel;
         tile = new Tile[50];    //kinds of tiles
 
         mapTilesNum = new int [panel.maxMapCol][panel.maxMapRow];   //[panel.maxScreenCol][panel.maxScreenRow] -> Map Size as Screen Size
                                                                     //Edit: now maxMapCol/Row -> Map Size
-        tileImage();            //call tileImage()
-        loadMap("/Maps/Bedroom.txt");  //call loadMap()
+        tileImage();                            //call tileImage()
+        loadMap("/Maps/Bedroom.txt");   //call loadMap()
     }
 
-    public void tileImage(){        //same as Player
-        try {
+    // TILE IMAGE
+    public void tileImage(){
+        try {   //same as Player
             tile[0] = new Tile();
             tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/WO_LUC.png")));
             tile[0].collision = true;       //only need to mark tiles that need collision! other automatically false
@@ -76,13 +99,14 @@ public class Manager {
             tile[19].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_D3.png")));
             tile[20] = new Tile();
             tile[20].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_RLC.png")));
-
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public void loadMap(String filePath){   //if you want to load a different Map, just call different loadMap
+    // LOAD MAP
+    public void loadMap(String filePath){
+        //if you want to load a different Map, just call different loadMap
         try{
             InputStream is = getClass().getResourceAsStream(filePath);   //Input Mapping
             assert is != null;      //means "a passed parameter must not be null": if it is null then the test case fails
@@ -102,7 +126,7 @@ public class Manager {
                     mapTilesNum[col][row] = num;                //Map-Matrix
                     col++;                                      //Go to next Column
                 }
-                if(col == panel.maxMapCol){                  //If Column reached the end...
+                if(col == panel.maxMapCol){                     //If Column reached the end...
                     col = 0;                                    //... then reset Column back to beginning ...
                     row++;                                      //... but next Row
                 }
@@ -114,11 +138,10 @@ public class Manager {
         }
     }
 
+    // DRAW MAP
     public void draw(Graphics2D graphics2D){
         int MapCol = 0;
         int MapRow = 0;
-        //int x = 0;
-        //int y = 0;
 
         while(MapCol< panel.maxMapCol && MapRow < panel.maxMapRow)  //instead of writing every tile
         {
@@ -130,10 +153,12 @@ public class Manager {
             int ScreenX = MapX - panel.player.MapX + panel.player.ScreenX; //coordinates to get to a specific tile; compared to the player where is the tile
             int ScreenY = MapY - panel.player.MapY + panel.player.ScreenY;
 
-            //Stop moving Screen at the edge
+            // STOP CAMERA AT EDGE
+            //Left Side / Top Side
             if(panel.player.ScreenX > panel.player.MapX) ScreenX = MapX;
             if(panel.player.ScreenY > panel.player.MapY) ScreenY = MapY;
 
+            //Right Side / Bottom Side
             int RightOffset = panel.ScreenWidth - panel.player.ScreenX;
             if(RightOffset > panel.MapWidth - panel.player.MapX)
                 ScreenX = panel.ScreenWidth - (panel.MapWidth - MapX);
@@ -145,22 +170,19 @@ public class Manager {
             if(MapX + panel.tileSize > panel.player.MapX - panel.player.ScreenX
                     && MapX - panel.tileSize < panel.player.MapX + panel.player.ScreenX
                     && MapY + panel.tileSize > panel.player.MapY - panel.player.ScreenY
-                    && MapY - panel.tileSize < panel.player.MapY + panel.player.ScreenY) {   //create boundary -> only draw tiles within the boundary
+                    && MapY - panel.tileSize < panel.player.MapY + panel.player.ScreenY)   //create boundary -> only draw tiles within the boundary
                 graphics2D.drawImage(tile[tileNum].image, ScreenX, ScreenY, panel.tileSize, panel.tileSize, null); //draw
-            }
+
             else if(panel.player.ScreenX > panel.player.MapX
                     || panel.player.ScreenY > panel.player.MapY
                     || RightOffset > panel.MapWidth - panel.player.MapX
-                    || BottomOffset > panel.MapHeight - panel.player.MapY) {        //if at edge fill Screen with tiles
+                    || BottomOffset > panel.MapHeight - panel.player.MapY)         //if at edge fill Screen with tiles
                 graphics2D.drawImage(tile[tileNum].image, ScreenX, ScreenY, panel.tileSize, panel.tileSize, null); //draw
-            }
-            MapCol++;                  //draw next tile
-            //x += panel.tileSize;    //next block
-            if(MapCol == panel.maxScreenCol){  //if col finished go to next row and repeat
-                MapCol = 0;
-               // x = 0;
-                MapRow++;
-                //y += panel.tileSize;
+
+            MapCol++;                           //draw next tile
+            if(MapCol == panel.maxScreenCol){   //if col finished go to next row and repeat
+                MapCol = 0;         //reset MapCol
+                MapRow++;           //go to next Row
             }
         }
     }

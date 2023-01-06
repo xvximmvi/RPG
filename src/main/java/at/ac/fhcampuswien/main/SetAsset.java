@@ -2,14 +2,23 @@ package at.ac.fhcampuswien.main;
 
 import at.ac.fhcampuswien.Object.*;
 
-public class SetAsset {
-    MyPanel panel;
+// CLASS CONTENT
+/*
+    ASSET CONSTRUCTOR
+    SET OBJECT
+ */
 
-    public SetAsset(MyPanel panel){
+public class SetAsset {
+    GamePanel panel;
+
+    //ASSET CONSTRUCTOR
+    public SetAsset(GamePanel panel){
         this.panel = panel;
     }
 
-    public void setObject(){    //instantiate default objects
+    // SET OBJECT
+    public void setObject() {
+        //instantiate default objects
         //Play around with variables till it fits
         panel.object[0] = new BR_Bed();  //ObjectBed is subclass of Object Class -> instantiate as one of this array
         panel.object[0].MapX = 13 * panel.tileSize;
@@ -48,7 +57,7 @@ public class SetAsset {
         panel.object[8].MapY = 6 * panel.tileSize;
 
         panel.object[9] = new OBJECT_SideOutline();
-        panel.object[9].MapX = 16 * panel.tileSize - 5;
+        panel.object[9].MapX = 16 * panel.tileSize - 10;
         panel.object[9].MapY = 6 * panel.tileSize;
 
         panel.object[10] = new OBJECT_BottomOutline();
@@ -62,6 +71,5 @@ public class SetAsset {
         panel.object[12] = new OBJECT_BottomDoor();
         panel.object[12].MapX = 6 * panel.tileSize + 9;
         panel.object[12].MapY = 16 * panel.tileSize - 3;
-
     }
 }

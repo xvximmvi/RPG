@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class BR_Bookshelf extends GameObject{
     public BR_Bookshelf(){
+
         name = "Bookshelf";
         ObjectWidth = 48*5+20;      //Size in Pixels
         ObjectHeight = 48*3+20;     //Size in Pixels
@@ -15,10 +16,9 @@ public class BR_Bookshelf extends GameObject{
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/BR_Bookshelf.png")));
-        }catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
         collision = true;
-
     }
 }
