@@ -42,6 +42,7 @@ import java.awt.*;
         - Object
         - Player
         - UI
+        - Debug
 
     MUSIC AND SOUND EFFECTS
         - Play & Stop Music
@@ -71,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;
 
     // SYSTEM
-    Handler handler = new Handler();    //add Handler
+    Handler handler = new Handler(this);    //add Handler
     Manager manager = new Manager(this);
     Sound sound = new Sound();
     public CollisionDetection collisionDetection = new CollisionDetection(this);    //public for Player
@@ -82,6 +83,11 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECT
     public Player player = new Player(this, this.handler);  //public for Manager
     public GameObject object[] = new GameObject[15];
+
+    // GAME STATE
+    public int GameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
 
 
     // GAME PANEL CONSTRUCTOR
@@ -99,6 +105,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void setUpGame(){
         asset.setObject();
         playMusic(1);       //Start Theme Music
+        GameState = playState;
     }
 
     // THREAD
@@ -143,9 +150,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     // UPDATE INFO
     public void updateInfo(){
-        player.update();        //update Player position
-        if(ui.playTime <= 0)    //if Play Time is up
-        ui.GameOver = true;     //GameOver
+        if(GameState == playState){
+            player.update();        //update Player position
+            if(ui.playTime <= 0)    //if Play Time is up
+                ui.GameOver = true;     //GameOver
+        }
+        if(GameState == pauseState){
+            //Do nothing. It's paused.
+        }
     }
 
     // DRAW
@@ -156,7 +168,11 @@ public class GamePanel extends JPanel implements Runnable{
         //"Graphics2D" provides more function for graphic (color, geometry,...)
         Graphics2D graphics2d = (Graphics2D)graphics;
 
-        //LAYER: first written is under the second
+        // DEBUG
+        long drawStart = 0;
+        if(handler.drawTime)
+            drawStart = System.nanoTime();  //to check the time
+
 
         // TILE
         manager.draw(graphics2d);   //draw manager tiles
@@ -173,6 +189,15 @@ public class GamePanel extends JPanel implements Runnable{
 
         // UI
         ui.draw(graphics2d);
+
+        // DEBUG
+        if(handler.drawTime) {
+            long drawEnd = System.nanoTime();
+            long passedTime = drawEnd - drawStart;
+            graphics2d.setColor(Color.white);
+            graphics2d.drawString("Draw Time: " + passedTime, tileSize*10, 30);
+            //System.out.println("Draw Time:" + passedTime);
+        }
 
         graphics2d.dispose();   // dispose graphics
     }

@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.Object;
 
 import at.ac.fhcampuswien.main.GamePanel;
+import at.ac.fhcampuswien.main.Utility;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -25,6 +26,7 @@ public class GameObject {
     public Rectangle Area;          //defined in each specific Object Class
     public int AreaDefaultX = 0;
     public int AreaDefaultY = 0;
+    Utility utility = new Utility();    //Improving rendering performance
 
     // DRAW OBJECT
     public void draw(Graphics2D g2, GamePanel panel) {

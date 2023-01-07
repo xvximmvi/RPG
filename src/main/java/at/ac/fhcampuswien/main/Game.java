@@ -16,7 +16,7 @@ public class Game {
         JFrame window = new JFrame();       //first create window
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //lets the window properly close when user clicks the close ("x") button
         window.setResizable(false);         //no resizing of the window
-        window.setTitle("GAME TITLE");      //Title of the Game
+        window.setTitle("WAY OUT");      //Title of the Game
 
         // ADD PANEL
         GamePanel panel = new GamePanel();

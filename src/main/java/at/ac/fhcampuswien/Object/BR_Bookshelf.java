@@ -1,12 +1,15 @@
 package at.ac.fhcampuswien.Object;
 
+import at.ac.fhcampuswien.main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BR_Bookshelf extends GameObject{
-    public BR_Bookshelf(){
+    GamePanel panel;
+    public BR_Bookshelf(GamePanel panel){
 
         name = "Bookshelf";
         ObjectWidth = 48*5+20;      //Size in Pixels
@@ -16,6 +19,7 @@ public class BR_Bookshelf extends GameObject{
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/BR_Bookshelf.png")));
+            utility.scaleImage(image, ObjectWidth, ObjectHeight);
         } catch(IOException e){
             e.printStackTrace();
         }

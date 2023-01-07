@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.entity;
 import at.ac.fhcampuswien.Object.BR_Light_ON;
 import at.ac.fhcampuswien.main.Handler;
 import at.ac.fhcampuswien.main.GamePanel;
+import at.ac.fhcampuswien.main.Utility;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,6 +23,9 @@ import java.util.Objects;
 
     PLAYER IMAGE
         - set direction to each Sprite Image
+
+    PLAYER IMAGE SETUP
+        - scale Image for improved rendering performance
 
     UPDATE PLAYER POSITION
         - Player direction
@@ -85,27 +89,37 @@ public class Player extends Entity{
 
     // PLAYER IMAGES
     public void playerImage(){
-        try{    //Gives every direction corresponding image
-            UP1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_B1.png")));
-            UP2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_B2.png")));
-            UP3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_B3.png")));
+        UP1 = setup("MC_B1");
+        UP2 = setup("MC_B2");
+        UP3 = setup("MC_B3");
 
-            DOWN1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_F1.png")));
-            DOWN2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_F2.png")));
-            DOWN3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_F3.png")));
+        DOWN1 = setup("MC_F1");
+        DOWN2 = setup("MC_F2");
+        DOWN3 = setup("MC_F2");
 
-            LEFT1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_L1.png")));
-            LEFT2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_L2.png")));
-            LEFT3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_L3.png")));
+        LEFT1 = setup("MC_L1");
+        LEFT2 = setup("MC_L2");
+        LEFT3 = setup("MC_L3");
 
-            RIGHT1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_R1.png")));
-            RIGHT2 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_R2.png")));
-            RIGHT3 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/MC_R3.png")));
+        RIGHT1 = setup("MC_R1");
+        RIGHT2 = setup("MC_R2");
+        RIGHT3 = setup("MC_R3");
+    }
 
+    // PLAYER IMAGE SETUP
+    public BufferedImage setup(String imageName){
+        //scale Image so that Graphics2D can skip that part and draw faster
+        Utility utility = new Utility();
+        BufferedImage scaledImage = null;
 
-        } catch (IOException e){
+        try{
+            scaledImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/MC/" + imageName + ".png")));
+            scaledImage = utility.scaleImage(scaledImage, panel.tileSize+20, panel.tileSize+20);
+
+        } catch(IOException e){
             e.printStackTrace();
         }
+        return scaledImage;
     }
 
     // UPDATE PLAYER POSITION
@@ -173,7 +187,7 @@ public class Player extends Entity{
                             //Turn Light on and off
                             BR_Light_State = !BR_Light_State;   //change Light State
                             if(BR_Light_State){             //if turning on -> instantiate new Object (Light_ON)
-                                panel.object[13] = new BR_Light_ON();
+                                panel.object[13] = new BR_Light_ON(panel);
                                 panel.object[13].MapX = 11 * panel.tileSize - 2;
                                 panel.object[13].MapY = 4 * panel.tileSize - 23;
                             } else  panel.object[13] = null;    //if turning off-> then delete Object (null)
@@ -272,6 +286,6 @@ public class Player extends Entity{
             y = panel.ScreenHeight - (panel.MapHeight - MapY);
 
         //ScreenX and ScreenY don't change
-        graphics2D.drawImage(image, x, y, panel.tileSize+20, panel.tileSize+20, null);    //null: image observer  +8 to make character bigger
+        graphics2D.drawImage(image, x, y, null);    //null: image observer  +8 to make character bigger
     }
 }

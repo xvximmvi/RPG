@@ -1,12 +1,15 @@
 package at.ac.fhcampuswien.Object;
 
+import at.ac.fhcampuswien.main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BR_Bed extends GameObject {
-    public BR_Bed(){
+    GamePanel panel;
+    public BR_Bed(GamePanel panel){
 
         name = "Bed";
         ObjectWidth = 48*2+25;      //Size in Pixels
@@ -16,6 +19,7 @@ public class BR_Bed extends GameObject {
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/BR_Bed.png")));
+            utility.scaleImage(image, ObjectWidth, ObjectHeight);
         } catch(IOException e){
             e.printStackTrace();
         }

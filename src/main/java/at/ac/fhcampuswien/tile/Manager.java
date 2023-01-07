@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.tile;
 
 import at.ac.fhcampuswien.main.GamePanel;
+import at.ac.fhcampuswien.main.Utility;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,6 +20,9 @@ import java.util.Objects;
 
     TILE IMAGE
         - List all Tiles
+
+    TILE IMAGE SETUP
+        - scale Image for improved rendering performance
 
     LOAD MAP
         - Go through every Column and Row of Map-Matrix
@@ -50,55 +54,40 @@ public class Manager {
 
     // TILE IMAGE
     public void tileImage(){
-        try {   //same as Player
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/WO_LUC.png")));
-            tile[0].collision = true;       //only need to mark tiles that need collision! other automatically false
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/WO_U.png")));
-            tile[1].collision = true;
-            tile[2] = new Tile();
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/WO_RUC.png")));
-            tile[2].collision = true;
-            tile[3] = new Tile();
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/WO_L.png")));
-            tile[3].collision = true;
-            tile[4] = new Tile();
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/WO_M.png")));
-            tile[4].collision = true;
-            tile[5] = new Tile();
-            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/WO_R.png")));
-            tile[5].collision = true;
-            tile[6] = new Tile();
-            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_LUC.png")));
-            tile[7] = new Tile();
-            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_U1.png")));
-            tile[8] = new Tile();
-            tile[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_U2.png")));
-            tile[9] = new Tile();
-            tile[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_RUC.png")));
-            tile[10] = new Tile();
-            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_L.png")));
-            tile[11] = new Tile();
-            tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_M1.png")));
-            tile[12] = new Tile();
-            tile[12].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_M2.png")));
-            tile[13] = new Tile();
-            tile[13].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_R.png")));
-            tile[14] = new Tile();
-            tile[14].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_LLC.png")));
-            tile[15] = new Tile();
-            tile[15].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_LM1.png")));
-            tile[16] = new Tile();
-            tile[16].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_LM2.png")));
-            tile[17] = new Tile();
-            tile[17].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_D1.png")));
-            tile[18] = new Tile();
-            tile[18].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_D2.png")));
-            tile[19] = new Tile();
-            tile[19].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_D3.png")));
-            tile[20] = new Tile();
-            tile[20].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/FO_RLC.png")));
+        //same as Player
+        setup(0, "WO_LUC", true);
+        setup(1, "WO_U", true);
+        setup(2, "WO_RUC", true);
+        setup(3, "WO_L", true);
+        setup(4, "WO_M", true);
+        setup(5, "WO_R", true);
+        setup(6, "FO_LUC", false);
+        setup(7, "FO_U1", false);
+        setup(8, "FO_U2", false);
+        setup(9, "FO_RUC", false);
+        setup(10, "FO_L", false);
+        setup(11, "FO_M1", false);
+        setup(12, "FO_M2", false);
+        setup(13, "FO_R", false);
+        setup(14, "FO_LLC", false);
+        setup(15, "FO_LM1", false);
+        setup(16, "FO_LM2", false);
+        setup(17, "FO_D1", false);
+        setup(18, "FO_D2", false);
+        setup(19, "FO_D3", false);
+        setup(20, "FO_RLC", false);
+    }
+
+    // TILE IMAGE SETUP
+    public void setup(int index, String imageName, boolean collision){
+        //scale image so that Graphics2D doesn't have to and draw faster
+        Utility utility = new Utility();
+        try{
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/" + imageName + ".png")));
+            tile[index].image = utility.scaleImage(tile[index].image, panel.tileSize, panel.tileSize);
+            tile[index].collision = collision;  //ask if collision needed or not
+
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -171,13 +160,13 @@ public class Manager {
                     && MapX - panel.tileSize < panel.player.MapX + panel.player.ScreenX
                     && MapY + panel.tileSize > panel.player.MapY - panel.player.ScreenY
                     && MapY - panel.tileSize < panel.player.MapY + panel.player.ScreenY)   //create boundary -> only draw tiles within the boundary
-                graphics2D.drawImage(tile[tileNum].image, ScreenX, ScreenY, panel.tileSize, panel.tileSize, null); //draw
+                graphics2D.drawImage(tile[tileNum].image, ScreenX, ScreenY, null); //draw
 
             else if(panel.player.ScreenX > panel.player.MapX
                     || panel.player.ScreenY > panel.player.MapY
                     || RightOffset > panel.MapWidth - panel.player.MapX
                     || BottomOffset > panel.MapHeight - panel.player.MapY)         //if at edge fill Screen with tiles
-                graphics2D.drawImage(tile[tileNum].image, ScreenX, ScreenY, panel.tileSize, panel.tileSize, null); //draw
+                graphics2D.drawImage(tile[tileNum].image, ScreenX, ScreenY, null); //draw
 
             MapCol++;                           //draw next tile
             if(MapCol == panel.maxScreenCol){   //if col finished go to next row and repeat

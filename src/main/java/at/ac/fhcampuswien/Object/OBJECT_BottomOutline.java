@@ -1,12 +1,15 @@
 package at.ac.fhcampuswien.Object;
 
+import at.ac.fhcampuswien.main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class OBJECT_BottomOutline extends GameObject{
-    public OBJECT_BottomOutline(){
+    GamePanel panel;
+    public OBJECT_BottomOutline(GamePanel panel){
 
         name = "BottomOutline";
         ObjectWidth = 288;      //Size in Pixels
@@ -16,6 +19,7 @@ public class OBJECT_BottomOutline extends GameObject{
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/OBJECT_BottomOutline.png")));
+            utility.scaleImage(image, ObjectWidth, ObjectHeight);
         } catch(IOException e){
             e.printStackTrace();
         }
