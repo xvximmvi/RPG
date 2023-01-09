@@ -21,4 +21,7 @@ public class Entity {   //This stores variables that will be used in players, mo
     public Rectangle Area;          //Collision Area
     public int AreaDefaultX, AreaDefaultY;
     public boolean collisionOn = false;
+
+    String dialogues[] = new String[30];
+    int dialogueIndex = 0;
 }

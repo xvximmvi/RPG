@@ -15,26 +15,24 @@ import java.net.URL;
 public class Sound {
 
     Clip clip;
-    URL soundURL[] = new URL[30];
+    URL sound[] = new URL[10];
 
     // SOUND FILES
     public Sound(){
-        soundURL[0] = getClass().getResource("/Sound/MainMelody_v1.wav");
-        soundURL[1] = getClass().getResource("/Sound/MainMelody_v2.wav");
-        soundURL[2] = getClass().getResource("/Sound/GameWon.wav");
-        soundURL[3] = getClass().getResource("/Sound/GameOver.wav");
-        soundURL[4] = getClass().getResource("/Sound/Key.wav");
-        soundURL[5] = getClass().getResource("/Sound/Notification.wav");
+        sound[0] = getClass().getResource("/Sound/MainMelody_v1.wav");
+        sound[1] = getClass().getResource("/Sound/MainMelody_v2.wav");
     }
 
     // OPEN FILE
     public void setFile(int i) {
         try{
             //Java format to open sound file
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream((soundURL[i]));
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream((sound[i]));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-        }catch (Exception e){}
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     // SOUND PLAY / LOOP / STOP

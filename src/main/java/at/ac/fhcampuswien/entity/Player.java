@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.entity;
 
 import at.ac.fhcampuswien.Object.BR_Light_ON;
+import at.ac.fhcampuswien.Object.OBJECT_Key;
 import at.ac.fhcampuswien.main.Handler;
 import at.ac.fhcampuswien.main.GamePanel;
 import at.ac.fhcampuswien.main.Utility;
@@ -45,6 +46,8 @@ import java.util.Objects;
 public class Player extends Entity{
     GamePanel panel;
     Handler handler;
+    BufferedImage bufferedImage;
+    Graphics2D graphics2D;
 
     public final int ScreenX, ScreenY;  //Coordinate of Screen
     public int Keys = 0;                //Number of collected/found Keys
@@ -75,6 +78,7 @@ public class Player extends Entity{
 
         setDefaultValues();         //call setDefaultValues()
         playerImage();              //call playerImage()
+        setDialogue();
     }
 
     // DEFAULT POSITION & DIRECTION
@@ -83,7 +87,7 @@ public class Player extends Entity{
         MapY = panel.tileSize*9-(panel.tileSize/2);     //position horizontal Center on Map
         Speed = 4;      //same as in Panel class
         direction = "DOWN";
-
+        Keys = 0;
         panel.ui.TutorialOn = true;     //Start game with Tutorial
     }
 
@@ -95,7 +99,7 @@ public class Player extends Entity{
 
         DOWN1 = setup("MC_F1");
         DOWN2 = setup("MC_F2");
-        DOWN3 = setup("MC_F2");
+        DOWN3 = setup("MC_F3");
 
         LEFT1 = setup("MC_L1");
         LEFT2 = setup("MC_L2");
@@ -125,6 +129,13 @@ public class Player extends Entity{
     // UPDATE PLAYER POSITION
     public void update() {
         //update current position of player
+
+        if(handler.Reset){
+            setDefaultValues();
+            panel.ui.foundKey = false;
+            panel.ui.playTime = panel.ui.DefaultPlayTime;
+            handler.Reset =false;
+        }
 
         // PLAYER DIRECTION
         if(handler.UP || handler.DOWN || handler.LEFT || handler.RIGHT){    //move if any key is pressed
@@ -164,6 +175,8 @@ public class Player extends Entity{
 
     // OBJECT INTERACTION
     public void Interaction(int index) {
+        OBJECT_Key key = new OBJECT_Key(panel); //OBJECT_Key Class
+        bufferedImage = key.image;              //image of Key Class
 
         // Index as confirmation of collision
         if(index != 999){   //if index isn't 999, then we haven't touched an object
@@ -178,11 +191,13 @@ public class Player extends Entity{
                 switch (ObjectName) {   //Identify Object
                     case "Nightstand":  //If Nightstand is "opened" than:
                         if (Keys < 1 && handler.INTERACT) {            //if no Key in possession:
-                            panel.playSoundEffect(4);               //Play Key Sound
-                            panel.ui.ShowMessage("The Key!");     //Print Message on screen
+                            panel.playSoundEffect(2);               //Play Key Sound
+                            panel.GameState = panel.dialogueState;
+                            panel.ui.currentDialogue = dialogues[2];
+                            panel.ui.foundKey = true;
                             Keys++;                                    //Increase numbers of Keys
                         } else if (Keys >= 1 && handler.INTERACT) {    //if Key is already in Possession
-                            panel.playSoundEffect(5);               //play Notification Sound
+                            panel.playSoundEffect(3);               //play Notification Sound
 
                             //Turn Light on and off
                             BR_Light_State = !BR_Light_State;   //change Light State
@@ -196,40 +211,55 @@ public class Player extends Entity{
 
                     case "Bed":
                         if (handler.INTERACT) {
-                            panel.playSoundEffect(5);
-                            panel.ui.ShowMessage("*Looks under Bed* \r\n Nothing");
+                            panel.playSoundEffect(3);
+                            panel.GameState = panel.dialogueState;
+                            panel.ui.currentDialogue = dialogues[1];
                         }
-
                         break;
 
                     case "Bookshelf":
                         if (handler.INTERACT) {
-                            panel.playSoundEffect(5);
-                            panel.ui.ShowMessage("*Looks between Books* \r\n Nothing");
+                            panel.playSoundEffect(3);
+                            panel.GameState = panel.dialogueState;
+                            panel.ui.currentDialogue = dialogues[3];
                         }
                         break;
 
                     case "ToyHorse":
                         if (handler.INTERACT) {
-                            panel.playSoundEffect(5);
-                            panel.ui.ShowMessage("*Looks under Toy Horse* \r\n Nothing.");
+                           panel.playSoundEffect(3);
+                            panel.GameState = panel.dialogueState;
+                            panel.ui.currentDialogue = dialogues[4];
                         }
                         break;
 
                     case "BottomDoor":
                         if (Keys >= 1 && handler.INTERACT) {    //if Key in possession ...
                             panel.ui.GameWon = true;            //... then Door is unlocked (Game Won)
+                            panel.GameState = panel.GameWonState;
+                            panel.playSoundEffect(0);
                             //panel.ui.ShowMessage("Open! Can go through.");
 
                         } else if (Keys < 1 && handler.INTERACT) {  //if no Key in possession
-                            panel.playSoundEffect(5);             //notification
-                            panel.ui.ShowMessage("It's locked.");
+                           panel.playSoundEffect(3);             //notification
+                            panel.GameState = panel.dialogueState;
+                            panel.ui.currentDialogue = dialogues[0];
                         }
                         break;
                 }
               InteractionCounter = 0;   //reset InteractionCounter
            }
         }
+    }
+
+    // LIST OF ALL DIALOGUES
+    public void setDialogue(){
+        dialogues[0] = "The door is locked...\nWhat should I do?";
+        dialogues[1] = "I don't think I can fall asleep...";
+        dialogues[2] = "huh...\nseems like there is a key in the drawer.";
+        dialogues[3] = "My favorite book is about a goldfish.";
+        dialogues[4] = "I don't want to play right now. \nMaybe later horsy.";
+
     }
 
     // DRAW PLAYER

@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.main;
 
 import at.ac.fhcampuswien.Object.GameObject;
 import at.ac.fhcampuswien.Sound.Sound;
+import at.ac.fhcampuswien.Sound.SoundEffect;
 import at.ac.fhcampuswien.entity.Player;
 import at.ac.fhcampuswien.tile.Manager;
 
@@ -75,19 +76,26 @@ public class GamePanel extends JPanel implements Runnable{
     Handler handler = new Handler(this);    //add Handler
     Manager manager = new Manager(this);
     Sound sound = new Sound();
+    SoundEffect soundEffect = new SoundEffect();
     public CollisionDetection collisionDetection = new CollisionDetection(this);    //public for Player
     public SetAsset asset = new SetAsset(this);
     public UI ui = new UI(this);
     Thread thread;      //implements Runnable (in public class)
 
     // ENTITY AND OBJECT
-    public Player player = new Player(this, this.handler);  //public for Manager
+    public Player player = new Player(this, this.handler);//public for Manager
+    //handler.setPlayer(player);
     public GameObject object[] = new GameObject[15];
 
     // GAME STATE
     public int GameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
+    public final int GameWonState = 4;
+    public final int GameOverState = 5;
+
 
 
     // GAME PANEL CONSTRUCTOR
@@ -104,8 +112,8 @@ public class GamePanel extends JPanel implements Runnable{
     // SETUP GAME
     public void setUpGame(){
         asset.setObject();
-        playMusic(1);       //Start Theme Music
-        GameState = playState;
+        //playMusic(1);       //Start Theme Music
+        GameState = titleState;
     }
 
     // THREAD
@@ -152,8 +160,11 @@ public class GamePanel extends JPanel implements Runnable{
     public void updateInfo(){
         if(GameState == playState){
             player.update();        //update Player position
-            if(ui.playTime <= 0)    //if Play Time is up
-                ui.GameOver = true;     //GameOver
+            if(ui.playTime <= 0){   //if Play Time is up
+                GameState = GameOverState;
+                playSoundEffect(1);
+            }
+
         }
         if(GameState == pauseState){
             //Do nothing. It's paused.
@@ -169,35 +180,41 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D graphics2d = (Graphics2D)graphics;
 
         // DEBUG
-        long drawStart = 0;
-        if(handler.drawTime)
-            drawStart = System.nanoTime();  //to check the time
+        //long drawStart = 0;
+        //if(handler.drawTime)
+            //drawStart = System.nanoTime();  //to check the time
 
 
-        // TILE
-        manager.draw(graphics2d);   //draw manager tiles
-
-        // OBJECT
-        for(int i = 0; i < object.length; i++){
-            if(object[i] != null){
-                object[i].draw(graphics2d, this);
-            }
+        // TITLE SCREEN
+        if(GameState == titleState){
+            ui.draw(graphics2d);
         }
 
-        // PLAYER
-        player.draw(graphics2d);    //draw player character
+        // OTHER
+        else{
+            // TILE
+            manager.draw(graphics2d);   //draw manager tiles
 
-        // UI
-        ui.draw(graphics2d);
+            // OBJECT
+            for(int i = 0; i < object.length; i++){
+                if(object[i] != null){
+                    object[i].draw(graphics2d, this);
+                }
+            }
+
+            // PLAYER
+            player.draw(graphics2d);    //draw player character
+
+            // UI
+            ui.draw(graphics2d);
+        }
 
         // DEBUG
-        if(handler.drawTime) {
-            long drawEnd = System.nanoTime();
+            /*long drawEnd = System.nanoTime();
             long passedTime = drawEnd - drawStart;
             graphics2d.setColor(Color.white);
             graphics2d.drawString("Draw Time: " + passedTime, tileSize*10, 30);
-            //System.out.println("Draw Time:" + passedTime);
-        }
+            System.out.println("Draw Time:" + passedTime);*/
 
         graphics2d.dispose();   // dispose graphics
     }
@@ -213,11 +230,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void playSoundEffect(int i){
-        sound.setFile(i);   //choose file
-        sound.play();       //only play once (no loop)
-    }
-    public void stopSoundEffect(){
-        sound.stop();   //stop current music
+        soundEffect.play(i);       //only play once (no loop)
     }
 
 }
