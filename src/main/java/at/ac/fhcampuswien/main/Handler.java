@@ -109,6 +109,7 @@ public class Handler implements KeyListener {
             // PAUSE/PLAY
             if (keyCode == KeyEvent.VK_P) {
                 panel.GameState = panel.pauseState;
+                panel.stopMusic();
                 drawTime = false;
             }
             // DEBUG
@@ -117,13 +118,17 @@ public class Handler implements KeyListener {
 
         // PAUSE STATE
         else if(panel.GameState == panel.pauseState){
-            if (keyCode == KeyEvent.VK_P)       panel.GameState = panel.playState;
+            if (keyCode == KeyEvent.VK_P){
+                panel.GameState = panel.playState;
+                panel.playMusic(1);
+            }
 
         }
 
         // DIALOGUE STATE
         else if(panel.GameState == panel.dialogueState){
-            if(keyCode == KeyEvent.VK_ENTER)    panel.GameState = panel.playState;
+            if(keyCode == KeyEvent.VK_SPACE)    panel.GameState = panel.playState;      //End Dialogue
+            //if(keyCode == KeyEvent.VK_ENTER)    panel.GameState = panel.playState;    //Skip Dialogue
         }
 
     }
