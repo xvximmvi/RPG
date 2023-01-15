@@ -12,23 +12,24 @@ import java.text.DecimalFormat;
 // CLASS CONTENT
 /*
     UI CONSTRUCTOR
-        - Define Fonts
-
-    SHOW MESSAGE
-        - Text
+        - Define Imported Font
 
     PRINT
-     PLAY
-        - GAME WON
-            > Congratulation!
-            > Door unlocked!
-        - GAME OVER
-            > Game Over!
-        - ONGOING GAME
-            > Remaining Tile
-            > Notification Message
-      PAUSE
-        - PAUSE SCREEN
+        - TITLE SCREEN STATE
+        - PLAY STATE
+            > Time
+            > Message
+            > Key
+            > Tool
+            > Tutorial
+        - PAUSE STATE
+        - DIALOGUE STATE
+        - GAME WON STATE
+        - GAME OVER STATE
+        - TRANSITION STATE
+        - CHARACTER STATE
+
+    METHODS FOR EACH STATE!
  */
 
 public class UI {
@@ -36,9 +37,10 @@ public class UI {
     GamePanel panel;
     Graphics2D graphics2D;
     BufferedImage bufferedImage;
-    Font Retro_Gaming;
-    public int command = 0;
+    Font Retro_Gaming;              // Imported Font
+    public int command = 0;         // Choose Option
 
+    // DIALOGE AND TEXT
     public String currentDialogue = "";
     public boolean MessageOn = false;
     public String Message = "";
@@ -53,7 +55,8 @@ public class UI {
     int TutorialCounter = 0;
 
 
-    public double playTime=60;      //30 sec Countdown
+    // PLAY TIME
+    public double playTime=60;      //60 sec Countdown (1 Minute)
     public double DefaultPlayTime = playTime;
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");  //minimize decimals
 
@@ -61,10 +64,11 @@ public class UI {
     public UI(GamePanel panel){
         this.panel = panel;
 
+        // IMPORTED FONT FILE
         InputStream is = getClass().getResourceAsStream("/Font/Retro Gaming.ttf");
         try {
-            assert is != null;
-            Retro_Gaming = Font.createFont(Font.TRUETYPE_FONT, is);
+            assert is != null;  //Javas Suggestion
+            Retro_Gaming = Font.createFont(Font.TRUETYPE_FONT, is); //TRUE TYPE FONT due to imported Font
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
@@ -78,18 +82,18 @@ public class UI {
         graphics2D.setFont(Retro_Gaming);
         graphics2D.setColor(Color.white);
 
-        // TITLE STATE
+        // TITLE STATE  ------------------------------------------------------------------
         if(panel.GameState == panel.titleState){
             TitleScreen();
         }
 
-        // PLAY STATE
+        // PLAY STATE   ------------------------------------------------------------------
         if(panel.GameState == panel.playState) {
 
             graphics2D.setFont(Retro_Gaming);
             graphics2D.setColor(Color.white);
 
-            // TIME
+            // TIME ------------------------------------------------------------------
             playTime -= (double) 1 / 60;    //add 1/60 to the loop (60 Frames per sec)
             graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 20F));
             // SHADOW
@@ -99,7 +103,7 @@ public class UI {
             graphics2D.drawString("Time: " + decimalFormat.format(playTime), panel.tileSize * 12 + 7, 60);
 
 
-            // MESSAGE
+            // MESSAGE ------------------------------------------------------------------
             if (MessageOn) {
                 graphics2D.drawString(Message, panel.tileSize, panel.tileSize + 90);
 
@@ -110,20 +114,21 @@ public class UI {
                 }
             }
 
-            // BEDROOM KEY
+            // KEY ------------------------------------------------------------------
             if (foundKey) {
                 OBJECT_Key key = new OBJECT_Key(panel);
                 bufferedImage = key.image;
                 graphics2D.drawImage(bufferedImage, 13 * panel.tileSize, 90, 24 * 3, 13 * 3, null);
             }
 
+            // TOOL (Screwdriver) -----------------------------------------------------------
             if (foundTool) {
                 OBJECT_Tool tool = new OBJECT_Tool(panel);
                 bufferedImage = tool.image;
                 graphics2D.drawImage(bufferedImage, 14 * panel.tileSize, 90, 7 * 3, 28 * 3, null);
             }
 
-            // TUTORIAL
+            // TUTORIAL ------------------------------------------------------------------
             if (TutorialOn) {
                 graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 17F));
                 graphics2D.drawString("Move: WASD", panel.tileSize, panel.tileSize);
@@ -150,36 +155,36 @@ public class UI {
             }
         }
 
-        // PAUSE STATE
+        // PAUSE STATE  ------------------------------------------------------------------
         if(panel.GameState == panel.pauseState){
             PauseScreen();
         }
 
-        // DIALOGUE STATE
+        // DIALOGUE STATE   ------------------------------------------------------------------
         if(panel.GameState == panel.dialogueState){
             DialogueWindow();
         }
 
-        // GAME WON STATE
+        // GAME WON STATE   ------------------------------------------------------------------
         if(panel.GameState == panel.GameWonState){
             GameWonScreen();
         }
 
-        // GAME OVER STATE
+        // GAME OVER STATE  ------------------------------------------------------------------
         if(panel.GameState == panel.GameOverState){
             GameOverScreen();
         }
 
-        // CHARACTER STATE
+        // CHARACTER STATE  ------------------------------------------------------------------
         if(panel.GameState == panel.characterState){
             CharacterScreen();
         }
 
-        // TRANSITION STATE
-       if(panel.GameState == panel.transitionState){
-           drawTransitionInState();
+        // TRANSITION STATE ------------------------------------------------------------------
+        if(panel.GameState == panel.transitionState){
+            drawTransitionInState();
         }
-       if(panel.GameState == panel.transitionOutState){
+        if(panel.GameState == panel.transitionOutState){
             drawTransitionOutState();
         }
     }
@@ -191,7 +196,7 @@ public class UI {
         //graphics2D.setColor(new Color(81,113,145));
         //graphics2D.fillRect(0, 0, panel.ScreenWidth, panel.ScreenHeight);
 
-        // GAME TITLE NAME
+        // GAME TITLE       ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 96F));
         String Text = "WAY OUT";
         int x = CenterXText(Text);
@@ -205,12 +210,15 @@ public class UI {
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
 
-        // PLAYER CHARACTER
+
+        // PLAYER CHARACTER   ------------------------------------------------------------------
         x = panel.ScreenWidth/2 - (panel.tileSize);
         y += panel.tileSize*2;
         graphics2D.drawImage(panel.player.DOWN2, x, y, panel.tileSize*2, panel.tileSize*2, null);
 
-        // NEW GAME
+
+
+        // NEW GAME     ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "NEW GAME";
         x = CenterXText(Text);
@@ -224,13 +232,15 @@ public class UI {
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
 
+        // CHOOSE OPTION
         if(command == 0){
             graphics2D.setColor(Color.GRAY);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);        }
+            graphics2D.drawString(">", x- panel.tileSize, y);
+        }
 
-        // LOAD GAME
+        // LOAD GAME    ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "LOAD GAME";
         x = CenterXText(Text);
@@ -244,6 +254,7 @@ public class UI {
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
 
+        // CHOOSE OPTION
         if(command == 1){
             graphics2D.setColor(Color.GRAY);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
@@ -251,7 +262,7 @@ public class UI {
             graphics2D.drawString(">", x- panel.tileSize, y);
         }
 
-        // QUIT
+        // QUIT     ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "QUIT";
         x = CenterXText(Text);
@@ -265,17 +276,19 @@ public class UI {
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
 
+        // CHOOSE OPTION
         if(command == 2){
             graphics2D.setColor(Color.GRAY);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);        }
-
+            graphics2D.drawString(">", x- panel.tileSize, y);
+        }
     }
 
     // PAUSE SCREEN
     public void PauseScreen(){
 
+        // Background Transparency (little darker than actual background image)
         graphics2D.setColor(new Color(0,0,0,100));
         graphics2D.fillRect(0,0,panel.ScreenWidth,panel.ScreenHeight);
 
@@ -296,15 +309,20 @@ public class UI {
 
     // GENERAL WINDOW
     public void Window(int x, int y, int width, int height){
+        // WINDOW
+        //Set color for Window (not 100% black; little transparency)
         Color color = new Color(0, 0, 0,205);       //RGB Number for Black (r, g, b, transparency) Color + transparency
         graphics2D.setColor(color);
 
-        graphics2D.fillRoundRect(x, y, width, height, 35, 35);
+        graphics2D.fillRoundRect(x, y, width, height, 35, 35);  //fill Round Rectangle
 
+        // WHITE OUTLINES
         color = new Color(255,255,255, 215);         //RGB Number for White
         graphics2D.setColor(color);
         graphics2D.setStroke(new BasicStroke(5));
         //setStroke(new BasicStroke(int)) -> defines the width of the outlines of graphics which are rendered with a Graphics2D
+
+        //Draw Round Rect vs. Fill Round Rect:   Fill - filled Rectangle / Draw - draw only outlines without filled area
         graphics2D.drawRoundRect(x+5,y+5,width-10,height-10,25,25);
     }
 
@@ -316,33 +334,36 @@ public class UI {
         int x = panel.ScreenWidth/2 - width/2;      //Window in Center of Screen
         int y = panel.ScreenHeight - height - panel.tileSize/2;
 
-        Window(x, y, width, height);
+        Window(x, y, width, height);    // call Window() Methode to draw wanted Window
 
+        // DIALOGUE TEXT WITHIN WINDOW
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 18));
-        x += panel.tileSize;
+        x += panel.tileSize;    // little more to the left than where the dialogue starts
         y += panel.tileSize;
-        //graphics2D.drawString(currentDialogue, x, y);
+        //graphics2D.drawString(currentDialogue, x, y); //Write Dialogue
 
-        for(String line : currentDialogue.split("\n")){
+        //Problem: Dialogue to long to fit -> create more Strings to separate dialogue in pieces
+        for(String line : currentDialogue.split("\n")){ // .split("\n")  -> knows when to split each dialogue
+            //without .split("\n") the drawString doesn't know what \n means and just keeps going without inserting a new line
             graphics2D.drawString(line, x, y);
-            y += 20;
+            y += 20;    //know where to draw the new String Text
         }
     }
 
     public void CharacterScreen(){
-
+        //Still to come...
     }
 
     // MAP TRANSITION
     public void drawTransitionInState(){
-        TransitionCounter++;
-         graphics2D.setColor(new Color(0, 0, 0, 2*TransitionCounter + 5));
-         graphics2D.fillRect(0, 0, panel.ScreenWidth, panel.ScreenHeight);
+        TransitionCounter++;        // Count up
+        graphics2D.setColor(new Color(0, 0, 0, 2*TransitionCounter + 5)); // gets darker the more it counts up
+        graphics2D.fillRect(0, 0, panel.ScreenWidth, panel.ScreenHeight);      //fill screen darker and darker
 
-        if (TransitionCounter == 40){
+        if (TransitionCounter == 40){   //when reached certain point
 
             panel.currentMap = panel.TransitionMap;                         // Which Map to Switch to
-            if (panel.TransitionMap == 0) panel.asset.setObjectBedroom();
+            if (panel.TransitionMap == 0) panel.asset.setObjectBedroom();   //Set object to corresponding map
             if (panel.TransitionMap == 1) panel.asset.setObjectCorridor();
             if(panel.TransitionMap == 2) panel.asset.setObjectBathroom();
             //if(panel.TransitionMap == 3) panel.asset.setObjectKitchen();
@@ -350,37 +371,39 @@ public class UI {
             panel.player.MapX = panel.tileSize * panel.TransitionX - (panel.tileSize / 2);     // X-Coordinate of Spawn point
             panel.player.MapY = panel.tileSize * panel.TransitionY - (panel.tileSize / 2);     // Y-Coordinate of Spawn point
 
-            TransitionCounter=0;
-            panel.GameState = panel.transitionOutState;
-
+            TransitionCounter=0;    //set counter back to zero for next Transition
+            panel.GameState = panel.transitionOutState; // go to next step (Make screen lighter again; same transition just backwards)
         }
     }
 
     public void drawTransitionOutState(){
+        // go out of transition: lighten the screen again
         TransitionCounter++;
-        graphics2D.setColor(new Color(0, 0, 0, 80-4*TransitionCounter));
-        graphics2D.fillRect(0,0, panel.ScreenWidth, panel.ScreenHeight);
+        graphics2D.setColor(new Color(0, 0, 0, 80-4*TransitionCounter));    //the certain which was reached in if(TransitionCounter == 40) from methode above
+        graphics2D.fillRect(0,0, panel.ScreenWidth, panel.ScreenHeight);        //show new screen transparency
 
 
-        if(TransitionCounter == 20){
-            TransitionCounter = 0;
-            panel.GameState = panel.playState;
+        if(TransitionCounter == 20){    //when its lighten enough
+            TransitionCounter = 0;      //set TransitionCounter back for next needed Transition
+            panel.GameState = panel.playState;  //switch back to player state
         }
     }
 
     // CENTER OF X-COORDINATE
     public int CenterXText(String Text){
+        //gets length of written input string
         int TextLength = (int)graphics2D.getFontMetrics().getStringBounds(Text, graphics2D).getWidth();
-        int x = panel.ScreenWidth/2 - TextLength/2;
-        return x;
+        return panel.ScreenWidth/2 - TextLength/2;  // Half of length to get it in center
     }
 
+    // GAME WON SCREEN
     public void GameWonScreen(){
 
+        // Background Transparency (little darker than actual background image)
         graphics2D.setColor(new Color(0,0,0,140));
         graphics2D.fillRect(0,0,panel.ScreenWidth,panel.ScreenHeight);
 
-        // CONGRATULATIONS  ----------------------
+        // CONGRATULATIONS  ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 60F));
         String Text = "CONGRATULATIONS";
         int x = CenterXText(Text);
@@ -395,7 +418,7 @@ public class UI {
         graphics2D.drawString(Text, x, y);
 
 
-        // DOOR UNLOCKED    ----------------------
+        // DOOR UNLOCKED    ------------------------------------------------------------------
         Text = "Door unlocked!";
         graphics2D.setFont(Retro_Gaming);
         graphics2D.setColor(Color.white);
@@ -403,15 +426,17 @@ public class UI {
         x = CenterXText(Text);
         y += panel.tileSize*2;
         graphics2D.drawString(Text, x, y);
+
         // SHADOW
         graphics2D.setColor(Color.BLACK);
         graphics2D.drawString(Text,x+3,y+3);
+
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
 
 
-        // PLAY AGAIN       ----------------------
+        // PLAY AGAIN       ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "PLAY AGAIN";
         x = CenterXText(Text);
@@ -423,13 +448,16 @@ public class UI {
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
+
+        // CHOOSE OPTION
         if(command == 0){
             graphics2D.setColor(Color.BLACK);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);        }
+            graphics2D.drawString(">", x- panel.tileSize, y);
+        }
 
-        // MAIN MENU        ----------------------
+        // MAIN MENU        ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "MAIN MENU";
         x = CenterXText(Text);
@@ -441,6 +469,8 @@ public class UI {
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
+
+        // CHOOSE OPTION
         if(command == 1){
             graphics2D.setColor(Color.BLACK);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
@@ -448,7 +478,7 @@ public class UI {
             graphics2D.drawString(">", x- panel.tileSize, y);
         }
 
-        // QUIT         ----------------------
+        // QUIT         ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "QUIT";
         x = CenterXText(Text);
@@ -460,19 +490,25 @@ public class UI {
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
+
+        // CHOOSE OPTION
         if(command == 2){
             graphics2D.setColor(Color.BLACK);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);        }
+            graphics2D.drawString(">", x- panel.tileSize, y);
+        }
     }
 
+
+    // GAME OVER SCREEN
     public void GameOverScreen(){
 
+        // Background Transparency (little darker than actual background image)
         graphics2D.setColor(new Color(0,0,0,140));
         graphics2D.fillRect(0,0,panel.ScreenWidth,panel.ScreenHeight);
 
-        // GAME OVER  ----------------------
+        // GAME OVER  ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 60F));
         String Text = "GAME OVER!";
         int x = CenterXText(Text);
@@ -486,7 +522,7 @@ public class UI {
         graphics2D.setColor(Color.RED);
         graphics2D.drawString(Text, x, y);
 
-        // RETRY      ----------------------
+        // RETRY      ------------------------------------------------------------------
         graphics2D.setColor(Color.WHITE);
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "RETRY";
@@ -499,13 +535,16 @@ public class UI {
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
+
+        // CHOOSE OPTION
         if(command == 0){
             graphics2D.setColor(Color.BLACK);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);        }
+            graphics2D.drawString(">", x- panel.tileSize, y);
+        }
 
-        // MAIN MENU        ----------------------
+        // MAIN MENU        ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "MAIN MENU";
         x = CenterXText(Text);
@@ -517,13 +556,16 @@ public class UI {
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
+
+        // CHOOSE OPTION
         if(command == 1){
             graphics2D.setColor(Color.BLACK);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);        }
+            graphics2D.drawString(">", x- panel.tileSize, y);
+        }
 
-        // QUIT         ----------------------
+        // QUIT         ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
         Text = "QUIT";
         x = CenterXText(Text);
@@ -535,10 +577,13 @@ public class UI {
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
+
+        // CHOOSE OPTION
         if(command == 2){
             graphics2D.setColor(Color.BLACK);
             graphics2D.drawString(">", x- panel.tileSize+3, y+3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);        }
+            graphics2D.drawString(">", x- panel.tileSize, y);
+        }
     }
 }

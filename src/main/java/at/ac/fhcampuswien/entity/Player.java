@@ -381,11 +381,14 @@ public class Player extends Entity{
 
     // LIST OF ALL DIALOGUES
     public void setDialogue() {
+        // BEDROOM
         dialogues[0] = "The door is locked...\nWhat should I do?";
         dialogues[1] = "I don't think I can fall asleep...";
         dialogues[2] = "huh...\nseems like there is a key in the drawer.";
         dialogues[3] = "My favorite book is about a goldfish.";
         dialogues[4] = "I don't want to play right now. \nMaybe later horsy.";
+
+        // CORRIDOR
         dialogues[5] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL";
         dialogues[6] = "STILL MISSING DIALOGE\nSomething about Fire";
         dialogues[7] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch";
@@ -393,6 +396,10 @@ public class Player extends Entity{
         dialogues[9] = "STILL MISSING DIALOGE\nClock..";
         dialogues[10] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB";
         dialogues[11] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk.";
+
+        // BATHROOM
+
+        // KITCHEN
 
     }
 

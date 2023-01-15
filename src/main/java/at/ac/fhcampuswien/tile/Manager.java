@@ -19,7 +19,10 @@ import java.util.Objects;
         - Load Map
 
     TILE IMAGE
-        - List all Tiles
+        - Bedroom Tiles
+        - Corridor Tiles
+        - Bathroom Tiles
+        - Kitchen Tiles
 
     TILE IMAGE SETUP
         - scale Image for improved rendering performance
@@ -44,22 +47,20 @@ public class Manager {
     // MANAGER CONSTRUCTOR
     public Manager(GamePanel panel){
         this.panel = panel;
-        tile = new Tile[70];    //kinds of tiles
+        tile = new Tile[70];    //how many kinds of tiles
 
+        mapTilesNum = new int [panel.maxMap][panel.maxMapCol][panel.maxMapRow];     //[panel.maxScreenCol][panel.maxScreenRow] -> Map Size as Screen Size
+        //Edit: now maxMapCol/Row -> Map Size
 
-        mapTilesNum = new int [panel.maxMap][panel.maxMapCol][panel.maxMapRow];   //[panel.maxScreenCol][panel.maxScreenRow] -> Map Size as Screen Size
-                                                                    //Edit: now maxMapCol/Row -> Map Size
         tileImage();                            //call tileImage()
-        loadMap("/Maps/Bedroom.txt", 0);   //call loadMap()
-        loadMap("/Maps/Corridor.txt",1);
-        loadMap("/Maps/Bathroom.txt",2);
+        loadMap("/Maps/Bedroom.txt", 0);    //call loadMap() of first Map (Bedroom)
+        loadMap("/Maps/Corridor.txt",1);    //call loadMap() of second Map (Corridor)
+        loadMap("/Maps/Bathroom.txt",2);    //call loadMap() of third Map (Bathroom)
 
     }
 
     // TILE IMAGE
     public void tileImage(){
-        //same as Player
-
         // BEDROOM
         setup(0, "WO_LUC", true);
         setup(1, "WO_U", true);
@@ -111,6 +112,7 @@ public class Manager {
         setup(43, "B_WO_LBC", true);
         setup(44, "B_WO_B", true);
         setup(45, "B_WO_RBC", true);
+        //Floor (optional; few problems with tiles)
         setup(46, "B_FO_L1", false);
         setup(47, "B_FO_1_M1", false);
         setup(48, "B_FO_1_M2", false);
@@ -128,16 +130,18 @@ public class Manager {
         setup(60, "B_FO_D4", false);
         setup(61, "B_FO_RBC", false);
 
+        // KITCHEN
     }
 
     // TILE IMAGE SETUP
     public void setup(int index, String imageName, boolean collision){
         //scale image so that Graphics2D doesn't have to and draw faster
+        // Edited afterwards due to space redundancy in code
         Utility utility = new Utility();
         try{
-            tile[index] = new Tile();
-            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/" + imageName + ".png")));
-            tile[index].image = utility.scaleImage(tile[index].image, panel.tileSize, panel.tileSize);
+            tile[index] = new Tile();   // Create new Tile
+            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/FWO/" + imageName + ".png"))); //all tiles are from same Folder -> just name is different
+            tile[index].image = utility.scaleImage(tile[index].image, panel.tileSize, panel.tileSize);  //size for every tile the same
             tile[index].collision = collision;  //ask if collision needed or not
 
         } catch (IOException e){
@@ -148,10 +152,10 @@ public class Manager {
     // LOAD MAP
     public void loadMap(String filePath, int Map){
         //if you want to load a different Map, just call different loadMap
-
+        //int Map -> to know in which Map we are (Identify the Map Number)
         try{
             InputStream is = getClass().getResourceAsStream(filePath);   //Input Mapping
-            assert is != null;      //means "a passed parameter must not be null": if it is null then the test case fails
+            assert is != null;      //means "a passed parameter must not be null": if it is null then the test case fails (Javas suggestion)
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));  // Read Input (Map-Text)
 
             int col = 0;    //Column of Map
@@ -189,6 +193,7 @@ public class Manager {
         {
             int tileNum = mapTilesNum[panel.currentMap][MapCol][MapRow];        //Draw number of each read Map-Matrix
 
+            // PLAYER ALWAYS AT CENTER OF SCREEN
             //Needed: 1. Tile image / 2. Where to draw on the screen (find X & Y)
             int MapX = MapCol*panel.tileSize;
             int MapY = MapRow*panel.tileSize;

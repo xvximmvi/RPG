@@ -5,7 +5,7 @@ import at.ac.fhcampuswien.Object.*;
 // CLASS CONTENT
 /*
     ASSET CONSTRUCTOR
-    SET OBJECT
+    SET OBJECT for every Room
  */
 
 public class SetAsset {
@@ -14,6 +14,7 @@ public class SetAsset {
     //ASSET CONSTRUCTOR
     public SetAsset(GamePanel panel){
         this.panel = panel;
+
     }
 
     // SET OBJECT
@@ -21,6 +22,8 @@ public class SetAsset {
         //instantiate default objects
         //Play around with variables till it fits
 
+        //first [] for current Map/Room
+        //second [] to know at which object we are
         panel.object[0][0] = new BR_Bed(panel);  //ObjectBed is subclass of Object Class -> instantiate as one of this array
         panel.object[0][0].MapX = 13 * panel.tileSize;
         panel.object[0][0].MapY = 5 * panel.tileSize;
@@ -79,6 +82,7 @@ public class SetAsset {
     }
 
     public void setObjectCorridor(){
+        // Each room gets different Methode for better structure and smaller number for second []
         panel.object[1][0] = new OBJECT_SideOutline(panel);
         panel.object[1][0].MapX = 10;
         panel.object[1][0].MapY = 6 * panel.tileSize;
@@ -142,6 +146,7 @@ public class SetAsset {
     }
 
     public void setObjectBathroom(){
+        //Outlines and Door are same within every Room
         panel.object[2][0] = new OBJECT_SideOutline(panel);
         panel.object[2][0].MapX = 10;
         panel.object[2][0].MapY = 6 * panel.tileSize;
