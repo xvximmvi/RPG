@@ -1,6 +1,8 @@
 package at.ac.fhcampuswien.main;
 
 import at.ac.fhcampuswien.Object.OBJECT_Key;
+import at.ac.fhcampuswien.Object.OBJECT_Tool;
+import at.ac.fhcampuswien.entity.Entity;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -34,6 +36,7 @@ public class UI {
 
     GamePanel panel;
     Handler handler;
+    Entity entity;
     Graphics2D graphics2D;
     BufferedImage bufferedImage;
     Font Retro_Gaming;
@@ -46,15 +49,19 @@ public class UI {
     public boolean MessageOn = false;
     public String Message = "";
     int MessageCounter = 0;
-    public boolean foundKey;
+    public boolean foundKey = false;
+    public boolean foundTool = false;
     int KeyCounter = 0;
+
+    public boolean TransitionOn = false;
+    int TransitionCounter = 0;
 
     public boolean TutorialOn = false;
     public boolean Goal = false;
     int TutorialCounter = 0;
 
 
-    public double playTime=30;      //30 sec Countdown
+    public double playTime=60;      //30 sec Countdown
     public double DefaultPlayTime = playTime;
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");  //minimize decimals
 
@@ -118,7 +125,7 @@ public class UI {
                 }
             }
 
-            // KEY
+            // BEDROOM KEY
             if (foundKey) {
                 OBJECT_Key key = new OBJECT_Key(panel);
                 bufferedImage = key.image;
@@ -129,6 +136,12 @@ public class UI {
                         KeyCounter = 0;
                         foundKey = false;
                     }*/
+            }
+
+            if (foundTool) {
+                OBJECT_Tool tool = new OBJECT_Tool(panel);
+                bufferedImage = tool.image;
+                graphics2D.drawImage(bufferedImage, 14 * panel.tileSize, 90, 7 * 3, 28 * 3, null);
             }
 
             // TUTORIAL
@@ -178,6 +191,18 @@ public class UI {
             GameOverScreen();
         }
 
+        // CHARACTER STATE
+        if(panel.GameState == panel.characterState){
+            CharacterScreen();
+        }
+
+        // TRANSITION STATE
+       if(panel.GameState == panel.transitionState){
+           drawTransitionInState();
+        }
+       if(panel.GameState == panel.transitionOutState){
+            drawTransitionOutState();
+        }
     }
 
     // TILE SCREEN
@@ -322,6 +347,45 @@ public class UI {
         for(String line : currentDialogue.split("\n")){
             graphics2D.drawString(line, x, y);
             y += 20;
+        }
+    }
+
+    public void CharacterScreen(){
+
+    }
+
+    // MAP TRANSITION
+    public void drawTransitionInState(){
+        TransitionCounter++;
+         graphics2D.setColor(new Color(0, 0, 0, 2*TransitionCounter + 5));
+         graphics2D.fillRect(0, 0, panel.ScreenWidth, panel.ScreenHeight);
+
+        if (TransitionCounter == 40){
+
+            panel.currentMap = panel.TransitionMap;                         // Which Map to Switch to
+            if (panel.TransitionMap == 0) panel.asset.setObjectBedroom();
+            if (panel.TransitionMap == 1) panel.asset.setObjectCorridor();
+            if(panel.TransitionMap == 2) panel.asset.setObjectBathroom();
+            //if(panel.TransitionMap == 3) panel.asset.setObjectKitchen();
+
+            panel.player.MapX = panel.tileSize * panel.TransitionX - (panel.tileSize / 2);     // X-Coordinate of Spawn point
+            panel.player.MapY = panel.tileSize * panel.TransitionY - (panel.tileSize / 2);     // Y-Coordinate of Spawn point
+
+            TransitionCounter=0;
+            panel.GameState = panel.transitionOutState;
+
+        }
+    }
+
+    public void drawTransitionOutState(){
+        TransitionCounter++;
+        graphics2D.setColor(new Color(0, 0, 0, 80-4*TransitionCounter));
+        graphics2D.fillRect(0,0, panel.ScreenWidth, panel.ScreenHeight);
+
+
+        if(TransitionCounter == 20){
+            TransitionCounter = 0;
+            panel.GameState = panel.playState;
         }
     }
 

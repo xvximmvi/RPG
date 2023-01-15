@@ -38,23 +38,29 @@ import java.util.Objects;
 public class Manager {
     GamePanel panel;                //draw the panel
     public Tile[] tile;             //use tiles  (public for CollisionDetection)
-    public int[][] mapTilesNum;     //which tile to use  (public for CollisionDetection)
+    public int[][][] mapTilesNum;     //which tile to use  (public for CollisionDetection)
 
 
     // MANAGER CONSTRUCTOR
     public Manager(GamePanel panel){
         this.panel = panel;
-        tile = new Tile[50];    //kinds of tiles
+        tile = new Tile[70];    //kinds of tiles
 
-        mapTilesNum = new int [panel.maxMapCol][panel.maxMapRow];   //[panel.maxScreenCol][panel.maxScreenRow] -> Map Size as Screen Size
+
+        mapTilesNum = new int [panel.maxMap][panel.maxMapCol][panel.maxMapRow];   //[panel.maxScreenCol][panel.maxScreenRow] -> Map Size as Screen Size
                                                                     //Edit: now maxMapCol/Row -> Map Size
         tileImage();                            //call tileImage()
-        loadMap("/Maps/Bedroom.txt");   //call loadMap()
+        loadMap("/Maps/Bedroom.txt", 0);   //call loadMap()
+        loadMap("/Maps/Corridor.txt",1);
+        loadMap("/Maps/Bathroom.txt",2);
+
     }
 
     // TILE IMAGE
     public void tileImage(){
         //same as Player
+
+        // BEDROOM
         setup(0, "WO_LUC", true);
         setup(1, "WO_U", true);
         setup(2, "WO_RUC", true);
@@ -75,7 +81,53 @@ public class Manager {
         setup(17, "FO_D1", false);
         setup(18, "FO_D2", false);
         setup(19, "FO_D3", false);
-        setup(20, "FO_RLC", false);
+        setup(20, "FO_D4", false);
+        setup(21, "FO_RLC", false);
+
+        // CORRIDOR
+        setup(22, "C_WO_LUC", true);
+        setup(23, "C_WO_U", true);
+        setup(24, "C_WO_RUC", true);
+        setup(25, "C_WO_L", true);
+        setup(26, "C_WO_M", true);
+        setup(27, "C_WO_R", true);
+        setup(28, "C_WO_WLU", true);
+        setup(29, "C_WO_WL", true);
+        setup(30, "C_WO_WLB", true);
+        setup(31, "C_WO_WMU", true);
+        setup(32, "C_WO_WM", true);
+        setup(33, "C_WO_WMB", true);
+        setup(34, "C_WO_WRU", true);
+        setup(35, "C_WO_WR", true);
+        setup(36, "C_WO_WRB", true);
+
+        // BATHROOM
+        setup(37, "B_WO_LUC", true);
+        setup(38, "B_WO_U", true);
+        setup(39, "B_WO_RUC", true);
+        setup(40, "B_WO_L", true);
+        setup(41, "B_WO_M", true);
+        setup(42, "B_WO_R", true);
+        setup(43, "B_WO_LBC", true);
+        setup(44, "B_WO_B", true);
+        setup(45, "B_WO_RBC", true);
+        setup(46, "B_FO_L1", false);
+        setup(47, "B_FO_1_M1", false);
+        setup(48, "B_FO_1_M2", false);
+        setup(49, "B_FO_R1", false);
+        setup(50, "B_FO_L2", false);
+        setup(51, "B_FO_2_M1", false);
+        setup(52, "B_FO_2_M2", false);
+        setup(53, "B_FO_R2", false);
+        setup(54, "B_FO_LBC", false);
+        setup(55, "B_FO_B_M1", false);
+        setup(56, "B_FO_B_M2", false);
+        setup(57, "B_FO_D1", false);
+        setup(58, "B_FO_D2", false);
+        setup(59, "B_FO_D3", false);
+        setup(60, "B_FO_D4", false);
+        setup(61, "B_FO_RBC", false);
+
     }
 
     // TILE IMAGE SETUP
@@ -94,8 +146,9 @@ public class Manager {
     }
 
     // LOAD MAP
-    public void loadMap(String filePath){
+    public void loadMap(String filePath, int Map){
         //if you want to load a different Map, just call different loadMap
+
         try{
             InputStream is = getClass().getResourceAsStream(filePath);   //Input Mapping
             assert is != null;      //means "a passed parameter must not be null": if it is null then the test case fails
@@ -112,7 +165,7 @@ public class Manager {
 
                     int num = Integer.parseInt(numbers[col]);   //Number of current Column
 
-                    mapTilesNum[col][row] = num;                //Map-Matrix
+                    mapTilesNum[Map][col][row] = num;                //Map-Matrix
                     col++;                                      //Go to next Column
                 }
                 if(col == panel.maxMapCol){                     //If Column reached the end...
@@ -132,9 +185,9 @@ public class Manager {
         int MapCol = 0;
         int MapRow = 0;
 
-        while(MapCol< panel.maxMapCol && MapRow < panel.maxMapRow)  //instead of writing every tile
+        while(MapCol < panel.maxMapCol && MapRow < panel.maxMapRow)  //instead of writing every tile
         {
-            int tileNum = mapTilesNum[MapCol][MapRow];        //Draw number of each read Map-Matrix
+            int tileNum = mapTilesNum[panel.currentMap][MapCol][MapRow];        //Draw number of each read Map-Matrix
 
             //Needed: 1. Tile image / 2. Where to draw on the screen (find X & Y)
             int MapX = MapCol*panel.tileSize;

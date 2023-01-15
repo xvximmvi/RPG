@@ -15,25 +15,16 @@ import java.awt.event.KeyListener;
 
 public class Handler implements KeyListener {
     GamePanel panel;
-    Player player;
 
     public boolean UP, DOWN, LEFT, RIGHT, INTERACT;   //Move direction
     public boolean drawTime = false;
     public boolean Reset = false;
+    public boolean Enter = false;
 
     // HANDLER CONSTRUCTOR
     public Handler(GamePanel panel){
         this.panel = panel;
     }
-
-    /*public Handler(GamePanel panel, Player player){
-        this.panel = panel;
-        this.player = player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }*/
 
     // KEY TYPED
     @Override
@@ -114,6 +105,13 @@ public class Handler implements KeyListener {
             }
             // DEBUG
             //if (keyCode == KeyEvent.VK_T) drawTime = !drawTime;
+
+            // CHARACTER STATE
+            if(keyCode == KeyEvent.VK_C)    panel.GameState = panel.characterState;
+
+            // ENTER
+            if(keyCode == KeyEvent.VK_ENTER)    Enter = true;
+
         }
 
         // PAUSE STATE
@@ -129,6 +127,11 @@ public class Handler implements KeyListener {
         else if(panel.GameState == panel.dialogueState){
             if(keyCode == KeyEvent.VK_SPACE)    panel.GameState = panel.playState;      //End Dialogue
             //if(keyCode == KeyEvent.VK_ENTER)    panel.GameState = panel.playState;    //Skip Dialogue
+        }
+
+        // CHARACTER STATE
+        else if(panel.GameState == panel.characterState){
+            if(keyCode == KeyEvent.VK_C)    panel.GameState = panel.playState;
         }
 
     }

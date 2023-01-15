@@ -55,29 +55,29 @@ public class CollisionDetection {
         switch (entity.direction) {
             case "UP" -> {
                 TopRow = (CollisionTop - entity.Speed) / panel.tileSize;  //-Speed: predict where player will be next
-                tileNum1 = panel.manager.mapTilesNum[LeftCol][TopRow];  //TopLeft Corner of collision
-                tileNum2 = panel.manager.mapTilesNum[RightCol][TopRow]; //TopRight Corner of collision
+                tileNum1 = panel.manager.mapTilesNum[panel.currentMap][LeftCol][TopRow];  //TopLeft Corner of collision
+                tileNum2 = panel.manager.mapTilesNum[panel.currentMap][RightCol][TopRow]; //TopRight Corner of collision
                 if (panel.manager.tile[tileNum1].collision || panel.manager.tile[tileNum2].collision)   //if either of the corners (one or both) hit the wall
                     entity.collisionOn = true;
             }
             case "DOWN" -> {
                 BottomRow = (CollisionBottom + entity.Speed) / panel.tileSize;
-                tileNum1 = panel.manager.mapTilesNum[LeftCol][BottomRow];
-                tileNum2 = panel.manager.mapTilesNum[RightCol][BottomRow];
+                tileNum1 = panel.manager.mapTilesNum[panel.currentMap][LeftCol][BottomRow];
+                tileNum2 = panel.manager.mapTilesNum[panel.currentMap][RightCol][BottomRow];
                 if (panel.manager.tile[tileNum1].collision || panel.manager.tile[tileNum2].collision)
                     entity.collisionOn = true;
             }
             case "LEFT" -> {
                 LeftCol = (CollisionLeft - entity.Speed) / panel.tileSize;
-                tileNum1 = panel.manager.mapTilesNum[LeftCol][TopRow];
-                tileNum2 = panel.manager.mapTilesNum[LeftCol][BottomRow];
+                tileNum1 = panel.manager.mapTilesNum[panel.currentMap][LeftCol][TopRow];
+                tileNum2 = panel.manager.mapTilesNum[panel.currentMap][LeftCol][BottomRow];
                 if (panel.manager.tile[tileNum1].collision || panel.manager.tile[tileNum2].collision)
                     entity.collisionOn = true;
             }
             case "RIGHT" -> {
                 RightCol = (CollisionRight + entity.Speed) / panel.tileSize;
-                tileNum1 = panel.manager.mapTilesNum[RightCol][TopRow];
-                tileNum2 = panel.manager.mapTilesNum[RightCol][BottomRow];
+                tileNum1 = panel.manager.mapTilesNum[panel.currentMap][RightCol][TopRow];
+                tileNum2 = panel.manager.mapTilesNum[panel.currentMap][RightCol][BottomRow];
                 if (panel.manager.tile[tileNum1].collision || panel.manager.tile[tileNum2].collision)
                     entity.collisionOn = true;
             }
@@ -88,24 +88,24 @@ public class CollisionDetection {
     public int DetectObject(Entity entity, boolean player){     //Player or NPCs
         int index = 999;        //If Player is touching Object -> we return Index (can be any number)
 
-        for(int i = 0; i < panel.object.length; i++){   //scan current object's Area
-            if(panel.object[i] != null){                //Check if it is null -> if not than continue
+        for(int i = 0; i < panel.object[2].length; i++){   //scan current object's Area
+            if(panel.object[panel.currentMap][i] != null){                //Check if it is null -> if not than continue
 
                 //get entity's collision area position
                 entity.Area.x = entity.MapX + entity.Area.x;
                 entity.Area.y = entity.MapY + entity.Area.y;
 
                 //get the object's collision area position
-                panel.object[i].Area.x = panel.object[i].MapX + panel.object[i].Area.x; //no need for coordinates like in TileDetection
-                panel.object[i].Area.y = panel.object[i].MapY + panel.object[i].Area.y;
+                panel.object[panel.currentMap][i].Area.x = panel.object[panel.currentMap][i].MapX + panel.object[panel.currentMap][i].Area.x; //no need for coordinates like in TileDetection
+                panel.object[panel.currentMap][i].Area.y = panel.object[panel.currentMap][i].MapY + panel.object[panel.currentMap][i].Area.y;
 
                 switch (entity.direction) {
                     case "UP" -> {
                         entity.Area.y -= entity.Speed;      //when going UP -> Y-Coordinate - Speed (4 px)
 
                         //automatically checks if entity.Area & panel.object[i].Area have intersection
-                        if (entity.Area.intersects(panel.object[i].Area)) {     //A intersection B
-                            if (panel.object[i].collision)  //collision == true -> if Object is solid (has collision Area)...
+                        if (entity.Area.intersects(panel.object[panel.currentMap][i].Area)) {     //A intersection B
+                            if (panel.object[panel.currentMap][i].collision)  //collision == true -> if Object is solid (has collision Area)...
                                 entity.collisionOn = true;  //then collision is happening
 
                             if (player)                     //player == true (player from boolean)
@@ -114,8 +114,8 @@ public class CollisionDetection {
                     }
                     case "DOWN" -> {
                         entity.Area.y += entity.Speed;
-                        if (entity.Area.intersects(panel.object[i].Area)) {
-                            if (panel.object[i].collision) {  //collision == true
+                        if (entity.Area.intersects(panel.object[panel.currentMap][i].Area)) {
+                            if (panel.object[panel.currentMap][i].collision) {  //collision == true
                                 entity.collisionOn = true;
                             }
                             if (player) {                     //player == true
@@ -125,8 +125,8 @@ public class CollisionDetection {
                     }
                     case "LEFT" -> {
                         entity.Area.x -= entity.Speed;
-                        if (entity.Area.intersects(panel.object[i].Area)) {
-                            if (panel.object[i].collision) {  //collision == true
+                        if (entity.Area.intersects(panel.object[panel.currentMap][i].Area)) {
+                            if (panel.object[panel.currentMap][i].collision) {  //collision == true
                                 entity.collisionOn = true;
                             }
                             if (player) {                     //player == true
@@ -136,8 +136,8 @@ public class CollisionDetection {
                     }
                     case "RIGHT" -> {
                         entity.Area.x += entity.Speed;
-                        if (entity.Area.intersects(panel.object[i].Area)) {
-                            if (panel.object[i].collision) {  //collision == true
+                        if (entity.Area.intersects(panel.object[panel.currentMap][i].Area)) {
+                            if (panel.object[panel.currentMap][i].collision) {  //collision == true
                                 entity.collisionOn = true;
                             }
                             if (player) {                     //player == true
@@ -151,8 +151,8 @@ public class CollisionDetection {
                 //reset Areas -> otherwise entity.MapX and entity.MapY keep increasing (Line 99 & 100)
                 entity.Area.x = entity.AreaDefaultX;
                 entity.Area.y = entity.AreaDefaultY;
-                panel.object[i].Area.x = panel.object[i].AreaDefaultX;
-                panel.object[i].Area.y = panel.object[i].AreaDefaultY;
+                panel.object[panel.currentMap][i].Area.x = panel.object[panel.currentMap][i].AreaDefaultX;
+                panel.object[panel.currentMap][i].Area.y = panel.object[panel.currentMap][i].AreaDefaultY;
             }
         }
         return index;       //return index

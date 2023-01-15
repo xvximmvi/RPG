@@ -1,6 +1,8 @@
 package at.ac.fhcampuswien.entity;
 
 import at.ac.fhcampuswien.Object.BR_Light_ON;
+import at.ac.fhcampuswien.Object.C_Lamp;
+import at.ac.fhcampuswien.Object.C_Lamp_ON;
 import at.ac.fhcampuswien.Object.OBJECT_Key;
 import at.ac.fhcampuswien.main.Handler;
 import at.ac.fhcampuswien.main.GamePanel;
@@ -131,6 +133,7 @@ public class Player extends Entity{
         //update current position of player
 
         if(handler.Reset){
+            panel.currentMap = 0;
             setDefaultValues();
             panel.ui.foundKey = false;
             panel.ui.playTime = panel.ui.DefaultPlayTime;
@@ -179,86 +182,195 @@ public class Player extends Entity{
         bufferedImage = key.image;              //image of Key Class
 
         // Index as confirmation of collision
-        if(index != 999){   //if index isn't 999, then we haven't touched an object
+        if(index != 999) {   //if index isn't 999, then we haven't touched an object
             //panel.object[index] = null;     //if object is touched, then delete it -> "Pick it up"
 
-            String ObjectName = panel.object[index].name;   //Which object is touched
+            String ObjectName = panel.object[panel.currentMap][index].name;   //Which object is touched
 
-            InteractionCounter++;       //Key-press takes to long -> interact more than once at a time
-            if(InteractionCounter>9) {  //count to 9 than do next interaction
+                InteractionCounter++;       //Key-press takes to long -> interact more than once at a time
+                if (InteractionCounter > 9) {  //count to 9 than do next interaction
 
-                // OBJECT INTERACTION
-                switch (ObjectName) {   //Identify Object
-                    case "Nightstand":  //If Nightstand is "opened" than:
-                        if (Keys < 1 && handler.INTERACT) {            //if no Key in possession:
-                            panel.playSoundEffect(2);               //Play Key Sound
-                            panel.GameState = panel.dialogueState;
-                            panel.ui.currentDialogue = dialogues[2];
-                            panel.ui.foundKey = true;
-                            Keys++;                                    //Increase numbers of Keys
-                        } else if (Keys >= 1 && handler.INTERACT) {    //if Key is already in Possession
-                            panel.playSoundEffect(3);               //play Notification Sound
+                    // INTERACTION WITH BEDROOM OBJECTS
+                    if (panel.currentMap == 0) {
+                        // OBJECT INTERACTION
+                        switch (ObjectName) {   //Identify Object
+                            case "Nightstand":  //If Nightstand is "opened" than:
+                                if (Keys < 1 && handler.INTERACT) {            //if no Key in possession:
+                                    panel.playSoundEffect(2);               //Play Key Sound
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[2];
+                                    panel.ui.foundKey = true;
+                                    Keys++;                                    //Increase numbers of Keys
+                                } else if (Keys >= 1 && handler.INTERACT) {    //if Key is already in Possession
+                                    panel.playSoundEffect(3);               //play Notification Sound
 
-                            //Turn Light on and off
-                            BR_Light_State = !BR_Light_State;   //change Light State
-                            if(BR_Light_State){             //if turning on -> instantiate new Object (Light_ON)
-                                panel.object[13] = new BR_Light_ON(panel);
-                                panel.object[13].MapX = 11 * panel.tileSize - 2;
-                                panel.object[13].MapY = 4 * panel.tileSize - 23;
-                            } else  panel.object[13] = null;    //if turning off-> then delete Object (null)
+                                    //Turn Light on and off
+                                    BR_Light_State = !BR_Light_State;   //change Light State
+                                    if (BR_Light_State) {             //if turning on -> instantiate new Object (Light_ON)
+                                        panel.object[0][13] = new BR_Light_ON(panel);
+                                        panel.object[0][13].MapX = 11 * panel.tileSize - 2;
+                                        panel.object[0][13].MapY = 4 * panel.tileSize - 23;
+                                    } else panel.object[0][13] = null;    //if turning off-> then delete Object (null)
+                                }
+                                break;
+
+                            case "Bed":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[1];
+                                }
+                                break;
+
+                            case "Bookshelf":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[3];
+                                }
+                                break;
+
+                            case "ToyHorse":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[4];
+                                }
+                                break;
+
+                            case "BottomDoor":
+                                if (Keys >= 1 && handler.INTERACT) {    //if Key in possession ...
+                                    switchMap(1, 12, 7);
+                                    panel.ui.foundKey = false;
+                                } else if (Keys < 1 && handler.INTERACT) {  //if no Key in possession
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[0];
+                                }
+                                break;
                         }
-                        break;
+                        InteractionCounter = 0;   //reset InteractionCounter
+                    }
 
-                    case "Bed":
-                        if (handler.INTERACT) {
-                            panel.playSoundEffect(3);
-                            panel.GameState = panel.dialogueState;
-                            panel.ui.currentDialogue = dialogues[1];
+                    // INTERACTION WITH CORRIDOR OBJECTS
+                    else if(panel.currentMap == 1){
+                        switch (ObjectName) {
+                            case "BottomDoor":
+                                if (Keys >= 3 && handler.INTERACT) {
+                                    panel.playSoundEffect(0);
+                                    panel.GameState = panel.GameWonState;
+                                } else if (Keys < 3 && handler.INTERACT) {  //if no Key in possession
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[5];
+                                }
+                                break;
+                            case "Bedroom_Door":
+                                if (handler.INTERACT) {
+                                    switchMap(0, 8, 14);
+                                }
+                                break;
+                            case "Bathroom_Door":
+                                if (handler.INTERACT) {
+                                    switchMap(2, 8, 14);
+                                }
+                                break;
+                            case "Fire":
+                                if (handler.INTERACT) {
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[6];
+                                }
+                                break;
+                            case "Lamp":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.object[1][13] = new C_Lamp_ON(panel);
+                                    panel.object[1][13].MapX = 2 * panel.tileSize + 20;
+                                    panel.object[1][13].MapY = 3 * panel.tileSize + 30;
+                                    panel.object[1][12] = null;
+                                }
+                                break;
+                            case "LampOn":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.object[1][12] = new C_Lamp(panel);
+                                    panel.object[1][12].MapX = 2 * panel.tileSize + 20;
+                                    panel.object[1][12].MapY = 3 * panel.tileSize + 30;
+                                    panel.object[1][13] = null;
+                                }
+                                break;
+                            case "Chouch":
+                                if (handler.INTERACT) {
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[7];
+                                }
+                                break;
+                            case "Clothes":
+                                if (handler.INTERACT) {
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[8];
+                                }
+                                break;
+                            case "Clock":
+                                if (handler.INTERACT) {
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[9];
+                                }
+                                break;
+                            case "ShelfFish":
+                                if (!panel.ui.foundTool && handler.INTERACT) {
+                                    panel.playSoundEffect(2);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[10];
+                                    panel.ui.foundTool = true;
+                                } else if (panel.ui.foundTool && handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[11];
+                                }
+                                break;
+
+                            case "Kitchen_Door":
+                                if (handler.INTERACT) {
+                                    //switchMap(0,0,0);
+                                }
+                                break;
+
                         }
-                        break;
+                    }
 
-                    case "Bookshelf":
-                        if (handler.INTERACT) {
-                            panel.playSoundEffect(3);
-                            panel.GameState = panel.dialogueState;
-                            panel.ui.currentDialogue = dialogues[3];
+                    // INTERACTION WITH BATHROOM OBJECTS
+                    else if(panel.currentMap == 2){
+                        switch (ObjectName) {
+                            case "BottomDoor":
+                                if (handler.INTERACT) {
+                                    switchMap(1, 5, 7);
+                                }
+                                break;
                         }
-                        break;
+                    }
+                    // INTERACTION WITH KITCHEN OBJECTS
+                    else if(panel.currentMap == 3){
 
-                    case "ToyHorse":
-                        if (handler.INTERACT) {
-                           panel.playSoundEffect(3);
-                            panel.GameState = panel.dialogueState;
-                            panel.ui.currentDialogue = dialogues[4];
-                        }
-                        break;
+                    }
+            }
 
-                    case "BottomDoor":
-                        if (Keys >= 1 && handler.INTERACT) {    //if Key in possession ...
-                            panel.ui.GameWon = true;            //... then Door is unlocked (Game Won)
-                            panel.GameState = panel.GameWonState;
-                            panel.playSoundEffect(0);
-                            //panel.ui.ShowMessage("Open! Can go through.");
 
-                        } else if (Keys < 1 && handler.INTERACT) {  //if no Key in possession
-                           panel.playSoundEffect(3);             //notification
-                            panel.GameState = panel.dialogueState;
-                            panel.ui.currentDialogue = dialogues[0];
-                        }
-                        break;
-                }
-              InteractionCounter = 0;   //reset InteractionCounter
-           }
         }
     }
 
     // LIST OF ALL DIALOGUES
-    public void setDialogue(){
+    public void setDialogue() {
         dialogues[0] = "The door is locked...\nWhat should I do?";
         dialogues[1] = "I don't think I can fall asleep...";
         dialogues[2] = "huh...\nseems like there is a key in the drawer.";
         dialogues[3] = "My favorite book is about a goldfish.";
         dialogues[4] = "I don't want to play right now. \nMaybe later horsy.";
+        dialogues[5] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL";
+        dialogues[6] = "STILL MISSING DIALOGE\nSomething about Fire";
+        dialogues[7] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch";
+        dialogues[8] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk";
+        dialogues[9] = "STILL MISSING DIALOGE\nClock..";
+        dialogues[10] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB";
+        dialogues[11] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk.";
 
     }
 
@@ -306,6 +418,7 @@ public class Player extends Entity{
         if(ScreenY > MapY)
             y = MapY;
 
+
         //Right Side / Bottom Side of Map (same as in Manager Class)
         int RightOffset = panel.ScreenWidth - ScreenX;
         if(RightOffset > panel.MapWidth - MapX)
@@ -317,5 +430,14 @@ public class Player extends Entity{
 
         //ScreenX and ScreenY don't change
         graphics2D.drawImage(image, x, y, null);    //null: image observer  +8 to make character bigger
+    }
+
+    // SWITCH ROOMS/MAPS
+    public void switchMap(int Map, int x, int y) {
+        panel.TransitionMap = Map;
+        panel.TransitionX = x;
+        panel.TransitionY = y;
+        panel.playSoundEffect(3);
+        panel.GameState = panel.transitionState;
     }
 }

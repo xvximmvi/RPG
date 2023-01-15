@@ -64,10 +64,16 @@ public class GamePanel extends JPanel implements Runnable{
     public final int ScreenHeight = tileSize*maxScreenRow; //576px
 
     // MAP SETTINGS
-    public final int maxMapCol = 16;
-    public final int maxMapRow = 16;
-    public final int MapWidth = tileSize*maxMapCol;
-    public final int MapHeight = tileSize*maxMapRow;
+    public final int maxMap = 5;
+    public int currentMap = 0;
+
+    public int maxMapCol = 16;
+    public int maxMapRow = 16;
+
+    public int MapWidth = tileSize*maxMapCol;
+    public int MapHeight = tileSize*maxMapRow;
+
+    public int TransitionMap, TransitionX, TransitionY;
 
     // FPS
     int FPS = 60;
@@ -85,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECT
     public Player player = new Player(this, this.handler);//public for Manager
     //handler.setPlayer(player);
-    public GameObject object[] = new GameObject[15];
+    public GameObject object[][] = new GameObject[maxMap][50];
 
     // GAME STATE
     public int GameState;
@@ -95,7 +101,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int dialogueState = 3;
     public final int GameWonState = 4;
     public final int GameOverState = 5;
-
+    public final int characterState = 6;
+    public final int transitionState = 7;
+    public final int transitionOutState = 8;
 
 
     // GAME PANEL CONSTRUCTOR
@@ -111,7 +119,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // SETUP GAME
     public void setUpGame(){
-        asset.setObject();
+        asset.setObjectBedroom();
         //playMusic(1);       //Start Theme Music
         GameState = titleState;
     }
@@ -196,9 +204,9 @@ public class GamePanel extends JPanel implements Runnable{
             manager.draw(graphics2d);   //draw manager tiles
 
             // OBJECT
-            for(int i = 0; i < object.length; i++){
-                if(object[i] != null){
-                    object[i].draw(graphics2d, this);
+            for(int i = 0; i < object[2].length; i++){
+                if(object[currentMap][i] != null){
+                    object[currentMap][i].draw(graphics2d, this);
                 }
             }
 
@@ -228,9 +236,7 @@ public class GamePanel extends JPanel implements Runnable{
     public void stopMusic(){
         sound.stop();   //stop current music
     }
-
     public void playSoundEffect(int i){
         soundEffect.play(i);       //only play once (no loop)
     }
-
 }

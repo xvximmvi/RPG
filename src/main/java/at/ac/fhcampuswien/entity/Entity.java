@@ -24,4 +24,7 @@ public class Entity {   //This stores variables that will be used in players, mo
 
     String dialogues[] = new String[30];
     int dialogueIndex = 0;
+
+    // CHARACTER ATTRIBUTES
+    public String name;
 }
