@@ -49,7 +49,6 @@ public class Player extends Entity{
     GamePanel panel;
     Handler handler;
     BufferedImage bufferedImage;
-    Graphics2D graphics2D;
 
     public final int ScreenX, ScreenY;  //Coordinate of Screen
     public int Keys = 0;                //Number of collected/found Keys
@@ -243,6 +242,7 @@ public class Player extends Entity{
                                     switchMap(1, 12, 7);
                                     panel.ui.foundKey = false;
                                 } else if (Keys < 1 && handler.INTERACT) {  //if no Key in possession
+                                    panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[0];
                                 }
@@ -259,22 +259,26 @@ public class Player extends Entity{
                                     panel.playSoundEffect(0);
                                     panel.GameState = panel.GameWonState;
                                 } else if (Keys < 3 && handler.INTERACT) {  //if no Key in possession
+                                    panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[5];
                                 }
                                 break;
                             case "Bedroom_Door":
                                 if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
                                     switchMap(0, 8, 14);
                                 }
                                 break;
                             case "Bathroom_Door":
                                 if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
                                     switchMap(2, 8, 14);
                                 }
                                 break;
                             case "Fire":
                                 if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[6];
                                 }
@@ -286,6 +290,13 @@ public class Player extends Entity{
                                     panel.object[1][13].MapX = 2 * panel.tileSize + 20;
                                     panel.object[1][13].MapY = 3 * panel.tileSize + 30;
                                     panel.object[1][12] = null;
+
+                                    // Most ugliest solution I've ever seen:
+                                    try {
+                                        Thread.sleep(140);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                                 break;
                             case "LampOn":
@@ -295,22 +306,32 @@ public class Player extends Entity{
                                     panel.object[1][12].MapX = 2 * panel.tileSize + 20;
                                     panel.object[1][12].MapY = 3 * panel.tileSize + 30;
                                     panel.object[1][13] = null;
+
+                                    // Most ugliest solution I've ever seen:
+                                    try {
+                                        Thread.sleep(140);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                                 break;
                             case "Chouch":
                                 if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[7];
                                 }
                                 break;
                             case "Clothes":
                                 if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[8];
                                 }
                                 break;
                             case "Clock":
                                 if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[9];
                                 }
@@ -342,6 +363,7 @@ public class Player extends Entity{
                         switch (ObjectName) {
                             case "BottomDoor":
                                 if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
                                     switchMap(1, 5, 7);
                                 }
                                 break;

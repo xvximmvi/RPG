@@ -2,7 +2,6 @@ package at.ac.fhcampuswien.main;
 
 import at.ac.fhcampuswien.Object.OBJECT_Key;
 import at.ac.fhcampuswien.Object.OBJECT_Tool;
-import at.ac.fhcampuswien.entity.Entity;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -35,15 +34,10 @@ import java.text.DecimalFormat;
 public class UI {
 
     GamePanel panel;
-    Handler handler;
-    Entity entity;
     Graphics2D graphics2D;
     BufferedImage bufferedImage;
     Font Retro_Gaming;
     public int command = 0;
-
-    public boolean GameOver = false;
-    public boolean GameWon = false;
 
     public String currentDialogue = "";
     public boolean MessageOn = false;
@@ -51,9 +45,7 @@ public class UI {
     int MessageCounter = 0;
     public boolean foundKey = false;
     public boolean foundTool = false;
-    int KeyCounter = 0;
 
-    public boolean TransitionOn = false;
     int TransitionCounter = 0;
 
     public boolean TutorialOn = false;
@@ -71,19 +63,12 @@ public class UI {
 
         InputStream is = getClass().getResourceAsStream("/Font/Retro Gaming.ttf");
         try {
+            assert is != null;
             Retro_Gaming = Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
 
-    }
-
-    //SHOW MESSAGE
-    public void ShowMessage(String Text){
-        Message = Text;
-        MessageOn = true;
     }
 
     // PRINT
@@ -130,12 +115,6 @@ public class UI {
                 OBJECT_Key key = new OBJECT_Key(panel);
                 bufferedImage = key.image;
                 graphics2D.drawImage(bufferedImage, 13 * panel.tileSize, 90, 24 * 3, 13 * 3, null);
-
-                    /*KeyCounter++;
-                    if (KeyCounter > 200) {
-                        KeyCounter = 0;
-                        foundKey = false;
-                    }*/
             }
 
             if (foundTool) {
@@ -317,7 +296,7 @@ public class UI {
 
     // GENERAL WINDOW
     public void Window(int x, int y, int width, int height){
-        Color color = new Color(0, 0, 0,205);       //RGB Number for Black (r, g, b, hasalpha) Color + transparency
+        Color color = new Color(0, 0, 0,205);       //RGB Number for Black (r, g, b, transparency) Color + transparency
         graphics2D.setColor(color);
 
         graphics2D.fillRoundRect(x, y, width, height, 35, 35);

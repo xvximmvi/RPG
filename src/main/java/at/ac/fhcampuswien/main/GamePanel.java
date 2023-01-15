@@ -91,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECT
     public Player player = new Player(this, this.handler);//public for Manager
     //handler.setPlayer(player);
-    public GameObject object[][] = new GameObject[maxMap][50];
+    public GameObject[][] object = new GameObject[maxMap][50];
 
     // GAME STATE
     public int GameState;
@@ -173,9 +173,6 @@ public class GamePanel extends JPanel implements Runnable{
                 playSoundEffect(1);
             }
 
-        }
-        if(GameState == pauseState){
-            //Do nothing. It's paused.
         }
     }
 
