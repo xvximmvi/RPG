@@ -91,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECT
     public Player player = new Player(this, this.handler);//public for Manager
     //handler.setPlayer(player);
-    public GameObject[][] object = new GameObject[maxMap][20];
+    public GameObject[][] object = new GameObject[maxMap][30];
 
     // GAME STATE
     public int GameState;

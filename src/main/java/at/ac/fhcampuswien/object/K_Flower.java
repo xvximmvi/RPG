@@ -12,9 +12,9 @@ public class K_Flower extends GameObject {
 
     public K_Flower(GamePanel panel){
 
-        name = "Clock";
-        ObjectWidth = 10*4;       //Size in Pixels
-        ObjectHeight = 23*4;     //Size in Pixels
+        name = "Flower";
+        ObjectWidth = 10*5;       //Size in Pixels
+        ObjectHeight = 23*5;     //Size in Pixels
 
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 

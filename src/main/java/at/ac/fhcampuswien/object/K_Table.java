@@ -13,8 +13,8 @@ public class K_Table extends GameObject {
     public K_Table(GamePanel panel){
 
         name = "Table";
-        ObjectWidth = 46*4;       //Size in Pixels
-        ObjectHeight = 30*4;     //Size in Pixels
+        ObjectWidth = 46*7;       //Size in Pixels
+        ObjectHeight = 30*5;     //Size in Pixels
 
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 

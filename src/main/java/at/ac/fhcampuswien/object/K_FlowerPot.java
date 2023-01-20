@@ -13,8 +13,8 @@ public class K_FlowerPot extends GameObject {
     public K_FlowerPot(GamePanel panel){
 
         name = "FlowerPot";
-        ObjectWidth = 8*4;       //Size in Pixels
-        ObjectHeight = 11*4;     //Size in Pixels
+        ObjectWidth = 8*5;       //Size in Pixels
+        ObjectHeight = 11*5;     //Size in Pixels
 
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 

@@ -13,8 +13,8 @@ public class K_Chair_Front extends GameObject {
     public K_Chair_Front(GamePanel panel){
 
         name = "Chair_Front";
-        ObjectWidth = 16*4;       //Size in Pixels
-        ObjectHeight = 27*4;     //Size in Pixels
+        ObjectWidth = 16*4+15;       //Size in Pixels
+        ObjectHeight = 27*4+15;     //Size in Pixels
 
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 

@@ -265,6 +265,61 @@ public class SetAsset {
         panel.object[3][7].MapY = 16 * panel.tileSize - 4;
 
         // OBJECTS
+        panel.object[3][8] = new K_Fridge(panel);
+        panel.object[3][8].MapX = panel.tileSize;
+        panel.object[3][8].MapY = 3 * panel.tileSize;
+
+        panel.object[3][9] = new K_Oven(panel);
+        panel.object[3][9].MapX = 5*panel.tileSize;
+        panel.object[3][9].MapY = 4 * panel.tileSize;
+
+        panel.object[3][10] = new K_Sink(panel);
+        panel.object[3][10].MapX = 8*panel.tileSize;
+        panel.object[3][10].MapY = 4 * panel.tileSize-4;
+
+        panel.object[3][11] = new K_Shelf(panel);
+        panel.object[3][11].MapX = 8 * panel.tileSize+32*4;
+        panel.object[3][11].MapY = 4 * panel.tileSize;
+
+        panel.object[3][12] = new K_Clock(panel);
+        panel.object[3][12].MapX = 7 * panel.tileSize;
+        panel.object[3][12].MapY = 2 * panel.tileSize-20;
+
+        panel.object[3][13] = new K_Chair_Front(panel);
+        panel.object[3][13].MapX = 6 * panel.tileSize;
+        panel.object[3][13].MapY = 8 * panel.tileSize+20;
+
+        panel.object[3][14] = new K_Chair_Front(panel);
+        panel.object[3][14].MapX = 9 * panel.tileSize-15;
+        panel.object[3][14].MapY = 8 * panel.tileSize+20;
+
+        panel.object[3][15] = new K_Chair_Right(panel);
+        panel.object[3][15].MapX = 11 * panel.tileSize-4;
+        panel.object[3][15].MapY = 10 * panel.tileSize;
+
+        panel.object[3][16] = new K_Table(panel);
+        panel.object[3][16].MapX = 5 * panel.tileSize;
+        panel.object[3][16].MapY = 10 * panel.tileSize;
+
+        panel.object[3][17] = new K_Chair_Back(panel);
+        panel.object[3][17].MapX = 6 * panel.tileSize;
+        panel.object[3][17].MapY = 11 * panel.tileSize+20;
+
+        panel.object[3][18] = new K_Chair_Back(panel);
+        panel.object[3][18].MapX = 9 * panel.tileSize-15;
+        panel.object[3][18].MapY = 11 * panel.tileSize+20;
+
+        panel.object[3][19] = new K_FlowerPot(panel);
+        panel.object[3][19].MapX = 8 * panel.tileSize;
+        panel.object[3][19].MapY = 10 * panel.tileSize;
+
+        panel.object[3][20] = new K_Flower(panel);
+        panel.object[3][20].MapX = 14 * panel.tileSize;
+        panel.object[3][20].MapY = 13 * panel.tileSize;
+
+        panel.object[3][21] = new K_HangingUtilitys(panel);
+        panel.object[3][21].MapX = 11 * panel.tileSize+15;
+        panel.object[3][21].MapY = 2 * panel.tileSize;
 
     }
 }

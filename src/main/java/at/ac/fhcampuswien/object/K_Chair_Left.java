@@ -13,8 +13,8 @@ public class K_Chair_Left extends GameObject {
     public K_Chair_Left(GamePanel panel){
 
         name = "Chair_Left";
-        ObjectWidth = 15*4;       //Size in Pixels
-        ObjectHeight = 28*4;     //Size in Pixels
+        ObjectWidth = 15*4+15;       //Size in Pixels
+        ObjectHeight = 28*4+15;     //Size in Pixels
 
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 
