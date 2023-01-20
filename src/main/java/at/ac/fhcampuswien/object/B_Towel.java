@@ -1,14 +1,17 @@
 package at.ac.fhcampuswien.object;
 
 import at.ac.fhcampuswien.main.GamePanel;
+import at.ac.fhcampuswien.main.Utility;
+import at.ac.fhcampuswien.object.GameObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class B_Towel extends GameObject{
+public class B_Towel extends GameObject {
     GamePanel panel;
+
     public B_Towel(GamePanel panel){
 
         name = "Towel";

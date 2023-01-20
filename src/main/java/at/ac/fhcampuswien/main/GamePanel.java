@@ -65,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // MAP SETTINGS
     public final int maxMap = 5;
-    public int currentMap = 0;
+    public int currentMap = 3;
 
     public int maxMapCol = 16;
     public int maxMapRow = 16;
@@ -91,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECT
     public Player player = new Player(this, this.handler);//public for Manager
     //handler.setPlayer(player);
-    public GameObject[][] object = new GameObject[maxMap][50];
+    public GameObject[][] object = new GameObject[maxMap][20];
 
     // GAME STATE
     public int GameState;
@@ -119,7 +119,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // SETUP GAME
     public void setUpGame(){
-        asset.setObjectBedroom();
+        asset.setObjectKitchen();
         //playMusic(1);       //Start Theme Music
         GameState = titleState;
     }

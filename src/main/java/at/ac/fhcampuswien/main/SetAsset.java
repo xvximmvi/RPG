@@ -258,10 +258,13 @@ public class SetAsset {
 
         panel.object[3][6] = new OBJECT_SideOutline(panel);
         panel.object[3][6].MapX = 10;
-        panel.object[3][6].MapY = 12* panel.tileSize;
+        panel.object[3][6].MapY = 13* panel.tileSize;
 
         panel.object[3][7] = new OBJECT_BottomOutline_Long(panel);
         panel.object[3][7].MapX = 0;
         panel.object[3][7].MapY = 16 * panel.tileSize - 4;
+
+        // OBJECTS
+
     }
 }
