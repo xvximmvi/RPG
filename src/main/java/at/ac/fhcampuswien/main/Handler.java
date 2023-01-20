@@ -1,8 +1,5 @@
 package at.ac.fhcampuswien.main;
 
-import at.ac.fhcampuswien.entity.Player;
-
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -51,8 +48,8 @@ public class Handler implements KeyListener {
                     panel.GameState = panel.playState;
                 }
                 if(panel.ui.command == 1){
-                    panel.GameState = panel.playState;
                     panel.playMusic(1);
+                    panel.GameState = panel.playState;
                 }
                 if(panel.ui.command == 2){
                     System.exit(0);

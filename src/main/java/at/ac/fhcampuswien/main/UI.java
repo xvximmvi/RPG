@@ -1,7 +1,7 @@
 package at.ac.fhcampuswien.main;
 
-import at.ac.fhcampuswien.Object.OBJECT_Key;
-import at.ac.fhcampuswien.Object.OBJECT_Tool;
+import at.ac.fhcampuswien.object.OBJECT_Key;
+import at.ac.fhcampuswien.object.OBJECT_Tool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -137,7 +137,7 @@ public class UI {
                 graphics2D.drawString("Pause/Play: P", panel.tileSize, panel.tileSize + 90);
 
                 TutorialCounter++;
-                if (TutorialCounter > 180) {   //180 Frames (60 Frames per sec -> 3 sec)
+                if (TutorialCounter > 240) {   //180 Frames (60 Frames per sec -> 3 sec)
                     TutorialCounter = 0;
                     TutorialOn = false;
                     Goal = true;
@@ -148,7 +148,7 @@ public class UI {
                 graphics2D.drawString("Escape the Room!", panel.tileSize, panel.tileSize + 30);
 
                 TutorialCounter++;
-                if (TutorialCounter > 180) {   //180 Frames (60 Frames per sec -> 3 sec)
+                if (TutorialCounter > 240) {   //180 Frames (60 Frames per sec -> 3 sec)
                     TutorialCounter = 0;
                     Goal = false;
                 }

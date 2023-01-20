@@ -1,9 +1,6 @@
 package at.ac.fhcampuswien.entity;
 
-import at.ac.fhcampuswien.Object.BR_Light_ON;
-import at.ac.fhcampuswien.Object.C_Lamp;
-import at.ac.fhcampuswien.Object.C_Lamp_ON;
-import at.ac.fhcampuswien.Object.OBJECT_Key;
+import at.ac.fhcampuswien.object.*;
 import at.ac.fhcampuswien.main.Handler;
 import at.ac.fhcampuswien.main.GamePanel;
 import at.ac.fhcampuswien.main.Utility;
@@ -13,6 +10,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 // CLASS CONTENT
 /*
@@ -51,8 +49,11 @@ public class Player extends Entity{
     BufferedImage bufferedImage;
 
     public final int ScreenX, ScreenY;  //Coordinate of Screen
-    public int Keys = 0;                //Number of collected/found Keys
+    public boolean BedroomKey = false;
+    public boolean KitchenKey = false;
+    public boolean OutsideKey = false;
     int InteractionCounter=0;           //InteractionCounter: slower interaction with objects
+    int ObjectCounter = 0;
 
     // OBJECT STATE
     public boolean BR_Light_State = false;
@@ -88,7 +89,10 @@ public class Player extends Entity{
         MapY = panel.tileSize*9-(panel.tileSize/2);     //position horizontal Center on Map
         Speed = 4;      //same as in Panel class
         direction = "DOWN";
-        Keys = 0;
+
+        BedroomKey = false;
+        KitchenKey = false;
+        OutsideKey = false;
         panel.ui.TutorialOn = true;     //Start game with Tutorial
     }
 
@@ -135,6 +139,7 @@ public class Player extends Entity{
             panel.currentMap = 0;
             setDefaultValues();
             panel.ui.foundKey = false;
+            panel.ui.foundTool = false;
             panel.ui.playTime = panel.ui.DefaultPlayTime;
             handler.Reset =false;
         }
@@ -194,22 +199,24 @@ public class Player extends Entity{
                         // OBJECT INTERACTION
                         switch (ObjectName) {   //Identify Object
                             case "Nightstand":  //If Nightstand is "opened" than:
-                                if (Keys < 1 && handler.INTERACT) {            //if no Key in possession:
-                                    panel.playSoundEffect(2);               //Play Key Sound
-                                    panel.GameState = panel.dialogueState;
-                                    panel.ui.currentDialogue = dialogues[2];
-                                    panel.ui.foundKey = true;
-                                    Keys++;                                    //Increase numbers of Keys
-                                } else if (Keys >= 1 && handler.INTERACT) {    //if Key is already in Possession
-                                    panel.playSoundEffect(3);               //play Notification Sound
-
-                                    //Turn Light on and off
-                                    BR_Light_State = !BR_Light_State;   //change Light State
-                                    if (BR_Light_State) {             //if turning on -> instantiate new Object (Light_ON)
-                                        panel.object[0][13] = new BR_Light_ON(panel);
-                                        panel.object[0][13].MapX = 11 * panel.tileSize - 2;
-                                        panel.object[0][13].MapY = 4 * panel.tileSize - 23;
-                                    } else panel.object[0][13] = null;    //if turning off-> then delete Object (null)
+                                if (handler.INTERACT) {            //if no Key in possession:
+                                    if(!BedroomKey) {
+                                        panel.playSoundEffect(2);               //Play Key Sound
+                                        panel.GameState = panel.dialogueState;
+                                        panel.ui.currentDialogue = dialogues[2];
+                                        panel.ui.foundKey = true;
+                                        BedroomKey = true;
+                                    } else {    //if Key is already in Possession
+                                        panel.playSoundEffect(3);               //play Notification Sound
+                                        //Turn Light on and off
+                                        BR_Light_State = !BR_Light_State;   //change Light State
+                                        if (BR_Light_State) {             //if turning on -> instantiate new Object (Light_ON)
+                                            panel.object[0][13] = new BR_Light_ON(panel);
+                                            panel.object[0][13].MapX = 11 * panel.tileSize - 2;
+                                            panel.object[0][13].MapY = 4 * panel.tileSize - 23;
+                                        } else
+                                            panel.object[0][13] = null;    //if turning off-> then delete Object (null)
+                                    }
                                 }
                                 break;
 
@@ -238,13 +245,16 @@ public class Player extends Entity{
                                 break;
 
                             case "BottomDoor":
-                                if (Keys >= 1 && handler.INTERACT) {    //if Key in possession ...
-                                    switchMap(1, 12, 7);
-                                    panel.ui.foundKey = false;
-                                } else if (Keys < 1 && handler.INTERACT) {  //if no Key in possession
-                                    panel.playSoundEffect(3);
-                                    panel.GameState = panel.dialogueState;
-                                    panel.ui.currentDialogue = dialogues[0];
+                                if(handler.INTERACT) {
+                                    if (BedroomKey) {    //if Key in possession ...
+                                        switchMap(1, 12, 7);
+                                        if (!KitchenKey && !OutsideKey)
+                                            panel.ui.foundKey = false;
+                                    } else {  //if no Key in possession
+                                        panel.playSoundEffect(3);
+                                        panel.GameState = panel.dialogueState;
+                                        panel.ui.currentDialogue = dialogues[0];
+                                    }
                                 }
                                 break;
                         }
@@ -255,10 +265,10 @@ public class Player extends Entity{
                     else if(panel.currentMap == 1){
                         switch (ObjectName) {
                             case "BottomDoor":
-                                if (Keys >= 3 && handler.INTERACT) {
+                                if (OutsideKey && handler.INTERACT) {
                                     panel.playSoundEffect(0);
                                     panel.GameState = panel.GameWonState;
-                                } else if (Keys < 3 && handler.INTERACT) {  //if no Key in possession
+                                } else if (!OutsideKey && handler.INTERACT) {  //if no Key in possession
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[5];
@@ -285,33 +295,27 @@ public class Player extends Entity{
                                 break;
                             case "Lamp":
                                 if (handler.INTERACT) {
-                                    panel.playSoundEffect(3);
-                                    panel.object[1][13] = new C_Lamp_ON(panel);
-                                    panel.object[1][13].MapX = 2 * panel.tileSize + 20;
-                                    panel.object[1][13].MapY = 3 * panel.tileSize + 30;
-                                    panel.object[1][12] = null;
-
-                                    // Most ugliest solution I've ever seen:
-                                    try {
-                                        Thread.sleep(140);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
+                                    ObjectCounter++;
+                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                        panel.playSoundEffect(3);
+                                        panel.object[1][13] = new C_Lamp_ON(panel);
+                                        panel.object[1][13].MapX = 2 * panel.tileSize + 20;
+                                        panel.object[1][13].MapY = 3 * panel.tileSize + 30;
+                                        panel.object[1][12] = null;
+                                        ObjectCounter = 0;
                                     }
                                 }
                                 break;
                             case "LampOn":
                                 if (handler.INTERACT) {
-                                    panel.playSoundEffect(3);
-                                    panel.object[1][12] = new C_Lamp(panel);
-                                    panel.object[1][12].MapX = 2 * panel.tileSize + 20;
-                                    panel.object[1][12].MapY = 3 * panel.tileSize + 30;
-                                    panel.object[1][13] = null;
-
-                                    // Most ugliest solution I've ever seen:
-                                    try {
-                                        Thread.sleep(140);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
+                                    ObjectCounter++;
+                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                        panel.playSoundEffect(3);
+                                        panel.object[1][12] = new C_Lamp(panel);
+                                        panel.object[1][12].MapX = 2 * panel.tileSize + 20;
+                                        panel.object[1][12].MapY = 3 * panel.tileSize + 30;
+                                        panel.object[1][13] = null;
+                                        ObjectCounter = 0;
                                     }
                                 }
                                 break;
@@ -349,9 +353,17 @@ public class Player extends Entity{
                                 }
                                 break;
 
-                            case "Kitchen_Door":
-                                if (handler.INTERACT) {
-                                    //switchMap(0,0,0);
+                            case "SideDoor1":
+                                if(handler.INTERACT) {
+                                    if (KitchenKey) {    //if Key in possession ...
+                                        //switchMap(1, 12, 7);
+                                        if (!OutsideKey)
+                                            panel.ui.foundKey = false;
+                                    } else {  //if no Key in possession
+                                        panel.playSoundEffect(3);
+                                        panel.GameState = panel.dialogueState;
+                                        panel.ui.currentDialogue = dialogues[12];
+                                    }
                                 }
                                 break;
 
@@ -367,6 +379,99 @@ public class Player extends Entity{
                                     switchMap(1, 5, 7);
                                 }
                                 break;
+
+                            case "Sink":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;
+                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                        panel.playSoundEffect(3);
+                                        panel.object[2][14] = new B_Sink_Interact(panel);
+                                        panel.object[2][14].MapX = 3 * panel.tileSize - 3;
+                                        panel.object[2][14].MapY = 3 * panel.tileSize + 20;
+                                        panel.object[2][10] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Sink_INTERACT":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;
+                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                        panel.playSoundEffect(3);
+                                        panel.object[2][10] = new B_Sink(panel);
+                                        panel.object[2][10].MapX = 3 * panel.tileSize - 3;
+                                        panel.object[2][10].MapY = 3 * panel.tileSize + 20;
+                                        panel.object[2][14] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Toilet":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;
+                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                        panel.playSoundEffect(3);
+                                        panel.object[2][15] = new B_Toilet_Interact(panel);
+                                        panel.object[2][15].MapX = 13 * panel.tileSize;
+                                        panel.object[2][15].MapY = 12 * panel.tileSize + 20;
+                                        panel.object[2][12] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Toilet_INTERACT":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;
+                                    if(ObjectCounter>8) {
+                                        panel.playSoundEffect(3);
+                                        panel.object[2][12] = new B_Toilet(panel);
+                                        panel.object[2][12].MapX = 13 * panel.tileSize;
+                                        panel.object[2][12].MapY = 12 * panel.tileSize + 20;
+                                        panel.object[2][15] = null;
+                                        ObjectCounter=0;
+                                    }
+                                }
+                                break;
+
+                            case "Bathtub_INTERACT":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;
+                                    if(ObjectCounter>8) {
+                                        panel.playSoundEffect(3);
+                                        panel.object[2][16] = new B_Bathtub(panel);
+                                        panel.object[2][16].MapX = 11* panel.tileSize;
+                                        panel.object[2][16].MapY = 6* panel.tileSize-24;
+                                        panel.object[2][7] = null;
+                                        ObjectCounter=0;
+                                    }
+                                }
+                                break;
+
+                            case "Bathtub":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;
+                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        if (!KitchenKey) {
+                                            panel.playSoundEffect(3);
+                                            panel.GameState = panel.dialogueState;
+                                            panel.ui.currentDialogue = dialogues[13];
+                                            panel.ui.foundKey = true;
+                                            KitchenKey = true;
+                                        } else {
+                                            panel.playSoundEffect(3);
+                                            panel.object[2][7] = new B_Bathtub_Interact(panel);
+                                            panel.object[2][7].MapX = 11 * panel.tileSize;
+                                            panel.object[2][7].MapY = 6 * panel.tileSize - 24;
+                                            panel.object[2][16] = null;
+                                            ObjectCounter = 0;
+                                        }
+                                    }
+                                }
+                                break;
+
                         }
                     }
                     // INTERACTION WITH KITCHEN OBJECTS
@@ -374,8 +479,6 @@ public class Player extends Entity{
 
                     }
             }
-
-
         }
     }
 
@@ -390,12 +493,15 @@ public class Player extends Entity{
 
         // CORRIDOR
         dialogues[5] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL";
-        dialogues[6] = "STILL MISSING DIALOGE\nSomething about Fire";
-        dialogues[7] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch";
-        dialogues[8] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk";
-        dialogues[9] = "STILL MISSING DIALOGE\nClock..";
-        dialogues[10] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB";
-        dialogues[11] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk.";
+        dialogues[6] = "STILL MISSING DIALOGE\nSomething about Fire (Fireplace)";
+        dialogues[7] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch (Couch)";
+        dialogues[8] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk (Clothes)";
+        dialogues[9] = "STILL MISSING DIALOGE\nClock.. (Clock)";
+        dialogues[10] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB (Shelf + Tool)";
+        dialogues[11] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk. (Shelf/Fish)";
+        dialogues[12] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED! (Kitchen Door)";
+
+        dialogues[13] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND (Bathtub)";
 
         // BATHROOM
 

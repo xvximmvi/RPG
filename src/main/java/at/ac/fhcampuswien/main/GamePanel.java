@@ -1,8 +1,8 @@
 package at.ac.fhcampuswien.main;
 
-import at.ac.fhcampuswien.Object.GameObject;
-import at.ac.fhcampuswien.Sound.Sound;
-import at.ac.fhcampuswien.Sound.SoundEffect;
+import at.ac.fhcampuswien.object.GameObject;
+import at.ac.fhcampuswien.sound.Sound;
+import at.ac.fhcampuswien.sound.SoundEffect;
 import at.ac.fhcampuswien.entity.Player;
 import at.ac.fhcampuswien.tile.Manager;
 
