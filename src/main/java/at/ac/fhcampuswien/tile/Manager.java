@@ -56,6 +56,7 @@ public class Manager {
         loadMap("/Maps/Bedroom.txt", 0);    //call loadMap() of first Map (Bedroom)
         loadMap("/Maps/Corridor.txt",1);    //call loadMap() of second Map (Corridor)
         loadMap("/Maps/Bathroom.txt",2);    //call loadMap() of third Map (Bathroom)
+        loadMap("/Maps/Kitchen.txt",3);    //call loadMap() of third Map (Bathroom)
 
     }
 

@@ -121,7 +121,7 @@ public class SetAsset {
 
         panel.object[1][9] = new C_Clothes(panel);
         panel.object[1][9].MapX = 14* panel.tileSize-26;
-        panel.object[1][9].MapY = 12* panel.tileSize;
+        panel.object[1][9].MapY = 12* panel.tileSize+10;
 
         panel.object[1][10] = new C_Chouch(panel);
         panel.object[1][10].MapX = panel.tileSize-20;
@@ -153,7 +153,7 @@ public class SetAsset {
 
         panel.object[1][18] = new OBJECT_SideDoor1(panel);
         panel.object[1][18].MapX = 16* panel.tileSize - 6;
-        panel.object[1][18].MapY = 9* panel.tileSize+5;
+        panel.object[1][18].MapY = 9* panel.tileSize+5*3;
 
 
     }
@@ -224,5 +224,40 @@ public class SetAsset {
         panel.object[2][18] = new B_SmallBox(panel);
         panel.object[2][18].MapX =3*panel.tileSize-20;
         panel.object[2][18].MapY = 14* panel.tileSize;
+    }
+
+    public void setObjectKitchen(){
+        // WALL & OUTLINES
+        panel.object[3][0] = new K_Wall(panel);
+        panel.object[3][0].MapX = 12;
+        panel.object[3][0].MapY = 12;
+
+        panel.object[3][1] = new OBJECT_SideOutline(panel);
+        panel.object[3][1].MapX = 16 * panel.tileSize - 10;
+        panel.object[3][1].MapY = 6 * panel.tileSize;
+
+        panel.object[3][2] = new K_SideDoor1(panel);
+        panel.object[3][2].MapX = 0;
+        panel.object[3][2].MapY = 13* panel.tileSize-(5*3);
+
+        panel.object[3][3] = new K_SideDoor2(panel);
+        panel.object[3][3].MapX = 0;
+        panel.object[3][3].MapY = 9* panel.tileSize;
+
+        panel.object[3][4] = new OBJECT_SideDoor2(panel);
+        panel.object[3][4].MapX = 0;
+        panel.object[3][4].MapY = 9* panel.tileSize+5*3;
+
+        panel.object[3][5] = new OBJECT_SideOutline(panel);
+        panel.object[3][5].MapX = 10;
+        panel.object[3][5].MapY = 0;
+
+        panel.object[3][6] = new OBJECT_SideOutline(panel);
+        panel.object[3][6].MapX = 10;
+        panel.object[3][6].MapY = 12* panel.tileSize;
+
+        panel.object[3][7] = new OBJECT_BottomOutline_Long(panel);
+        panel.object[3][7].MapX = 0;
+        panel.object[3][7].MapY = 16 * panel.tileSize - 4;
     }
 }

@@ -366,7 +366,7 @@ public class UI {
             if (panel.TransitionMap == 0) panel.asset.setObjectBedroom();   //Set object to corresponding map
             if (panel.TransitionMap == 1) panel.asset.setObjectCorridor();
             if(panel.TransitionMap == 2) panel.asset.setObjectBathroom();
-            //if(panel.TransitionMap == 3) panel.asset.setObjectKitchen();
+            if(panel.TransitionMap == 3) panel.asset.setObjectKitchen();
 
             panel.player.MapX = panel.tileSize * panel.TransitionX - (panel.tileSize / 2);     // X-Coordinate of Spawn point
             panel.player.MapY = panel.tileSize * panel.TransitionY - (panel.tileSize / 2);     // Y-Coordinate of Spawn point

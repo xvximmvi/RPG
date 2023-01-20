@@ -7,18 +7,18 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class OBJECT_SideDoor1 extends GameObject{
+public class OBJECT_SideDoor2 extends GameObject{
     GamePanel panel;
-    public OBJECT_SideDoor1(GamePanel panel){
+    public OBJECT_SideDoor2(GamePanel panel){
 
-        name = "SideDoor1";
-        ObjectWidth = 6;            //Size in Pixels
+        name = "SideDoor2";
+        ObjectWidth = 7;            //Size in Pixels
         ObjectHeight = 4*48-10*3;   //Size in Pixels
 
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 
         try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/OBJECT_SideDoor1.png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/OBJECT_SideDoor2.png")));
             utility.scaleImage(image, ObjectWidth, ObjectHeight);
         } catch(IOException e){
             e.printStackTrace();

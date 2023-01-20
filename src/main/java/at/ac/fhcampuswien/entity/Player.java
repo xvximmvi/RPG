@@ -356,7 +356,7 @@ public class Player extends Entity{
                             case "SideDoor1":
                                 if(handler.INTERACT) {
                                     if (KitchenKey) {    //if Key in possession ...
-                                        //switchMap(1, 12, 7);
+                                        switchMap(3, 1, 11);
                                         if (!OutsideKey)
                                             panel.ui.foundKey = false;
                                     } else {  //if no Key in possession
@@ -466,14 +466,20 @@ public class Player extends Entity{
 
                             case "Bathtub_INTERACT":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                    if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
+                                    if(panel.ui.foundTool) {
+                                        ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                        if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
+                                            panel.playSoundEffect(3);
+                                            panel.object[2][16] = new B_Bathtub(panel);
+                                            panel.object[2][16].MapX = 11 * panel.tileSize;
+                                            panel.object[2][16].MapY = 6 * panel.tileSize - 24;
+                                            panel.object[2][7] = null;
+                                            ObjectCounter = 0;
+                                        }
+                                    } else {
                                         panel.playSoundEffect(3);
-                                        panel.object[2][16] = new B_Bathtub(panel);
-                                        panel.object[2][16].MapX = 11* panel.tileSize;
-                                        panel.object[2][16].MapY = 6* panel.tileSize-24;
-                                        panel.object[2][7] = null;
-                                        ObjectCounter=0;
+                                        panel.GameState = panel.dialogueState;
+                                        panel.ui.currentDialogue = dialogues[17];
                                     }
                                 }
                                 break;
@@ -501,10 +507,16 @@ public class Player extends Entity{
                                 break;
                         }
                     }
+
                     // INTERACTION WITH KITCHEN OBJECTS
                     else if(panel.currentMap == 3){
-                        //In work
-
+                        switch (ObjectName) {
+                            case "SideDoor2":
+                                if (handler.INTERACT) {
+                                        switchMap(1, 15, 11);
+                                }
+                                break;
+                        }
                     }
             }
         }
@@ -535,6 +547,7 @@ public class Player extends Entity{
         dialogues[i] = "STILL MISSING DIALOGE\nBig empty box with stuff. idk. (BB)";    i++;
         dialogues[i] = "STILL MISSING DIALOGE\nSmall empty box with stuff. idk. (SB)";  i++;
         dialogues[i] = "STILL MISSING DIALOGE\nToy Duck. Bath Duck. something. (Duck)"; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nCANT OPEN! NEED TOOL FROM CORRIDOR (Bathtub)"; i++;  //17
 
         // KITCHEN
 
