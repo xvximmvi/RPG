@@ -180,6 +180,7 @@ public class SetAsset {
         panel.object[2][4].MapX = 6 * panel.tileSize + 9;
         panel.object[2][4].MapY = 16 * panel.tileSize - 6;
 
+        // Objects
         panel.object[2][5] = new B_MiniRug(panel);
         panel.object[2][5].MapX =11* panel.tileSize+30;
         panel.object[2][5].MapY = 8* panel.tileSize;
@@ -217,11 +218,11 @@ public class SetAsset {
         panel.object[2][13].MapY = 3* panel.tileSize+20;
 
         panel.object[2][17] = new B_BigBox(panel);
-        panel.object[2][17].MapX =panel.tileSize;
+        panel.object[2][17].MapX =panel.tileSize-5;
         panel.object[2][17].MapY = 13* panel.tileSize;
 
         panel.object[2][18] = new B_SmallBox(panel);
-        panel.object[2][18].MapX =3*panel.tileSize-15;
+        panel.object[2][18].MapX =3*panel.tileSize-20;
         panel.object[2][18].MapY = 14* panel.tileSize;
     }
 }

@@ -425,7 +425,7 @@ public class Player extends Entity{
                             case "Toilet_INTERACT":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;
-                                    if(ObjectCounter>8) {
+                                    if(ObjectCounter>8) {       //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[2][12] = new B_Toilet(panel);
                                         panel.object[2][12].MapX = 13 * panel.tileSize;
@@ -439,7 +439,7 @@ public class Player extends Entity{
                             case "Bathtub_INTERACT":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;
-                                    if(ObjectCounter>8) {
+                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[2][16] = new B_Bathtub(panel);
                                         panel.object[2][16].MapX = 11* panel.tileSize;
@@ -476,6 +476,7 @@ public class Player extends Entity{
                     }
                     // INTERACTION WITH KITCHEN OBJECTS
                     else if(panel.currentMap == 3){
+                        //In work
 
                     }
             }
@@ -501,9 +502,9 @@ public class Player extends Entity{
         dialogues[11] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk. (Shelf/Fish)";
         dialogues[12] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED! (Kitchen Door)";
 
-        dialogues[13] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND (Bathtub)";
-
         // BATHROOM
+        dialogues[13] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND! (Bathtub)";
+
 
         // KITCHEN
 
