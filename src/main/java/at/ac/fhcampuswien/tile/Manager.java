@@ -68,6 +68,8 @@ public class Manager {
         setup(3, "WO_L", true);
         setup(4, "WO_M", true);
         setup(5, "WO_R", true);
+
+        // FLOOR (GENERAL)
         setup(6, "FO_LUC", false);
         setup(7, "FO_U1", false);
         setup(8, "FO_U2", false);
@@ -112,23 +114,6 @@ public class Manager {
         setup(43, "B_WO_LBC", true);
         setup(44, "B_WO_B", true);
         setup(45, "B_WO_RBC", true);
-        //Floor (optional; few problems with tiles)
-        setup(46, "B_FO_L1", false);
-        setup(47, "B_FO_1_M1", false);
-        setup(48, "B_FO_1_M2", false);
-        setup(49, "B_FO_R1", false);
-        setup(50, "B_FO_L2", false);
-        setup(51, "B_FO_2_M1", false);
-        setup(52, "B_FO_2_M2", false);
-        setup(53, "B_FO_R2", false);
-        setup(54, "B_FO_LBC", false);
-        setup(55, "B_FO_B_M1", false);
-        setup(56, "B_FO_B_M2", false);
-        setup(57, "B_FO_D1", false);
-        setup(58, "B_FO_D2", false);
-        setup(59, "B_FO_D3", false);
-        setup(60, "B_FO_D4", false);
-        setup(61, "B_FO_RBC", false);
 
         // KITCHEN
     }

@@ -295,7 +295,7 @@ public class Player extends Entity{
                                 break;
                             case "Lamp":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;
+                                    ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[1][13] = new C_Lamp_ON(panel);
@@ -308,7 +308,7 @@ public class Player extends Entity{
                                 break;
                             case "LampOn":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;
+                                    ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[1][12] = new C_Lamp(panel);
@@ -410,8 +410,8 @@ public class Player extends Entity{
                             // INTERACTIVE OBJECTS
                             case "Sink":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;
-                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                    ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[2][14] = new B_Sink_Interact(panel);
                                         panel.object[2][14].MapX = 3 * panel.tileSize - 3;
@@ -424,8 +424,8 @@ public class Player extends Entity{
 
                             case "Sink_INTERACT":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;
-                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                    ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[2][10] = new B_Sink(panel);
                                         panel.object[2][10].MapX = 3 * panel.tileSize - 3;
@@ -438,8 +438,8 @@ public class Player extends Entity{
 
                             case "Toilet":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;
-                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                    ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[2][15] = new B_Toilet_Interact(panel);
                                         panel.object[2][15].MapX = 13 * panel.tileSize;
@@ -452,8 +452,8 @@ public class Player extends Entity{
 
                             case "Toilet_INTERACT":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;
-                                    if(ObjectCounter>8) {       //Ugliest fucking solution to ever exist
+                                    ObjectCounter++;            //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if(ObjectCounter>9) {       //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[2][12] = new B_Toilet(panel);
                                         panel.object[2][12].MapX = 13 * panel.tileSize;
@@ -466,8 +466,8 @@ public class Player extends Entity{
 
                             case "Bathtub_INTERACT":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;
-                                    if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
+                                    ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
                                         panel.object[2][16] = new B_Bathtub(panel);
                                         panel.object[2][16].MapX = 11* panel.tileSize;
@@ -480,8 +480,8 @@ public class Player extends Entity{
 
                             case "Bathtub":
                                 if (handler.INTERACT) {
-                                    ObjectCounter++;
-                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                         if (!KitchenKey) {
                                             panel.playSoundEffect(3);
                                             panel.GameState = panel.dialogueState;
@@ -514,44 +514,27 @@ public class Player extends Entity{
     public void setDialogue() {
         int i=0;
         // BEDROOM
-        dialogues[i] = "The door is locked...\nWhat should I do?";
-        i++;
-        dialogues[i] = "I don't think I can fall asleep...";
-        i++;
-        dialogues[i] = "huh...\nseems like there is a key in the drawer.";
-        i++;
-        dialogues[i] = "My favorite book is about a goldfish.";
-        i++;
-        dialogues[i] = "I don't want to play right now. \nMaybe later horsy.";
-        i++;
+        dialogues[i] = "The door is locked...\nWhat should I do?";  i++;
+        dialogues[i] = "I don't think I can fall asleep...";    i++;
+        dialogues[i] = "huh...\nseems like there is a key in the drawer.";  i++;
+        dialogues[i] = "My favorite book is about a goldfish."; i++;
+        dialogues[i] = "I don't want to play right now. \nMaybe later horsy.";  i++;
 
         // CORRIDOR
-        dialogues[i] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nSomething about Fire (Fireplace)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch (Couch)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk (Clothes)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nClock.. (Clock)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB (Shelf + Tool)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk. (Shelf/Fish)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED! (Kitchen Door)";
-        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL";  i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nSomething about Fire (Fireplace)";   i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch (Couch)"; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk (Clothes)"; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nClock.. (Clock)";    i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB (Shelf + Tool)"; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk. (Shelf/Fish)";   i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED! (Kitchen Door)";    i++;
 
         // BATHROOM
-        dialogues[i] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND! (Bathtub)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nBig empty box with stuff. idk. (BB)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nSmall empty box with stuff. idk. (SB)";
-        i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nToy Duck. Bath Duck. something. (Duck)";
-        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND! (Bathtub)";   i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nBig empty box with stuff. idk. (BB)";    i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nSmall empty box with stuff. idk. (SB)";  i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nToy Duck. Bath Duck. something. (Duck)"; i++;
 
         // KITCHEN
 
