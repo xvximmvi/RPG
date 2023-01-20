@@ -475,6 +475,7 @@ public class Player extends Entity{
                                             panel.object[2][16].MapY = 6 * panel.tileSize - 24;
                                             panel.object[2][7] = null;
                                             ObjectCounter = 0;
+                                            panel.ui.usedTool = true;
                                         }
                                     } else {
                                         panel.playSoundEffect(3);
@@ -538,7 +539,7 @@ public class Player extends Entity{
         dialogues[i] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch (Couch)"; i++;
         dialogues[i] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk (Clothes)"; i++;
         dialogues[i] = "STILL MISSING DIALOGE\nClock.. (Clock)";    i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB (Shelf + Tool)"; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB"; i++;
         dialogues[i] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk. (Shelf/Fish)";   i++;
         dialogues[i] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED! (Kitchen Door)";    i++;
 
@@ -547,7 +548,7 @@ public class Player extends Entity{
         dialogues[i] = "STILL MISSING DIALOGE\nBig empty box with stuff. idk. (BB)";    i++;
         dialogues[i] = "STILL MISSING DIALOGE\nSmall empty box with stuff. idk. (SB)";  i++;
         dialogues[i] = "STILL MISSING DIALOGE\nToy Duck. Bath Duck. something. (Duck)"; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nCANT OPEN! NEED TOOL FROM CORRIDOR (Bathtub)"; i++;  //17
+        dialogues[i] = "STILL MISSING DIALOGE\nCANT OPEN! NEED TOOL FROM CORRIDOR"; i++;  //17
 
         // KITCHEN
 

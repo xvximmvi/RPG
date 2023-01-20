@@ -47,6 +47,7 @@ public class UI {
     int MessageCounter = 0;
     public boolean foundKey = false;
     public boolean foundTool = false;
+    public boolean usedTool = false;
 
     int TransitionCounter = 0;
 
@@ -123,9 +124,11 @@ public class UI {
 
             // TOOL (Screwdriver) -----------------------------------------------------------
             if (foundTool) {
-                OBJECT_Tool tool = new OBJECT_Tool(panel);
-                bufferedImage = tool.image;
-                graphics2D.drawImage(bufferedImage, 14 * panel.tileSize, 90, 7 * 3, 28 * 3, null);
+                if(!usedTool) {
+                    OBJECT_Tool tool = new OBJECT_Tool(panel);
+                    bufferedImage = tool.image;
+                    graphics2D.drawImage(bufferedImage, 14 * panel.tileSize, 90, 7 * 3, 28 * 3, null);
+                }
             }
 
             // TUTORIAL ------------------------------------------------------------------

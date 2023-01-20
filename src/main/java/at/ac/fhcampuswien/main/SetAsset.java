@@ -224,6 +224,10 @@ public class SetAsset {
         panel.object[2][18] = new B_SmallBox(panel);
         panel.object[2][18].MapX =3*panel.tileSize-20;
         panel.object[2][18].MapY = 14* panel.tileSize;
+
+        panel.object[2][19] = new OBJECT_Window(panel);
+        panel.object[2][19].MapX =10*panel.tileSize;
+        panel.object[2][19].MapY = panel.tileSize+15;
     }
 
     public void setObjectKitchen(){
