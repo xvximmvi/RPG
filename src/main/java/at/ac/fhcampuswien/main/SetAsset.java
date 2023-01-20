@@ -321,5 +321,8 @@ public class SetAsset {
         panel.object[3][21].MapX = 11 * panel.tileSize+15;
         panel.object[3][21].MapY = 2 * panel.tileSize;
 
+        panel.object[3][22] = new K_EmptyPot(panel);
+        panel.object[3][22].MapX = 12 * panel.tileSize;
+        panel.object[3][22].MapY = 4 * panel.tileSize;
     }
 }

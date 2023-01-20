@@ -19,7 +19,7 @@ public class K_Sink_Interact extends GameObject {
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 
         try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/K_Sink:Interact.png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/K_Sink_Interact.png")));
             utility.scaleImage(image, ObjectWidth, ObjectHeight);
         } catch(IOException e){
             e.printStackTrace();

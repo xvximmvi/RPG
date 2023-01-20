@@ -19,7 +19,7 @@ public class K_Fridge_Interact extends GameObject {
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 
         try {
-            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/K_Fridge:Interact.png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/K_Fridge_Interact.png")));
             utility.scaleImage(image, ObjectWidth, ObjectHeight);
         } catch(IOException e){
             e.printStackTrace();

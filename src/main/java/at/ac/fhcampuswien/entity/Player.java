@@ -516,6 +516,112 @@ public class Player extends Entity{
                                         switchMap(1, 15, 11);
                                 }
                                 break;
+
+                            case "Fridge":
+                            if (handler.INTERACT) {
+                                ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    panel.object[3][23] = new K_Fridge_Interact(panel);
+                                    panel.object[3][23].MapX = panel.tileSize-4;
+                                    panel.object[3][23].MapY = 3 * panel.tileSize;
+                                    panel.object[3][8] = null;
+                                    if(MapY>(6* panel.tileSize-(panel.tileSize / 2)) && MapX<((panel.tileSize+26*4)-(panel.tileSize / 2)))
+                                        MapY = panel.tileSize *8 - (panel.tileSize / 2);
+                                    ObjectCounter = 0;
+                                }
+                            }
+                            break;
+
+                            case "Fridge_INTERACT":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.object[3][8] = new K_Fridge(panel);
+                                        panel.object[3][8].MapX = panel.tileSize;
+                                        panel.object[3][8].MapY = 3 * panel.tileSize;
+                                        panel.object[3][23] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Oven":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.object[3][24] = new K_Oven_Interact(panel);
+                                        panel.object[3][24].MapX = 5*panel.tileSize;
+                                        panel.object[3][24].MapY = 4 * panel.tileSize;
+                                        panel.object[3][9] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Oven_INTERACT":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.object[3][9] = new K_Oven(panel);
+                                        panel.object[3][9].MapX = 5*panel.tileSize;
+                                        panel.object[3][9].MapY = 4 * panel.tileSize;
+                                        panel.object[3][24] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Sink":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.object[3][25] = new K_Sink_Interact(panel);
+                                        panel.object[3][25].MapX = 8*panel.tileSize;
+                                        panel.object[3][25].MapY = 4 * panel.tileSize-4;
+                                        panel.object[3][10] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Sink_INTERACT":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.object[3][10] = new K_Sink(panel);
+                                        panel.object[3][10].MapX = 8*panel.tileSize;
+                                        panel.object[3][10].MapY = 4 * panel.tileSize-4;
+                                        panel.object[3][25] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Shelf":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.object[3][26] = new K_Shelf_Interact(panel);
+                                        panel.object[3][26].MapX = 8 * panel.tileSize+32*4;
+                                        panel.object[3][26].MapY = 4 * panel.tileSize;
+                                        panel.object[3][11] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Shelf_INTERACT":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.object[3][11] = new K_Shelf(panel);
+                                        panel.object[3][11].MapX = 8 * panel.tileSize+32*4;
+                                        panel.object[3][11].MapY = 4 * panel.tileSize;
+                                        panel.object[3][26] = null;
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
                         }
                     }
             }
