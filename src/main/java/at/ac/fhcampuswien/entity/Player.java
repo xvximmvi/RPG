@@ -380,6 +380,34 @@ public class Player extends Entity{
                                 }
                                 break;
 
+                            // NORMAL OBJECTS
+                            case "BigBox":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[14];
+                                    //panel.object[2][17] = null;   //Optional: Make Box disappear
+                                }
+                                break;
+
+                            case "SmallBox":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[15];
+                                    //panel.object[2][18] = null;   //Optional: Make Box disappear
+                                }
+                                break;
+
+                            case "Duck":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[16];
+                                }
+                                break;
+
+                            // INTERACTIVE OBJECTS
                             case "Sink":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;
@@ -471,32 +499,6 @@ public class Player extends Entity{
                                     }
                                 }
                                 break;
-
-                            case "BigBox":
-                                if (handler.INTERACT) {
-                                    panel.playSoundEffect(3);
-                                    panel.GameState = panel.dialogueState;
-                                    panel.ui.currentDialogue = dialogues[14];
-                                    //panel.object[2][17] = null;   //Optional
-                                }
-                                break;
-
-                            case "SmallBox":
-                                if (handler.INTERACT) {
-                                    panel.playSoundEffect(3);
-                                    panel.GameState = panel.dialogueState;
-                                    panel.ui.currentDialogue = dialogues[15];
-                                    //panel.object[2][18] = null;   //Optional
-                                }
-                                break;
-
-                            case "Duck":
-                                if (handler.INTERACT) {
-                                    panel.playSoundEffect(3);
-                                    panel.GameState = panel.dialogueState;
-                                    panel.ui.currentDialogue = dialogues[16];
-                                }
-                                break;
                         }
                     }
                     // INTERACTION WITH KITCHEN OBJECTS
@@ -510,28 +512,46 @@ public class Player extends Entity{
 
     // LIST OF ALL DIALOGUES
     public void setDialogue() {
+        int i=0;
         // BEDROOM
-        dialogues[0] = "The door is locked...\nWhat should I do?";
-        dialogues[1] = "I don't think I can fall asleep...";
-        dialogues[2] = "huh...\nseems like there is a key in the drawer.";
-        dialogues[3] = "My favorite book is about a goldfish.";
-        dialogues[4] = "I don't want to play right now. \nMaybe later horsy.";
+        dialogues[i] = "The door is locked...\nWhat should I do?";
+        i++;
+        dialogues[i] = "I don't think I can fall asleep...";
+        i++;
+        dialogues[i] = "huh...\nseems like there is a key in the drawer.";
+        i++;
+        dialogues[i] = "My favorite book is about a goldfish.";
+        i++;
+        dialogues[i] = "I don't want to play right now. \nMaybe later horsy.";
+        i++;
 
         // CORRIDOR
-        dialogues[5] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL";
-        dialogues[6] = "STILL MISSING DIALOGE\nSomething about Fire (Fireplace)";
-        dialogues[7] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch (Couch)";
-        dialogues[8] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk (Clothes)";
-        dialogues[9] = "STILL MISSING DIALOGE\nClock.. (Clock)";
-        dialogues[10] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB (Shelf + Tool)";
-        dialogues[11] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk. (Shelf/Fish)";
-        dialogues[12] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED! (Kitchen Door)";
+        dialogues[i] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nSomething about Fire (Fireplace)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch (Couch)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk (Clothes)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nClock.. (Clock)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB (Shelf + Tool)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk. (Shelf/Fish)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED! (Kitchen Door)";
+        i++;
 
         // BATHROOM
-        dialogues[13] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND! (Bathtub)";
-        dialogues[14] = "STILL MISSING DIALOGE\nBig empty box with stuff. idk. (BB)";
-        dialogues[15] = "STILL MISSING DIALOGE\nSmall empty box with stuff. idk. (SB)";
-        dialogues[16] = "STILL MISSING DIALOGE\nToy Duck. Bath Duck. something. (Duck)";
+        dialogues[i] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND! (Bathtub)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nBig empty box with stuff. idk. (BB)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nSmall empty box with stuff. idk. (SB)";
+        i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nToy Duck. Bath Duck. something. (Duck)";
+        i++;
 
         // KITCHEN
 
