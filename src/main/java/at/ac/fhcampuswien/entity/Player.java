@@ -472,6 +472,31 @@ public class Player extends Entity{
                                 }
                                 break;
 
+                            case "BigBox":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[14];
+                                    //panel.object[2][17] = null;   //Optional
+                                }
+                                break;
+
+                            case "SmallBox":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[15];
+                                    //panel.object[2][18] = null;   //Optional
+                                }
+                                break;
+
+                            case "Duck":
+                                if (handler.INTERACT) {
+                                    panel.playSoundEffect(3);
+                                    panel.GameState = panel.dialogueState;
+                                    panel.ui.currentDialogue = dialogues[16];
+                                }
+                                break;
                         }
                     }
                     // INTERACTION WITH KITCHEN OBJECTS
@@ -504,7 +529,9 @@ public class Player extends Entity{
 
         // BATHROOM
         dialogues[13] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND! (Bathtub)";
-
+        dialogues[14] = "STILL MISSING DIALOGE\nBig empty box with stuff. idk. (BB)";
+        dialogues[15] = "STILL MISSING DIALOGE\nSmall empty box with stuff. idk. (SB)";
+        dialogues[16] = "STILL MISSING DIALOGE\nToy Duck. Bath Duck. something. (Duck)";
 
         // KITCHEN
 
