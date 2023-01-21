@@ -20,6 +20,7 @@ import java.text.DecimalFormat;
             > Message
             > Key
             > Tool
+            > Kitchen Tools
             > Tutorial
         - PAUSE STATE
         - DIALOGUE STATE

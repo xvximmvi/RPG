@@ -15,6 +15,7 @@ public class BR_Ball extends GameObject{
         ObjectWidth = 48;       //Size in Pixels
         ObjectHeight = 48+10;   //Size in Pixels
 
+
         Area = new Rectangle(0, 0, ObjectWidth, ObjectHeight);
 
         try {

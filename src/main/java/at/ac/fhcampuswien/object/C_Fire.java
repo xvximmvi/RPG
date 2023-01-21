@@ -24,6 +24,5 @@ public class C_Fire extends GameObject{
             e.printStackTrace();
         }
         collision = true;
-
     }
 }

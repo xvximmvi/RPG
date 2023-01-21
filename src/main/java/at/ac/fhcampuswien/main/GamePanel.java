@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.main;
 
+import at.ac.fhcampuswien.object.C_Fire;
 import at.ac.fhcampuswien.object.GameObject;
 import at.ac.fhcampuswien.sound.Sound;
 import at.ac.fhcampuswien.sound.SoundEffect;
@@ -64,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int ScreenHeight = tileSize*maxScreenRow; //576px
 
     // MAP SETTINGS
-    public final int maxMap = 5;
+    public final int maxMap = 4;
     public int currentMap = 0;
 
     public int maxMapCol = 16;
@@ -201,7 +202,7 @@ public class GamePanel extends JPanel implements Runnable{
             manager.draw(graphics2d);   //draw manager tiles
 
             // OBJECT
-            for(int i = 0; i < object[2].length; i++){
+            for(int i = 0; i < object[1].length; i++){
                 if(object[currentMap][i] != null){
                     object[currentMap][i].draw(graphics2d, this);
                 }

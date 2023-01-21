@@ -49,14 +49,21 @@ public class GameObject {
         if (MapX + panel.tileSize > panel.player.MapX - panel.player.ScreenX &&
                 MapX - panel.tileSize < panel.player.MapX + panel.player.ScreenX &&
                 MapY + panel.tileSize > panel.player.MapY - panel.player.ScreenY &&
-                MapY - panel.tileSize < panel.player.MapY + panel.player.ScreenY)
+                MapY - panel.tileSize < panel.player.MapY + panel.player.ScreenY) {
             g2.drawImage(image, ScreenX, ScreenY, ObjectWidth, ObjectHeight, null);
+
+        }
 
         // If player is around the edge, draw everything
         else if (panel.player.MapX < panel.player.ScreenX ||
                 panel.player.MapY < panel.player.ScreenY ||
                 RightOffset > panel.MapWidth - panel.player.MapX ||
-                BottomOffset > panel.MapHeight - panel.player.MapY)
+                BottomOffset > panel.MapHeight - panel.player.MapY ||
+                //Problem: Fireplace (Map1) & Wall(Map3) disappeared when standing in certain Map-Position (Around the middle ob Map)
+                //Why? Absolutely no Idea. No fucking Clue.
+                //the most hideous fucking solution to ever exist:
+                !(panel.object[1][8]==null) || !(panel.object[3][0]==null)) {   //if either of the objects isn't null. don't care. just Draw.
             g2.drawImage(image, ScreenX, ScreenY, ObjectWidth, ObjectHeight, null);
+        }
     }
 }
