@@ -1,6 +1,5 @@
 package at.ac.fhcampuswien.main;
 
-import at.ac.fhcampuswien.object.C_Fire;
 import at.ac.fhcampuswien.object.GameObject;
 import at.ac.fhcampuswien.sound.Sound;
 import at.ac.fhcampuswien.sound.SoundEffect;
@@ -86,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable{
     SoundEffect soundEffect = new SoundEffect();
     public CollisionDetection collisionDetection = new CollisionDetection(this);    //public for Player
     public SetAsset asset = new SetAsset(this);
-    public UI ui = new UI(this);
+    public UserInterface ui = new UserInterface(this);
     Thread thread;      //implements Runnable (in public class)
 
     // ENTITY AND OBJECT

@@ -32,7 +32,7 @@ import java.text.DecimalFormat;
     METHODS FOR EACH STATE!
  */
 
-public class UI {
+public class UserInterface {
 
     GamePanel panel;
     Graphics2D graphics2D;
@@ -63,6 +63,8 @@ public class UI {
     public boolean usedEmptyPlate = false;
     public boolean usedSoupPlate = false;
 
+    public int CompletionOfGame = 0;
+
     int TransitionCounter = 0;
 
     public boolean TutorialOn = false;
@@ -76,7 +78,7 @@ public class UI {
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");  //minimize decimals
 
     // UI CONSTRUCTOR
-    public UI(GamePanel panel){
+    public UserInterface(GamePanel panel){
         this.panel = panel;
 
         // IMPORTED FONT FILE
@@ -487,21 +489,20 @@ public class UI {
 
 
         // DOOR UNLOCKED    ------------------------------------------------------------------
-        Text = "Door unlocked!";
+        Text = "Completed: ";
         graphics2D.setFont(Retro_Gaming);
         graphics2D.setColor(Color.white);
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 30F));
         x = CenterXText(Text);
         y += panel.tileSize*2;
-        graphics2D.drawString(Text, x, y);
 
         // SHADOW
         graphics2D.setColor(Color.BLACK);
-        graphics2D.drawString(Text,x+3,y+3);
+        graphics2D.drawString(Text + (CompletionOfGame*100/panel.player.FullCompletion) + "%",x+3,y+3);
 
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
-        graphics2D.drawString(Text, x, y);
+        graphics2D.drawString(Text + ((CompletionOfGame*100)/panel.player.FullCompletion) + "%", x, y);
 
 
         // PLAY AGAIN       ------------------------------------------------------------------

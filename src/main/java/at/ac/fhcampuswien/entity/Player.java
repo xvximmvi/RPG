@@ -54,6 +54,9 @@ public class Player extends Entity{
     int InteractionCounter=0;           //InteractionCounter: slower interaction with objects
     int ObjectCounter = 0;
 
+    public int FullCompletion = 54;
+    Boolean[] complete = new Boolean[FullCompletion+1];
+
     // OBJECT STATE
     public boolean BR_Light_State = false;
 
@@ -92,6 +95,9 @@ public class Player extends Entity{
         BedroomKey = false;
         KitchenKey = false;
         OutsideKey = false;
+
+        for(int c=0; c <= FullCompletion; c++)
+            complete[c]=false;
 
 
         panel.ui.TutorialOn = true;     //Start game with Tutorial
@@ -206,6 +212,7 @@ public class Player extends Entity{
 
     // OBJECT INTERACTION
     public void Interaction(int index) {
+
         OBJECT_Key key = new OBJECT_Key(panel); //OBJECT_Key Class
         bufferedImage = key.image;              //image of Key Class
 
@@ -230,6 +237,10 @@ public class Player extends Entity{
                                         panel.ui.currentDialogue = dialogues[2];
                                         panel.ui.foundKey = true;
                                         BedroomKey = true;
+                                        if(!complete[0]){       // only add one time to Completion
+                                            complete[0] = true; //set true, so it doesn't add again on second use
+                                            panel.ui.CompletionOfGame++;    //add to Completion
+                                        }
                                     } else {    //if Key is already in Possession
                                         panel.playSoundEffect(3);               //play Notification Sound
                                         //Turn Light on and off
@@ -238,8 +249,17 @@ public class Player extends Entity{
                                             panel.object[0][13] = new BR_Light_ON(panel);
                                             panel.object[0][13].MapX = 11 * panel.tileSize - 2;
                                             panel.object[0][13].MapY = 4 * panel.tileSize - 23;
-                                        } else
+                                            if(!complete[1]){
+                                                complete[1] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
+                                        } else {
                                             panel.object[0][13] = null;    //if turning off-> then delete Object (null)
+                                            if (!complete[2]) {
+                                                complete[2] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
+                                        }
                                     }
                                 }
                                 break;
@@ -249,6 +269,10 @@ public class Player extends Entity{
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[1];
+                                    if(!complete[3]){
+                                        complete[3] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -257,6 +281,10 @@ public class Player extends Entity{
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[3];
+                                    if(!complete[4]){
+                                        complete[4] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -265,6 +293,10 @@ public class Player extends Entity{
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[4];
+                                    if(!complete[5]){
+                                        complete[5] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -274,10 +306,18 @@ public class Player extends Entity{
                                         switchMap(1, 12, 7);
                                         if (!KitchenKey && !OutsideKey)
                                             panel.ui.foundKey = false;
+                                        if(!complete[6]){
+                                            complete[6] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                     } else {  //if no Key in possession
                                         panel.playSoundEffect(3);
                                         panel.GameState = panel.dialogueState;
                                         panel.ui.currentDialogue = dialogues[0];
+                                        if(!complete[7]){
+                                            complete[7] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                     }
                                 }
                                 break;
@@ -292,22 +332,38 @@ public class Player extends Entity{
                                 if (OutsideKey && handler.INTERACT) {
                                     panel.playSoundEffect(0);
                                     panel.GameState = panel.GameWonState;
+                                    if(!complete[8]){
+                                        complete[8] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 } else if (!OutsideKey && handler.INTERACT) {  //if no Key in possession
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[5];
+                                    if(!complete[9]){
+                                        complete[9] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
                             case "Bedroom_Door":
                                 if (handler.INTERACT) {
                                     panel.playSoundEffect(3);
                                     switchMap(0, 8, 14);
+                                    if(!complete[10]){
+                                        complete[10] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
                             case "Bathroom_Door":
                                 if (handler.INTERACT) {
                                     panel.playSoundEffect(3);
                                     switchMap(2, 8, 14);
+                                    if(!complete[11]){
+                                        complete[11] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
                             case "Fire":
@@ -315,6 +371,10 @@ public class Player extends Entity{
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[6];
+                                    if(!complete[12]){
+                                        complete[12] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
                             case "Lamp":
@@ -326,6 +386,10 @@ public class Player extends Entity{
                                         panel.object[1][13].MapX = 2 * panel.tileSize + 20;
                                         panel.object[1][13].MapY = 3 * panel.tileSize + 30;
                                         panel.object[1][12] = null;
+                                        if(!complete[13]){
+                                            complete[13] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -339,6 +403,10 @@ public class Player extends Entity{
                                         panel.object[1][12].MapX = 2 * panel.tileSize + 20;
                                         panel.object[1][12].MapY = 3 * panel.tileSize + 30;
                                         panel.object[1][13] = null;
+                                        if(!complete[14]){
+                                            complete[14] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -348,6 +416,10 @@ public class Player extends Entity{
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[7];
+                                    if(!complete[15]){
+                                        complete[15] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
                             case "Clothes":
@@ -355,6 +427,10 @@ public class Player extends Entity{
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[8];
+                                    if(!complete[16]){
+                                        complete[16] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
                             case "Clock":
@@ -362,6 +438,10 @@ public class Player extends Entity{
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[9];
+                                    if(!complete[17]){
+                                        complete[17] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
                             case "ShelfFish":
@@ -370,10 +450,18 @@ public class Player extends Entity{
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[10];
                                     panel.ui.foundTool = true;
+                                    if(!complete[18]){
+                                        complete[18] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 } else if (panel.ui.foundTool && handler.INTERACT) {
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[11];
+                                    if(!complete[19]){
+                                        complete[19] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -381,16 +469,23 @@ public class Player extends Entity{
                                 if(handler.INTERACT) {
                                     if (KitchenKey) {    //if Key in possession ...
                                         switchMap(3, 1, 11);
+                                        if(!complete[20]){
+                                            complete[20] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         if (!OutsideKey)
                                             panel.ui.foundKey = false;
                                     } else {  //if no Key in possession
                                         panel.playSoundEffect(3);
                                         panel.GameState = panel.dialogueState;
                                         panel.ui.currentDialogue = dialogues[12];
+                                        if(!complete[21]){
+                                            complete[21] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                     }
                                 }
                                 break;
-
                         }
                     }
 
@@ -401,6 +496,10 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     panel.playSoundEffect(3);
                                     switchMap(1, 5, 7);
+                                    if(!complete[22]){
+                                        complete[22] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -411,6 +510,10 @@ public class Player extends Entity{
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[14];
                                     //panel.object[2][17] = null;   //Optional: Make Box disappear
+                                    if(!complete[23]){
+                                        complete[23] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -420,6 +523,10 @@ public class Player extends Entity{
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[15];
                                     //panel.object[2][18] = null;   //Optional: Make Box disappear
+                                    if(!complete[24]){
+                                        complete[24] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -428,6 +535,10 @@ public class Player extends Entity{
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;
                                     panel.ui.currentDialogue = dialogues[16];
+                                    if(!complete[25]){
+                                        complete[25] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -441,6 +552,10 @@ public class Player extends Entity{
                                         panel.object[2][14].MapX = 3 * panel.tileSize - 3;
                                         panel.object[2][14].MapY = 3 * panel.tileSize + 20;
                                         panel.object[2][10] = null;
+                                        if(!complete[26]){
+                                            complete[26] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -455,6 +570,10 @@ public class Player extends Entity{
                                         panel.object[2][10].MapX = 3 * panel.tileSize - 3;
                                         panel.object[2][10].MapY = 3 * panel.tileSize + 20;
                                         panel.object[2][14] = null;
+                                        if(!complete[27]){
+                                            complete[27] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -469,6 +588,10 @@ public class Player extends Entity{
                                         panel.object[2][15].MapX = 13 * panel.tileSize;
                                         panel.object[2][15].MapY = 12 * panel.tileSize + 20;
                                         panel.object[2][12] = null;
+                                        if(!complete[28]){
+                                            complete[28] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -483,6 +606,10 @@ public class Player extends Entity{
                                         panel.object[2][12].MapX = 13 * panel.tileSize;
                                         panel.object[2][12].MapY = 12 * panel.tileSize + 20;
                                         panel.object[2][15] = null;
+                                        if(!complete[29]){
+                                            complete[29] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter=0;
                                     }
                                 }
@@ -498,13 +625,21 @@ public class Player extends Entity{
                                             panel.object[2][16].MapX = 11 * panel.tileSize;
                                             panel.object[2][16].MapY = 6 * panel.tileSize - 24;
                                             panel.object[2][7] = null;
-                                            ObjectCounter = 0;
+                                            if(!complete[30]){
+                                                complete[30] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                             panel.ui.usedTool = true;
+                                            ObjectCounter = 0;
                                         }
                                     } else {
                                         panel.playSoundEffect(3);
                                         panel.GameState = panel.dialogueState;
                                         panel.ui.currentDialogue = dialogues[17];
+                                        if(!complete[31]){
+                                            complete[31] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                     }
                                 }
                                 break;
@@ -519,12 +654,20 @@ public class Player extends Entity{
                                             panel.ui.currentDialogue = dialogues[13];
                                             panel.ui.foundKey = true;
                                             KitchenKey = true;
+                                            if(!complete[32]){
+                                                complete[32] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                         } else {
                                             panel.playSoundEffect(3);
                                             panel.object[2][7] = new B_Bathtub_Interact(panel);
                                             panel.object[2][7].MapX = 11 * panel.tileSize;
                                             panel.object[2][7].MapY = 6 * panel.tileSize - 24;
                                             panel.object[2][16] = null;
+                                            if(!complete[33]){
+                                                complete[33] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                             ObjectCounter = 0;
                                         }
                                     }
@@ -539,6 +682,10 @@ public class Player extends Entity{
                             case "SideDoor2":
                                 if (handler.INTERACT) {
                                         switchMap(1, 15, 11);
+                                    if(!complete[34]){
+                                        complete[34] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                 }
                                 break;
 
@@ -552,6 +699,10 @@ public class Player extends Entity{
                                     panel.object[3][8] = null;
                                     if(MapY>(6* panel.tileSize-(panel.tileSize / 2)) && MapX<((panel.tileSize+26*4)-(panel.tileSize / 2)))
                                         MapY = panel.tileSize *8 - (panel.tileSize / 2);
+                                    if(!complete[35]){
+                                        complete[35] = true;
+                                        panel.ui.CompletionOfGame++;
+                                    }
                                     ObjectCounter = 0;
                                 }
                             }
@@ -564,17 +715,29 @@ public class Player extends Entity{
                                             if(panel.ui.usedEmptyPot && !panel.ui.collectSoupCan) {
                                                 panel.GameState = panel.dialogueState;
                                                 panel.ui.currentDialogue = dialogues[18];
+                                                if(!complete[36]){
+                                                    complete[36] = true;
+                                                    panel.ui.CompletionOfGame++;
+                                                }
                                                 panel.ui.collectSoupCan = true;
                                             }
                                             else {
                                                 if(!panel.ui.collectSoupCan) {
                                                     panel.GameState = panel.dialogueState;
                                                     panel.ui.currentDialogue = dialogues[19];
+                                                    if(!complete[37]){
+                                                        complete[37] = true;
+                                                        panel.ui.CompletionOfGame++;
+                                                    }
                                                 }
                                                 panel.object[3][8] = new K_Fridge(panel);
                                                 panel.object[3][8].MapX = panel.tileSize;
                                                 panel.object[3][8].MapY = 3 * panel.tileSize;
                                                 panel.object[3][23] = null;
+                                                if(!complete[38]){
+                                                    complete[38] = true;
+                                                    panel.ui.CompletionOfGame++;
+                                                }
                                             }
                                         ObjectCounter = 0;
                                     }
@@ -589,6 +752,10 @@ public class Player extends Entity{
                                         panel.object[3][24].MapX = 5*panel.tileSize;
                                         panel.object[3][24].MapY = 4 * panel.tileSize;
                                         panel.object[3][9] = null;
+                                        if(!complete[39]){
+                                            complete[39] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -603,11 +770,19 @@ public class Player extends Entity{
                                             panel.object[3][9].MapX = 5 * panel.tileSize;
                                             panel.object[3][9].MapY = 4 * panel.tileSize;
                                             panel.object[3][24] = null;
+                                            if(!complete[40]){
+                                                complete[40] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                         } else {
                                             if(!panel.ui.collectSoupCan) {                  //Empty Pot but no soup
                                                 panel.object[3][27] = new K_EmptyPot(panel);
                                                 panel.object[3][27].MapX = 5 * panel.tileSize + 8;
                                                 panel.object[3][27].MapY = 4 * panel.tileSize + 4;
+                                                if(!complete[41]){
+                                                    complete[41] = true;
+                                                    panel.ui.CompletionOfGame++;
+                                                }
                                                 panel.ui.usedEmptyPot = true;
                                             } else if(panel.ui.collectSoupCan && !panel.ui.collectEmptyPlate) {  //Put Soup in Pot
                                                 if (!panel.ui.usedSoupCan) {
@@ -615,16 +790,28 @@ public class Player extends Entity{
                                                     panel.object[3][28].MapX = 5 * panel.tileSize + 8;
                                                     panel.object[3][28].MapY = 4 * panel.tileSize + 4;
                                                     panel.object[3][27] = null;
+                                                    if(!complete[42]){
+                                                        complete[42] = true;
+                                                        panel.ui.CompletionOfGame++;
+                                                    }
                                                     panel.ui.usedSoupCan = true;
                                                 } else {
                                                     panel.GameState = panel.dialogueState;
                                                     panel.ui.currentDialogue = dialogues[20];
+                                                    if(!complete[43]){
+                                                        complete[43] = true;
+                                                        panel.ui.CompletionOfGame++;
+                                                    }
                                                 }
                                             }else if(panel.ui.collectEmptyPlate) {      //Put Soup in Plate
                                                 panel.object[3][27] = new K_EmptyPot(panel);
                                                 panel.object[3][27].MapX = 5 * panel.tileSize + 8;
                                                 panel.object[3][27].MapY = 4 * panel.tileSize + 4;
                                                 panel.object[3][28] = null;
+                                                if(!complete[44]){
+                                                    complete[44] = true;
+                                                    panel.ui.CompletionOfGame++;
+                                                }
                                                 panel.ui.usedEmptyPlate = true;
                                                 panel.ui.collectSoupPlate = true;
                                             }
@@ -642,6 +829,10 @@ public class Player extends Entity{
                                         panel.object[3][25].MapX = 8*panel.tileSize;
                                         panel.object[3][25].MapY = 4 * panel.tileSize-4;
                                         panel.object[3][10] = null;
+                                        if(!complete[45]){
+                                            complete[45] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -655,6 +846,10 @@ public class Player extends Entity{
                                         panel.object[3][10].MapX = 8*panel.tileSize;
                                         panel.object[3][10].MapY = 4 * panel.tileSize-4;
                                         panel.object[3][25] = null;
+                                        if(!complete[46]){
+                                            complete[46] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -669,12 +864,24 @@ public class Player extends Entity{
                                             panel.object[3][26].MapX = 8 * panel.tileSize + 32 * 4;
                                             panel.object[3][26].MapY = 4 * panel.tileSize;
                                             panel.object[3][11] = null;
+                                            if(!complete[47]){
+                                                complete[47] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                             if (!panel.ui.usedSoupCan) {
                                                 panel.GameState = panel.dialogueState;
                                                 panel.ui.currentDialogue = dialogues[21];
+                                                if(!complete[48]){
+                                                    complete[48] = true;
+                                                    panel.ui.CompletionOfGame++;
+                                                }
                                             }
                                         } else {
                                             panel.object[3][22] = null;
+                                            if(!complete[49]){
+                                                complete[49] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                             panel.ui.collectEmptyPot = true;
                                         }
                                         ObjectCounter = 0;
@@ -687,12 +894,20 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                          if(panel.ui.usedSoupCan && !panel.ui.collectEmptyPlate) {
+                                             if(!complete[50]){
+                                                 complete[50] = true;
+                                                 panel.ui.CompletionOfGame++;
+                                             }
                                             panel.ui.collectEmptyPlate = true;
                                         } else {
                                              panel.object[3][11] = new K_Shelf(panel);
                                              panel.object[3][11].MapX = 8 * panel.tileSize + 32 * 4;
                                              panel.object[3][11].MapY = 4 * panel.tileSize;
                                              panel.object[3][26] = null;
+                                             if(!complete[51]){
+                                                 complete[51] = true;
+                                                 panel.ui.CompletionOfGame++;
+                                             }
                                          }
                                         ObjectCounter = 0;
                                     }
@@ -706,22 +921,31 @@ public class Player extends Entity{
                                         if(!panel.ui.collectSoupPlate){
                                             panel.GameState = panel.dialogueState;
                                             panel.ui.currentDialogue = dialogues[22];
+                                            if(!complete[52]){
+                                                complete[52] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                         } else if(panel.ui.collectSoupPlate && !panel.ui.usedSoupPlate){
-
                                             panel.object[3][29] = new K_SoupPlate(panel);
                                             panel.object[3][29].MapX = 6 * panel.tileSize-25;
                                             panel.object[3][29].MapY = 11 * panel.tileSize+24;
+                                            if(!complete[53]){
+                                                complete[53] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                             panel.ui.usedSoupPlate = true;
-                                            panel.GameState = panel.dialogueState;
-                                            panel.ui.currentDialogue = dialogues[23];
                                         } else if(panel.ui.usedSoupPlate){
                                             panel.object[3][29] = new K_EmptyPlate(panel);
                                             panel.object[3][29].MapX = 6 * panel.tileSize-25;
                                             panel.object[3][29].MapY = 11 * panel.tileSize+24;
+                                            if(!complete[54]){
+                                                complete[54] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                             OutsideKey = true;
                                             panel.ui.foundKey = true;
                                             panel.GameState = panel.dialogueState;
-                                            panel.ui.currentDialogue = dialogues[24];
+                                            panel.ui.currentDialogue = dialogues[23];
                                         }
                                         ObjectCounter = 0;
                                     }
@@ -746,7 +970,7 @@ public class Player extends Entity{
         // CORRIDOR
         dialogues[i] = "If I want more food for Nemo\nI need to find the house key.";  i++;
         dialogues[i] = "Maybe Santa would bring me presents\nif it weren't for CollisionDetection-Class";   i++;
-        dialogues[i] = "(Takes to long to animate sitting character\nso lets just stand. Lazy animation.)"; i++;
+        dialogues[i] = "Since the creators of \"Way Out\" are to\nlazy to animate me sitting\nI'll just stand"; i++;
         dialogues[i] = "That's dad's Hat.\nI'm not allowed to take it."; i++;
         dialogues[i] = "It's my favorite hiding spot!\nNo one ever finds me hehe";    i++;
         dialogues[i] = "oh! I found a screwdriver.\nMaybe I can use it for something..."; i++;
@@ -766,8 +990,7 @@ public class Player extends Entity{
         dialogues[i] = "I need a plate."; i++;
         dialogues[i] = "Here are all our plates."; i++;
         dialogues[i] = "I like to stand while I eat..."; i++;
-        dialogues[i] = "I like to stand while I eat..."; i++;
-        dialogues[i] = "Ouch!!\nI bit on something hard..."; i++; //24
+        dialogues[i] = "Ouch!!\nI bit on something hard..."; i++; //23
 
     }
 
