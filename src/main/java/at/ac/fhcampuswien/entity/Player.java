@@ -741,33 +741,34 @@ public class Player extends Entity{
         dialogues[i] = "I don't think I can fall asleep...";    i++;
         dialogues[i] = "huh...\nseems like there is a key in the drawer.";  i++;
         dialogues[i] = "My favorite book is about a goldfish."; i++;
-        dialogues[i] = "I don't want to play right now. \nMaybe later horsy.";  i++;
+        dialogues[i] = "I don't want to play right now. \nMaybe later Horsy.";  i++;
 
         // CORRIDOR
-        dialogues[i] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL!";  i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nIf if weren't for CollisionDetection-Class\nI would jump inside";   i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nTakes to long to animate sitting Character\nso lets just stand. Lazy Animation."; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nUgly fucking Hat."; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nWho still uses these clocks?";    i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nFOUND A SCREWDRIVER!"; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nMay be a Goldfish but I still call him Nemo.";   i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED!";    i++;
+        dialogues[i] = "If I want more food for Nemo\nI need to find the house key.";  i++;
+        dialogues[i] = "Maybe Santa would bring me presents\nif it weren't for CollisionDetection-Class";   i++;
+        dialogues[i] = "(Takes to long to animate sitting character\nso lets just stand. Lazy animation.)"; i++;
+        dialogues[i] = "That's dad's Hat.\nI'm not allowed to take it."; i++;
+        dialogues[i] = "It's my favorite hiding spot!\nNo one ever finds me hehe";    i++;
+        dialogues[i] = "oh! I found a screwdriver.\nMaybe I can use it for something..."; i++;
+        dialogues[i] = "Hello Nemo.";   i++;
+        dialogues[i] = "Why is the kitchen locked?\nI'm so hungry...";    i++;
 
         // BATHROOM
-        dialogues[i] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND!";   i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nBig Box with Towels. Or Ducks.";    i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nSmall empty box with small Towels.\nOr small Ducks.";  i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nDonald Duck"; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nCANT OPEN! To TIGHT! NEED TOOL FROM\nCORRIDOR!"; i++;  //17
+        dialogues[i] = "I found another key.";   i++;
+        dialogues[i] = "A big box filled with towels.\nAnd ducks.";    i++;
+        dialogues[i] = "A tiny box filled with tiny towels.\nAnd tiny Ducks.";  i++;
+        dialogues[i] = "Hi Donald Duck."; i++;
+        dialogues[i] = "I see something shiny!!\nI need to drain the water but it's clogged.\nLet's look for something in the corridor."; i++;  //17
 
         // KITCHEN
-        dialogues[i] = "STILL MISSING DIALOGE\nTomato Soup. Most disgusting Soup to\never exist in this world."; i++;  //18
-        dialogues[i] = "STILL MISSING DIALOGE\nWe want Soup cause we're to dumb for\nanything else."; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nWe don't eat like pigs. Grab a fucking\nplate you useless shit."; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nHere are the plates. ok."; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nTable. Just Table. idk.\nAn empty fucking Table."; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nAnd Again. Lazy Animating. We do not need\na chair. WE STAND!"; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nFucking Key in the Soup. Wtf?"; i++; //24
+        dialogues[i] = "Tomato Soup. YUCK."; i++;  //18
+        dialogues[i] = "I will cook some soup!\nJust like mom sometimes does."; i++;
+        dialogues[i] = "I need a plate."; i++;
+        dialogues[i] = "Here are all our plates."; i++;
+        dialogues[i] = "I like to stand while I eat..."; i++;
+        dialogues[i] = "I like to stand while I eat..."; i++;
+        dialogues[i] = "Ouch!!\nI bit on something hard..."; i++; //24
+
     }
 
     // DRAW PLAYER
