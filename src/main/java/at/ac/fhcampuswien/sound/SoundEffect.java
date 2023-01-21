@@ -1,8 +1,6 @@
 package at.ac.fhcampuswien.sound;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 import java.net.URL;
 
 // CLASS CONTENT
@@ -15,14 +13,17 @@ import java.net.URL;
 public class SoundEffect {
 
     Clip clip ;
-    URL soundeffect[] = new URL[10];
+    URL[] soundeffect = new URL[10];
 
     // SOUND FILES
     public SoundEffect(){
         soundeffect[0] = getClass().getResource("/Sound/GameWon.wav");
         soundeffect[1] = getClass().getResource("/Sound/GameOver.wav");
-        soundeffect[2] = getClass().getResource("/Sound/Key.wav");
-        soundeffect[3] = getClass().getResource("/Sound/Notification.wav");
+        soundeffect[2] = getClass().getResource("/Sound/Collect.wav");
+        soundeffect[3] = getClass().getResource("/Sound/Dialogue_v1_single.wav");
+        soundeffect[4] = getClass().getResource("/Sound/Door.wav");
+        soundeffect[5] = getClass().getResource("/Sound/Choose.wav");
+        soundeffect[6] = getClass().getResource("/Sound/Switch.wav");
     }
 
     // OPEN FILE

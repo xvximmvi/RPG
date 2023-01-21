@@ -242,7 +242,7 @@ public class Player extends Entity{
                                             panel.ui.CompletionOfGame++;    //add to Completion
                                         }
                                     } else {    //if Key is already in Possession
-                                        panel.playSoundEffect(3);               //play Notification Sound
+                                        panel.playSoundEffect(5);               //play Notification Sound
                                         //Turn Light on and off
                                         BR_Light_State = !BR_Light_State;   //change Light State
                                         if (BR_Light_State) {             //if turning on -> instantiate new Object (Light_ON)
@@ -303,6 +303,7 @@ public class Player extends Entity{
                             case "BottomDoor":
                                 if(handler.INTERACT) {
                                     if (BedroomKey) {    //if Key in possession ...
+                                        panel.playSoundEffect(4);
                                         switchMap(1, 12, 7);
                                         if (!KitchenKey && !OutsideKey)
                                             panel.ui.foundKey = false;
@@ -348,7 +349,7 @@ public class Player extends Entity{
                                 break;
                             case "Bedroom_Door":
                                 if (handler.INTERACT) {
-                                    panel.playSoundEffect(3);
+                                    panel.playSoundEffect(4);
                                     switchMap(0, 8, 14);
                                     if(!complete[10]){
                                         complete[10] = true;
@@ -358,7 +359,7 @@ public class Player extends Entity{
                                 break;
                             case "Bathroom_Door":
                                 if (handler.INTERACT) {
-                                    panel.playSoundEffect(3);
+                                    panel.playSoundEffect(4);
                                     switchMap(2, 8, 14);
                                     if(!complete[11]){
                                         complete[11] = true;
@@ -445,22 +446,24 @@ public class Player extends Entity{
                                 }
                                 break;
                             case "ShelfFish":
-                                if (!panel.ui.foundTool && handler.INTERACT) {
-                                    panel.playSoundEffect(2);
-                                    panel.GameState = panel.dialogueState;
-                                    panel.ui.currentDialogue = dialogues[10];
-                                    panel.ui.foundTool = true;
-                                    if(!complete[18]){
-                                        complete[18] = true;
-                                        panel.ui.CompletionOfGame++;
-                                    }
-                                } else if (panel.ui.foundTool && handler.INTERACT) {
-                                    panel.playSoundEffect(3);
-                                    panel.GameState = panel.dialogueState;
-                                    panel.ui.currentDialogue = dialogues[11];
-                                    if(!complete[19]){
-                                        complete[19] = true;
-                                        panel.ui.CompletionOfGame++;
+                                if(handler.INTERACT) {
+                                    if (!panel.ui.foundTool) {
+                                        panel.playSoundEffect(2);
+                                        panel.GameState = panel.dialogueState;
+                                        panel.ui.currentDialogue = dialogues[10];
+                                        panel.ui.foundTool = true;
+                                        if (!complete[18]) {
+                                            complete[18] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
+                                    } else {
+                                        panel.playSoundEffect(3);
+                                        panel.GameState = panel.dialogueState;
+                                        panel.ui.currentDialogue = dialogues[11];
+                                        if (!complete[19]) {
+                                            complete[19] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
                                     }
                                 }
                                 break;
@@ -468,6 +471,7 @@ public class Player extends Entity{
                             case "SideDoor1":
                                 if(handler.INTERACT) {
                                     if (KitchenKey) {    //if Key in possession ...
+                                        panel.playSoundEffect(4);
                                         switchMap(3, 1, 11);
                                         if(!complete[20]){
                                             complete[20] = true;
@@ -475,7 +479,7 @@ public class Player extends Entity{
                                         }
                                         if (!OutsideKey)
                                             panel.ui.foundKey = false;
-                                    } else {  //if no Key in possession
+                                    } else {  //if Key not in possession
                                         panel.playSoundEffect(3);
                                         panel.GameState = panel.dialogueState;
                                         panel.ui.currentDialogue = dialogues[12];
@@ -494,7 +498,7 @@ public class Player extends Entity{
                         switch (ObjectName) {
                             case "BottomDoor":
                                 if (handler.INTERACT) {
-                                    panel.playSoundEffect(3);
+                                    panel.playSoundEffect(4);
                                     switchMap(1, 5, 7);
                                     if(!complete[22]){
                                         complete[22] = true;
@@ -547,7 +551,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
-                                        panel.playSoundEffect(3);
+                                        panel.playSoundEffect(5);
                                         panel.object[2][14] = new B_Sink_Interact(panel);
                                         panel.object[2][14].MapX = 3 * panel.tileSize - 3;
                                         panel.object[2][14].MapY = 3 * panel.tileSize + 20;
@@ -565,7 +569,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
-                                        panel.playSoundEffect(3);
+                                        panel.playSoundEffect(5);
                                         panel.object[2][10] = new B_Sink(panel);
                                         panel.object[2][10].MapX = 3 * panel.tileSize - 3;
                                         panel.object[2][10].MapY = 3 * panel.tileSize + 20;
@@ -583,7 +587,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
-                                        panel.playSoundEffect(3);
+                                        panel.playSoundEffect(5);
                                         panel.object[2][15] = new B_Toilet_Interact(panel);
                                         panel.object[2][15].MapX = 13 * panel.tileSize;
                                         panel.object[2][15].MapY = 12 * panel.tileSize + 20;
@@ -601,7 +605,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;            //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>9) {       //Ugliest fucking solution to ever exist
-                                        panel.playSoundEffect(3);
+                                        panel.playSoundEffect(5);
                                         panel.object[2][12] = new B_Toilet(panel);
                                         panel.object[2][12].MapX = 13 * panel.tileSize;
                                         panel.object[2][12].MapY = 12 * panel.tileSize + 20;
@@ -617,27 +621,39 @@ public class Player extends Entity{
 
                             case "Bathtub_INTERACT":
                                 if (handler.INTERACT) {
-                                    if(panel.ui.foundTool) {
-                                        ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                        if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
-                                            panel.playSoundEffect(3);
+                                    ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 9) {        //Ugliest fucking solution to ever exist
+                                        if (panel.ui.foundTool) {
+                                            panel.playSoundEffect(5);
                                             panel.object[2][16] = new B_Bathtub(panel);
                                             panel.object[2][16].MapX = 11 * panel.tileSize;
                                             panel.object[2][16].MapY = 6 * panel.tileSize - 24;
                                             panel.object[2][7] = null;
-                                            if(!complete[30]){
+                                            if (!complete[30]) {
                                                 complete[30] = true;
                                                 panel.ui.CompletionOfGame++;
                                             }
                                             panel.ui.usedTool = true;
                                             ObjectCounter = 0;
+
+                                            if (!KitchenKey) {
+                                                panel.playSoundEffect(2);
+                                                panel.GameState = panel.dialogueState;
+                                                panel.ui.currentDialogue = dialogues[13];
+                                                panel.ui.foundKey = true;
+                                                KitchenKey = true;
+                                                if (!complete[31]) {
+                                                    complete[31] = true;
+                                                    panel.ui.CompletionOfGame++;
+                                                }
+                                            }
                                         }
                                     } else {
                                         panel.playSoundEffect(3);
                                         panel.GameState = panel.dialogueState;
                                         panel.ui.currentDialogue = dialogues[17];
-                                        if(!complete[31]){
-                                            complete[31] = true;
+                                        if(!complete[32]){
+                                            complete[32] = true;
                                             panel.ui.CompletionOfGame++;
                                         }
                                     }
@@ -648,17 +664,6 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
-                                        if (!KitchenKey) {
-                                            panel.playSoundEffect(3);
-                                            panel.GameState = panel.dialogueState;
-                                            panel.ui.currentDialogue = dialogues[13];
-                                            panel.ui.foundKey = true;
-                                            KitchenKey = true;
-                                            if(!complete[32]){
-                                                complete[32] = true;
-                                                panel.ui.CompletionOfGame++;
-                                            }
-                                        } else {
                                             panel.playSoundEffect(3);
                                             panel.object[2][7] = new B_Bathtub_Interact(panel);
                                             panel.object[2][7].MapX = 11 * panel.tileSize;
@@ -669,7 +674,6 @@ public class Player extends Entity{
                                                 panel.ui.CompletionOfGame++;
                                             }
                                             ObjectCounter = 0;
-                                        }
                                     }
                                 }
                                 break;
@@ -681,7 +685,8 @@ public class Player extends Entity{
                         switch (ObjectName) {
                             case "SideDoor2":
                                 if (handler.INTERACT) {
-                                        switchMap(1, 15, 11);
+                                    panel.playSoundEffect(4);
+                                    switchMap(1, 15, 11);
                                     if(!complete[34]){
                                         complete[34] = true;
                                         panel.ui.CompletionOfGame++;
@@ -693,6 +698,7 @@ public class Player extends Entity{
                             if (handler.INTERACT) {
                                 ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                 if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    panel.playSoundEffect(5);
                                     panel.object[3][23] = new K_Fridge_Interact(panel);
                                     panel.object[3][23].MapX = panel.tileSize-4;
                                     panel.object[3][23].MapY = 3 * panel.tileSize;
@@ -713,16 +719,19 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                             if(panel.ui.usedEmptyPot && !panel.ui.collectSoupCan) {
+                                                panel.playSoundEffect(3);
                                                 panel.GameState = panel.dialogueState;
                                                 panel.ui.currentDialogue = dialogues[18];
                                                 if(!complete[36]){
                                                     complete[36] = true;
                                                     panel.ui.CompletionOfGame++;
                                                 }
+                                                panel.playSoundEffect(2);
                                                 panel.ui.collectSoupCan = true;
                                             }
                                             else {
                                                 if(!panel.ui.collectSoupCan) {
+                                                    panel.playSoundEffect(3);
                                                     panel.GameState = panel.dialogueState;
                                                     panel.ui.currentDialogue = dialogues[19];
                                                     if(!complete[37]){
@@ -730,6 +739,7 @@ public class Player extends Entity{
                                                         panel.ui.CompletionOfGame++;
                                                     }
                                                 }
+                                                panel.playSoundEffect(5);
                                                 panel.object[3][8] = new K_Fridge(panel);
                                                 panel.object[3][8].MapX = panel.tileSize;
                                                 panel.object[3][8].MapY = 3 * panel.tileSize;
@@ -748,6 +758,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.playSoundEffect(5);
                                         panel.object[3][24] = new K_Oven_Interact(panel);
                                         panel.object[3][24].MapX = 5*panel.tileSize;
                                         panel.object[3][24].MapY = 4 * panel.tileSize;
@@ -766,6 +777,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                         if(!panel.ui.collectEmptyPot || panel.ui.collectSoupPlate ) {   //Nothing collected jet or Oven is finished (Soup is made)
+                                            panel.playSoundEffect(5);
                                             panel.object[3][9] = new K_Oven(panel);
                                             panel.object[3][9].MapX = 5 * panel.tileSize;
                                             panel.object[3][9].MapY = 4 * panel.tileSize;
@@ -776,6 +788,7 @@ public class Player extends Entity{
                                             }
                                         } else {
                                             if(!panel.ui.collectSoupCan) {                  //Empty Pot but no soup
+                                                panel.playSoundEffect(5);
                                                 panel.object[3][27] = new K_EmptyPot(panel);
                                                 panel.object[3][27].MapX = 5 * panel.tileSize + 8;
                                                 panel.object[3][27].MapY = 4 * panel.tileSize + 4;
@@ -784,36 +797,42 @@ public class Player extends Entity{
                                                     panel.ui.CompletionOfGame++;
                                                 }
                                                 panel.ui.usedEmptyPot = true;
-                                            } else if(panel.ui.collectSoupCan && !panel.ui.collectEmptyPlate) {  //Put Soup in Pot
-                                                if (!panel.ui.usedSoupCan) {
-                                                    panel.object[3][28] = new K_SoupPot(panel);
-                                                    panel.object[3][28].MapX = 5 * panel.tileSize + 8;
-                                                    panel.object[3][28].MapY = 4 * panel.tileSize + 4;
-                                                    panel.object[3][27] = null;
-                                                    if(!complete[42]){
-                                                        complete[42] = true;
+                                            } else {
+                                                if (!panel.ui.collectEmptyPlate) {  //Put Soup in Pot
+                                                    if (!panel.ui.usedSoupCan) {
+                                                        panel.playSoundEffect(5);
+                                                        panel.object[3][28] = new K_SoupPot(panel);
+                                                        panel.object[3][28].MapX = 5 * panel.tileSize + 8;
+                                                        panel.object[3][28].MapY = 4 * panel.tileSize + 4;
+                                                        panel.object[3][27] = null;
+                                                        if (!complete[42]) {
+                                                            complete[42] = true;
+                                                            panel.ui.CompletionOfGame++;
+                                                        }
+                                                        panel.ui.usedSoupCan = true;
+                                                    } else {
+                                                        panel.playSoundEffect(3);
+                                                        panel.GameState = panel.dialogueState;
+                                                        panel.ui.currentDialogue = dialogues[20];
+                                                        if (!complete[43]) {
+                                                            complete[43] = true;
+                                                            panel.ui.CompletionOfGame++;
+                                                        }
+                                                    }
+                                                } else {      //Put Soup in Plate
+                                                    panel.playSoundEffect(5);
+                                                    panel.object[3][27] = new K_EmptyPot(panel);
+                                                    panel.object[3][27].MapX = 5 * panel.tileSize + 8;
+                                                    panel.object[3][27].MapY = 4 * panel.tileSize + 4;
+                                                    panel.object[3][28] = null;
+                                                    if (!complete[44]) {
+                                                        complete[44] = true;
                                                         panel.ui.CompletionOfGame++;
                                                     }
-                                                    panel.ui.usedSoupCan = true;
-                                                } else {
-                                                    panel.GameState = panel.dialogueState;
-                                                    panel.ui.currentDialogue = dialogues[20];
-                                                    if(!complete[43]){
-                                                        complete[43] = true;
-                                                        panel.ui.CompletionOfGame++;
-                                                    }
+                                                    panel.ui.usedEmptyPlate = true;
+                                                    panel.playSoundEffect(2);
+                                                    panel.ui.collectSoupPlate = true;
                                                 }
-                                            }else if(panel.ui.collectEmptyPlate) {      //Put Soup in Plate
-                                                panel.object[3][27] = new K_EmptyPot(panel);
-                                                panel.object[3][27].MapX = 5 * panel.tileSize + 8;
-                                                panel.object[3][27].MapY = 4 * panel.tileSize + 4;
-                                                panel.object[3][28] = null;
-                                                if(!complete[44]){
-                                                    complete[44] = true;
-                                                    panel.ui.CompletionOfGame++;
-                                                }
-                                                panel.ui.usedEmptyPlate = true;
-                                                panel.ui.collectSoupPlate = true;
                                             }
                                         }
                                         ObjectCounter = 0;
@@ -825,6 +844,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.playSoundEffect(5);
                                         panel.object[3][25] = new K_Sink_Interact(panel);
                                         panel.object[3][25].MapX = 8*panel.tileSize;
                                         panel.object[3][25].MapY = 4 * panel.tileSize-4;
@@ -842,6 +862,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                        panel.playSoundEffect(5);
                                         panel.object[3][10] = new K_Sink(panel);
                                         panel.object[3][10].MapX = 8*panel.tileSize;
                                         panel.object[3][10].MapY = 4 * panel.tileSize-4;
@@ -860,6 +881,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                         if(panel.ui.collectEmptyPot) {
+                                            panel.playSoundEffect(5);
                                             panel.object[3][26] = new K_Shelf_Interact(panel);
                                             panel.object[3][26].MapX = 8 * panel.tileSize + 32 * 4;
                                             panel.object[3][26].MapY = 4 * panel.tileSize;
@@ -869,6 +891,7 @@ public class Player extends Entity{
                                                 panel.ui.CompletionOfGame++;
                                             }
                                             if (!panel.ui.usedSoupCan) {
+                                                panel.playSoundEffect(3);
                                                 panel.GameState = panel.dialogueState;
                                                 panel.ui.currentDialogue = dialogues[21];
                                                 if(!complete[48]){
@@ -877,6 +900,7 @@ public class Player extends Entity{
                                                 }
                                             }
                                         } else {
+                                            panel.playSoundEffect(2);
                                             panel.object[3][22] = null;
                                             if(!complete[49]){
                                                 complete[49] = true;
@@ -898,8 +922,10 @@ public class Player extends Entity{
                                                  complete[50] = true;
                                                  panel.ui.CompletionOfGame++;
                                              }
-                                            panel.ui.collectEmptyPlate = true;
+                                             panel.playSoundEffect(2);
+                                             panel.ui.collectEmptyPlate = true;
                                         } else {
+                                             panel.playSoundEffect(5);
                                              panel.object[3][11] = new K_Shelf(panel);
                                              panel.object[3][11].MapX = 8 * panel.tileSize + 32 * 4;
                                              panel.object[3][11].MapY = 4 * panel.tileSize;
@@ -919,33 +945,40 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                         if(!panel.ui.collectSoupPlate){
+                                            panel.playSoundEffect(3);
                                             panel.GameState = panel.dialogueState;
                                             panel.ui.currentDialogue = dialogues[22];
                                             if(!complete[52]){
                                                 complete[52] = true;
                                                 panel.ui.CompletionOfGame++;
                                             }
-                                        } else if(panel.ui.collectSoupPlate && !panel.ui.usedSoupPlate){
-                                            panel.object[3][29] = new K_SoupPlate(panel);
-                                            panel.object[3][29].MapX = 6 * panel.tileSize-25;
-                                            panel.object[3][29].MapY = 11 * panel.tileSize+24;
-                                            if(!complete[53]){
-                                                complete[53] = true;
-                                                panel.ui.CompletionOfGame++;
+                                        } else {
+                                            if (!panel.ui.usedSoupPlate) {
+                                                panel.playSoundEffect(5);
+                                                panel.object[3][29] = new K_SoupPlate(panel);
+                                                panel.object[3][29].MapX = 6 * panel.tileSize - 25;
+                                                panel.object[3][29].MapY = 11 * panel.tileSize + 24;
+                                                if (!complete[53]) {
+                                                    complete[53] = true;
+                                                    panel.ui.CompletionOfGame++;
+                                                }
+                                                panel.ui.usedSoupPlate = true;
+                                            } else {
+                                                panel.playSoundEffect(5);
+                                                panel.object[3][29] = new K_EmptyPlate(panel);
+                                                panel.object[3][29].MapX = 6 * panel.tileSize - 25;
+                                                panel.object[3][29].MapY = 11 * panel.tileSize + 24;
+                                                if (!complete[54]) {
+                                                    complete[54] = true;
+                                                    panel.ui.CompletionOfGame++;
+                                                }
+                                                panel.playSoundEffect(3);
+                                                panel.GameState = panel.dialogueState;
+                                                panel.ui.currentDialogue = dialogues[23];
+                                                panel.playSoundEffect(2);
+                                                OutsideKey = true;
+                                                panel.ui.foundKey = true;
                                             }
-                                            panel.ui.usedSoupPlate = true;
-                                        } else if(panel.ui.usedSoupPlate){
-                                            panel.object[3][29] = new K_EmptyPlate(panel);
-                                            panel.object[3][29].MapX = 6 * panel.tileSize-25;
-                                            panel.object[3][29].MapY = 11 * panel.tileSize+24;
-                                            if(!complete[54]){
-                                                complete[54] = true;
-                                                panel.ui.CompletionOfGame++;
-                                            }
-                                            OutsideKey = true;
-                                            panel.ui.foundKey = true;
-                                            panel.GameState = panel.dialogueState;
-                                            panel.ui.currentDialogue = dialogues[23];
                                         }
                                         ObjectCounter = 0;
                                     }
@@ -990,7 +1023,7 @@ public class Player extends Entity{
         dialogues[i] = "I need a plate."; i++;
         dialogues[i] = "Here are all our plates."; i++;
         dialogues[i] = "I like to stand while I eat..."; i++;
-        dialogues[i] = "Ouch!!\nI bit on something hard..."; i++; //23
+        dialogues[i] = "Ouch!!\nI bit on something hard..."; //23
 
     }
 
