@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.main;
 
-import at.ac.fhcampuswien.object.OBJECT_Key;
-import at.ac.fhcampuswien.object.OBJECT_Tool;
+import at.ac.fhcampuswien.object.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -45,9 +44,23 @@ public class UI {
     public boolean MessageOn = false;
     public String Message = "";
     int MessageCounter = 0;
+
+    // INVENTORY
     public boolean foundKey = false;
     public boolean foundTool = false;
     public boolean usedTool = false;
+
+    //KITCHEN INVENTORY
+    public boolean collectEmptyPot = false;
+    public boolean collectSoupPot = false;
+    public boolean collectSoupCan = false;
+    public boolean collectEmptyPlate = false;
+    public boolean collectSoupPlate = false;
+    public boolean usedEmptyPot = false;
+    public boolean usedSoupPot = false;
+    public boolean usedSoupCan = false;
+    public boolean usedEmptyPlate = false;
+    public boolean usedSoupPlate = false;
 
     int TransitionCounter = 0;
 
@@ -57,7 +70,7 @@ public class UI {
 
 
     // PLAY TIME
-    public double playTime=60;      //60 sec Countdown (1 Minute)
+    public double playTime=100;      //100 sec Countdown
     public double DefaultPlayTime = playTime;
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");  //minimize decimals
 
@@ -131,9 +144,56 @@ public class UI {
                 }
             }
 
+            // KITCHEN INVENTORY -----------------------------------------------------------
+            if(collectEmptyPlate){
+                if(!usedEmptyPlate) {
+                    K_EmptyPlate emptyPlate = new K_EmptyPlate(panel);
+                    bufferedImage = emptyPlate.image;
+                    graphics2D.drawImage(bufferedImage, 13 * panel.tileSize+15, 90, 14*5, 8*5, null);
+                }
+            }
+
+            if(collectEmptyPot){
+                if(!usedEmptyPot) {
+                    K_EmptyPot emptyPot = new K_EmptyPot(panel);
+                    bufferedImage = emptyPot.image;
+                    graphics2D.drawImage(bufferedImage, 13 * panel.tileSize+24, 90, 14 * 5, 13 * 5, null);
+                }
+            }
+
+            if(collectSoupCan) {
+                if (!usedSoupCan) {
+                    K_SoupCan soupCan = new K_SoupCan(panel);
+                    bufferedImage = soupCan.image;
+                    graphics2D.drawImage(bufferedImage, 13 * panel.tileSize+24, 90, 6*5, 9*5, null);
+                }
+            }
+
+            if(collectSoupPlate) {
+                if (!usedSoupPlate) {
+                    K_SoupPlate soupPlate = new K_SoupPlate(panel);
+                    bufferedImage = soupPlate.image;
+                    graphics2D.drawImage(bufferedImage, 13 * panel.tileSize+15, 90, 14*5, 8*5, null);
+                }
+            }
+
+            if(collectSoupPot) {
+                if (usedSoupPot) {
+                    K_SoupPot soupPot = new K_SoupPot(panel);
+                    bufferedImage = soupPot.image;
+                    graphics2D.drawImage(bufferedImage, 13 * panel.tileSize, 90, 24 * 3, 13 * 3, null);
+                }
+            }
+
             // TUTORIAL ------------------------------------------------------------------
             if (TutorialOn) {
                 graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 17F));
+                graphics2D.setColor(Color.BLACK);
+                graphics2D.drawString("Move: WASD", panel.tileSize+2, panel.tileSize+2);
+                graphics2D.drawString("Interact: SPACE", panel.tileSize+2, panel.tileSize + 30+2);
+                graphics2D.drawString("Dialogue: ENTER", panel.tileSize+2, panel.tileSize + 60+2);
+                graphics2D.drawString("Pause/Play: P", panel.tileSize+2, panel.tileSize + 90+2);
+                graphics2D.setColor(Color.WHITE);
                 graphics2D.drawString("Move: WASD", panel.tileSize, panel.tileSize);
                 graphics2D.drawString("Interact: SPACE", panel.tileSize, panel.tileSize + 30);
                 graphics2D.drawString("Dialogue: ENTER", panel.tileSize, panel.tileSize + 60);
@@ -147,6 +207,10 @@ public class UI {
                 }
             } else if (Goal) {
                 graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 17F));
+                graphics2D.setColor(Color.BLACK);
+                graphics2D.drawString("Find the KEY!", panel.tileSize+2, panel.tileSize+2);
+                graphics2D.drawString("Escape the Room!", panel.tileSize+2, panel.tileSize + 32);
+                graphics2D.setColor(Color.WHITE);
                 graphics2D.drawString("Find the KEY!", panel.tileSize, panel.tileSize);
                 graphics2D.drawString("Escape the Room!", panel.tileSize, panel.tileSize + 30);
 

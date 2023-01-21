@@ -92,6 +92,8 @@ public class Player extends Entity{
         BedroomKey = false;
         KitchenKey = false;
         OutsideKey = false;
+
+
         panel.ui.TutorialOn = true;     //Start game with Tutorial
     }
 
@@ -139,6 +141,29 @@ public class Player extends Entity{
             setDefaultValues();
             panel.ui.foundKey = false;
             panel.ui.foundTool = false;
+            panel.ui.usedTool = false;
+
+            //KITCHEN
+            panel.ui.collectEmptyPot = false;
+            panel.ui.collectSoupPot = false;
+            panel.ui.collectSoupCan = false;
+            panel.ui.collectEmptyPlate = false;
+            panel.ui.collectSoupPlate = false;
+            panel.ui.usedEmptyPot = false;
+            panel.ui.usedSoupPot = false;
+            panel.ui.usedSoupCan = false;
+            panel.ui.usedEmptyPlate = false;
+            panel.ui.usedSoupPlate = false;
+
+            // INTERACTIVE OBJECTS
+            for(int i=23; i<30; i++) {
+                panel.object[3][i] = null;
+            }
+            panel.object[1][13] = null;
+            panel.object[2][14] = null;
+            panel.object[2][15] = null;
+            panel.object[2][16] = null;
+
             panel.ui.playTime = panel.ui.DefaultPlayTime;
             handler.Reset =false;
         }
@@ -536,10 +561,21 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
-                                        panel.object[3][8] = new K_Fridge(panel);
-                                        panel.object[3][8].MapX = panel.tileSize;
-                                        panel.object[3][8].MapY = 3 * panel.tileSize;
-                                        panel.object[3][23] = null;
+                                            if(panel.ui.usedEmptyPot && !panel.ui.collectSoupCan) {
+                                                panel.GameState = panel.dialogueState;
+                                                panel.ui.currentDialogue = dialogues[18];
+                                                panel.ui.collectSoupCan = true;
+                                            }
+                                            else {
+                                                if(!panel.ui.collectSoupCan) {
+                                                    panel.GameState = panel.dialogueState;
+                                                    panel.ui.currentDialogue = dialogues[19];
+                                                }
+                                                panel.object[3][8] = new K_Fridge(panel);
+                                                panel.object[3][8].MapX = panel.tileSize;
+                                                panel.object[3][8].MapY = 3 * panel.tileSize;
+                                                panel.object[3][23] = null;
+                                            }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -562,10 +598,37 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
-                                        panel.object[3][9] = new K_Oven(panel);
-                                        panel.object[3][9].MapX = 5*panel.tileSize;
-                                        panel.object[3][9].MapY = 4 * panel.tileSize;
-                                        panel.object[3][24] = null;
+                                        if(!panel.ui.collectEmptyPot || panel.ui.collectSoupPlate ) {   //Nothing collected jet or Oven is finished (Soup is made)
+                                            panel.object[3][9] = new K_Oven(panel);
+                                            panel.object[3][9].MapX = 5 * panel.tileSize;
+                                            panel.object[3][9].MapY = 4 * panel.tileSize;
+                                            panel.object[3][24] = null;
+                                        } else {
+                                            if(!panel.ui.collectSoupCan) {                  //Empty Pot but no soup
+                                                panel.object[3][27] = new K_EmptyPot(panel);
+                                                panel.object[3][27].MapX = 5 * panel.tileSize + 8;
+                                                panel.object[3][27].MapY = 4 * panel.tileSize + 4;
+                                                panel.ui.usedEmptyPot = true;
+                                            } else if(panel.ui.collectSoupCan && !panel.ui.collectEmptyPlate) {  //Put Soup in Pot
+                                                if (!panel.ui.usedSoupCan) {
+                                                    panel.object[3][28] = new K_SoupPot(panel);
+                                                    panel.object[3][28].MapX = 5 * panel.tileSize + 8;
+                                                    panel.object[3][28].MapY = 4 * panel.tileSize + 4;
+                                                    panel.object[3][27] = null;
+                                                    panel.ui.usedSoupCan = true;
+                                                } else {
+                                                    panel.GameState = panel.dialogueState;
+                                                    panel.ui.currentDialogue = dialogues[20];
+                                                }
+                                            }else if(panel.ui.collectEmptyPlate) {      //Put Soup in Plate
+                                                panel.object[3][27] = new K_EmptyPot(panel);
+                                                panel.object[3][27].MapX = 5 * panel.tileSize + 8;
+                                                panel.object[3][27].MapY = 4 * panel.tileSize + 4;
+                                                panel.object[3][28] = null;
+                                                panel.ui.usedEmptyPlate = true;
+                                                panel.ui.collectSoupPlate = true;
+                                            }
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -601,10 +664,19 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
-                                        panel.object[3][26] = new K_Shelf_Interact(panel);
-                                        panel.object[3][26].MapX = 8 * panel.tileSize+32*4;
-                                        panel.object[3][26].MapY = 4 * panel.tileSize;
-                                        panel.object[3][11] = null;
+                                        if(panel.ui.collectEmptyPot) {
+                                            panel.object[3][26] = new K_Shelf_Interact(panel);
+                                            panel.object[3][26].MapX = 8 * panel.tileSize + 32 * 4;
+                                            panel.object[3][26].MapY = 4 * panel.tileSize;
+                                            panel.object[3][11] = null;
+                                            if (!panel.ui.usedSoupCan) {
+                                                panel.GameState = panel.dialogueState;
+                                                panel.ui.currentDialogue = dialogues[21];
+                                            }
+                                        } else {
+                                            panel.object[3][22] = null;
+                                            panel.ui.collectEmptyPot = true;
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -614,10 +686,43 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
-                                        panel.object[3][11] = new K_Shelf(panel);
-                                        panel.object[3][11].MapX = 8 * panel.tileSize+32*4;
-                                        panel.object[3][11].MapY = 4 * panel.tileSize;
-                                        panel.object[3][26] = null;
+                                         if(panel.ui.usedSoupCan && !panel.ui.collectEmptyPlate) {
+                                            panel.ui.collectEmptyPlate = true;
+                                        } else {
+                                             panel.object[3][11] = new K_Shelf(panel);
+                                             panel.object[3][11].MapX = 8 * panel.tileSize + 32 * 4;
+                                             panel.object[3][11].MapY = 4 * panel.tileSize;
+                                             panel.object[3][26] = null;
+                                         }
+                                        ObjectCounter = 0;
+                                    }
+                                }
+                                break;
+
+                            case "Table":
+                                if (handler.INTERACT) {
+                                    ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
+                                        if(!panel.ui.collectSoupPlate){
+                                            panel.GameState = panel.dialogueState;
+                                            panel.ui.currentDialogue = dialogues[22];
+                                        } else if(panel.ui.collectSoupPlate && !panel.ui.usedSoupPlate){
+
+                                            panel.object[3][29] = new K_SoupPlate(panel);
+                                            panel.object[3][29].MapX = 6 * panel.tileSize-25;
+                                            panel.object[3][29].MapY = 11 * panel.tileSize+24;
+                                            panel.ui.usedSoupPlate = true;
+                                            panel.GameState = panel.dialogueState;
+                                            panel.ui.currentDialogue = dialogues[23];
+                                        } else if(panel.ui.usedSoupPlate){
+                                            panel.object[3][29] = new K_EmptyPlate(panel);
+                                            panel.object[3][29].MapX = 6 * panel.tileSize-25;
+                                            panel.object[3][29].MapY = 11 * panel.tileSize+24;
+                                            OutsideKey = true;
+                                            panel.ui.foundKey = true;
+                                            panel.GameState = panel.dialogueState;
+                                            panel.ui.currentDialogue = dialogues[24];
+                                        }
                                         ObjectCounter = 0;
                                     }
                                 }
@@ -639,24 +744,30 @@ public class Player extends Entity{
         dialogues[i] = "I don't want to play right now. \nMaybe later horsy.";  i++;
 
         // CORRIDOR
-        dialogues[i] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL";  i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nSomething about Fire (Fireplace)";   i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nIDK what to say about a fucking Chouch (Couch)"; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nMaybe something about the Hat or idk (Clothes)"; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nClock.. (Clock)";    i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nFOUND TOOL TO SCREW BATHTUB"; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nFishy. Goldfish. Nemo. idk. (Shelf/Fish)";   i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED! (Kitchen Door)";    i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFINAL DOOR = GOAL!";  i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nIf if weren't for CollisionDetection-Class\nI would jump inside";   i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nTakes to long to animate sitting Character\nso lets just stand. Lazy Animation."; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nUgly fucking Hat."; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nWho still uses these clocks?";    i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFOUND A SCREWDRIVER!"; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nMay be a Goldfish but I still call him Nemo.";   i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nKITCHEN DOOR LOCKED!";    i++;
 
         // BATHROOM
-        dialogues[i] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND! (Bathtub)";   i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nBig empty box with stuff. idk. (BB)";    i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nSmall empty box with stuff. idk. (SB)";  i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nToy Duck. Bath Duck. something. (Duck)"; i++;
-        dialogues[i] = "STILL MISSING DIALOGE\nCANT OPEN! NEED TOOL FROM CORRIDOR"; i++;  //17
+        dialogues[i] = "STILL MISSING DIALOGE\nKEY FOR KITCHEN FOUND!";   i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nBig Box with Towels. Or Ducks.";    i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nSmall empty box with small Towels.\nOr small Ducks.";  i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nDonald Duck"; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nCANT OPEN! To TIGHT! NEED TOOL FROM\nCORRIDOR!"; i++;  //17
 
         // KITCHEN
-
+        dialogues[i] = "STILL MISSING DIALOGE\nTomato Soup. Most disgusting Soup to\never exist in this world."; i++;  //18
+        dialogues[i] = "STILL MISSING DIALOGE\nWe want Soup cause we're to dumb for\nanything else."; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nWe don't eat like pigs. Grab a fucking\nplate you useless shit."; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nHere are the plates. ok."; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nTable. Just Table. idk.\nAn empty fucking Table."; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nAnd Again. Lazy Animating. We do not need\na chair. WE STAND!"; i++;
+        dialogues[i] = "STILL MISSING DIALOGE\nFucking Key in the Soup. Wtf?"; i++; //24
     }
 
     // DRAW PLAYER

@@ -46,6 +46,7 @@ public class Handler implements KeyListener {
                 if(panel.ui.command == 0){
                     panel.playMusic(1);
                     panel.GameState = panel.playState;
+                    Reset=true;
                 }
                 if(panel.ui.command == 1){
                     panel.playMusic(1);

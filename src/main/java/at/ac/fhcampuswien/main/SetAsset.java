@@ -287,31 +287,31 @@ public class SetAsset {
 
         panel.object[3][13] = new K_Chair_Front(panel);
         panel.object[3][13].MapX = 6 * panel.tileSize;
-        panel.object[3][13].MapY = 8 * panel.tileSize+20;
+        panel.object[3][13].MapY = 9 * panel.tileSize+20;
 
         panel.object[3][14] = new K_Chair_Front(panel);
         panel.object[3][14].MapX = 9 * panel.tileSize-15;
-        panel.object[3][14].MapY = 8 * panel.tileSize+20;
+        panel.object[3][14].MapY = 9 * panel.tileSize+20;
 
         panel.object[3][15] = new K_Chair_Right(panel);
         panel.object[3][15].MapX = 11 * panel.tileSize-4;
-        panel.object[3][15].MapY = 10 * panel.tileSize;
+        panel.object[3][15].MapY = 11 * panel.tileSize;
 
         panel.object[3][16] = new K_Table(panel);
         panel.object[3][16].MapX = 5 * panel.tileSize;
-        panel.object[3][16].MapY = 10 * panel.tileSize;
+        panel.object[3][16].MapY = 11 * panel.tileSize;
 
         panel.object[3][17] = new K_Chair_Back(panel);
         panel.object[3][17].MapX = 6 * panel.tileSize;
-        panel.object[3][17].MapY = 11 * panel.tileSize+20;
+        panel.object[3][17].MapY = 12 * panel.tileSize+20;
 
         panel.object[3][18] = new K_Chair_Back(panel);
         panel.object[3][18].MapX = 9 * panel.tileSize-15;
-        panel.object[3][18].MapY = 11 * panel.tileSize+20;
+        panel.object[3][18].MapY = 12 * panel.tileSize+20;
 
         panel.object[3][19] = new K_FlowerPot(panel);
         panel.object[3][19].MapX = 8 * panel.tileSize;
-        panel.object[3][19].MapY = 10 * panel.tileSize;
+        panel.object[3][19].MapY = 11 * panel.tileSize;
 
         panel.object[3][20] = new K_Flower(panel);
         panel.object[3][20].MapX = 14 * panel.tileSize;
