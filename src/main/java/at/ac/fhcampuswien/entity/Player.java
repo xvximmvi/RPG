@@ -420,7 +420,7 @@ public class Player extends Entity{
                                     }
                                 }
                                 break;
-                            case "Chouch":
+                            case "Couch":
                                 if (handler.INTERACT) {
                                     panel.playSoundEffect(3);
                                     panel.GameState = panel.dialogueState;

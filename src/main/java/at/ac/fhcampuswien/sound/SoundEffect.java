@@ -14,6 +14,9 @@ public class SoundEffect {
 
     Clip clip ;
     URL[] soundeffect = new URL[10];
+    FloatControl floatControl;
+    public int volumeScale = 3;
+    float volume;
 
     // SOUND FILES
     public SoundEffect(){
@@ -34,8 +37,22 @@ public class SoundEffect {
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
+            floatControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);    //FloatControl accepts from -80f to 6f (-80 = no sound)
+            setVolume();
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void setVolume(){
+        switch(volumeScale){
+            case 0: volume = -80f;  break;
+            case 1: volume = -20f;  break;
+            case 2: volume = -12f;  break;
+            case 3: volume = -5f;   break;
+            case 4: volume = 1f;    break;
+            case 5: volume = 6f;    break;
+        }
+        floatControl.setValue(volume);
     }
 }

@@ -34,14 +34,15 @@ public class Handler implements KeyListener {
 
         // TITLE STATE
         if(panel.GameState == panel.titleState){
-            panel.playSoundEffect(6);
 
             if (keyCode == KeyEvent.VK_W){
                 panel.ui.command--;
+                panel.playSoundEffect(6);
                 if(panel.ui.command < 0) panel.ui.command = 2;
             }
             if (keyCode == KeyEvent.VK_S){
                 panel.ui.command++;
+                panel.playSoundEffect(6);
                 if(panel.ui.command > 2) panel.ui.command = 0;
             }
             if(keyCode == KeyEvent.VK_ENTER){
@@ -121,6 +122,13 @@ public class Handler implements KeyListener {
                 panel.GameState = panel.characterState;
             }
 
+            // OPTION STATE
+            if(keyCode == KeyEvent.VK_O){
+                panel.playSoundEffect(5);
+                Enter = false;
+                panel.GameState = panel.optionState;
+            }
+
             // ENTER
             if(keyCode == KeyEvent.VK_ENTER)    Enter = true;
 
@@ -147,6 +155,61 @@ public class Handler implements KeyListener {
             if(keyCode == KeyEvent.VK_C) {
                 panel.playSoundEffect(5);
                 panel.GameState = panel.playState;
+            }
+        }
+
+        // OPTION STATE
+        else if(panel.GameState == panel.optionState){
+            if(keyCode == KeyEvent.VK_O) {
+                panel.playSoundEffect(5);
+                panel.GameState = panel.playState;
+            }
+
+            if(keyCode == KeyEvent.VK_ENTER) {
+                Enter = true;
+            }
+
+            int maxCommand = 0;
+            switch(panel.ui.optionState){
+                case 0: maxCommand = 7;
+            }
+            if(keyCode == KeyEvent.VK_W) {
+                panel.ui.command--;
+                panel.playSoundEffect(6);
+                if(panel.ui.command < 0) panel.ui.command = maxCommand;
+            }
+            if(keyCode == KeyEvent.VK_S) {
+                panel.ui.command++;
+                panel.playSoundEffect(6);
+                if(panel.ui.command > maxCommand) panel.ui.command = 0;
+            }
+
+
+            if(keyCode == KeyEvent.VK_A) {
+                if(panel.ui.optionState == 0){
+                    if(panel.ui.command == 1 && panel.sound.volumeScale > 0){
+                        panel.sound.volumeScale--;
+                        panel.sound.setVolume();     //need to change ongoing music. Call setVolume while changing
+                        panel.playSoundEffect(6);
+                    }
+                    if(panel.ui.command == 2 && panel.sound.volumeScale > 0){
+                        panel.soundEffect.volumeScale--;
+                        panel.playSoundEffect(6);
+                    }
+                }
+            }
+            if(keyCode == KeyEvent.VK_D) {
+                if(panel.ui.optionState == 0){
+                    if(panel.ui.command == 1 && panel.soundEffect.volumeScale < 5){
+                        panel.sound.volumeScale++;
+                        panel.sound.setVolume();     //need to change ongoing music. Call setVolume while changing
+                        panel.playSoundEffect(6);
+                    }
+                    if(panel.ui.command == 2 && panel.soundEffect.volumeScale < 5){
+                        panel.soundEffect.volumeScale++;
+                        panel.playSoundEffect(6);
+                    }
+                }
             }
         }
 

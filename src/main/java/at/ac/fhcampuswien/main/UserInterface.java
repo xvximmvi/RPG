@@ -71,11 +71,14 @@ public class UserInterface {
     public boolean Goal = false;
     int TutorialCounter = 0;
 
-
     // PLAY TIME
+    public boolean Timer = true;
     public double playTime=100;      //100 sec Countdown
     public double DefaultPlayTime = playTime;
     DecimalFormat decimalFormat = new DecimalFormat("#0.00");  //minimize decimals
+    DecimalFormat decimalForCharacter = new DecimalFormat("#0.0");  //minimize decimals
+
+    public int optionState = 0;
 
     // UI CONSTRUCTOR
     public UserInterface(GamePanel panel){
@@ -110,15 +113,17 @@ public class UserInterface {
             graphics2D.setFont(Retro_Gaming);
             graphics2D.setColor(Color.white);
 
-            // TIME ------------------------------------------------------------------
-            playTime -= (double) 1 / 60;    //add 1/60 to the loop (60 Frames per sec)
-            graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 20F));
-            // SHADOW
-            graphics2D.setColor(Color.BLACK);
-            graphics2D.drawString("Time: " + decimalFormat.format(playTime), panel.tileSize * 12 + 7+2, 60+2);
-            graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString("Time: " + decimalFormat.format(playTime), panel.tileSize * 12 + 7, 60);
 
+            // TIME ------------------------------------------------------------------
+            if(Timer) {
+                playTime -= (double) 1 / 60;    //add 1/60 to the loop (60 Frames per sec)
+                graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 20F));
+                // SHADOW
+                graphics2D.setColor(Color.BLACK);
+                graphics2D.drawString("Time: " + decimalFormat.format(playTime), panel.tileSize * 12 + 7 + 2, 60 + 2);
+                graphics2D.setColor(Color.WHITE);
+                graphics2D.drawString("Time: " + decimalFormat.format(playTime), panel.tileSize * 12 + 7, 60);
+            }
 
             // MESSAGE ------------------------------------------------------------------
             if (MessageOn) {
@@ -256,6 +261,11 @@ public class UserInterface {
         }
         if(panel.GameState == panel.transitionOutState){
             drawTransitionOutState();
+        }
+
+        // OPTION STATE ------------------------------------------------------------------
+        if(panel.GameState == panel.optionState){
+            OptionScreen();
         }
     }
 
@@ -420,9 +430,10 @@ public class UserInterface {
         }
     }
 
+    // CHARACTER SCREEN
     public void CharacterScreen(){
 
-        // CREATE A FRAME
+        // CREATE A WINDOW
         final int characterWindowX = panel.tileSize;
         final int characterWindowY = panel.tileSize;
         final int characterWindowWidth = panel.tileSize*8;
@@ -434,7 +445,7 @@ public class UserInterface {
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
 
         int textX = characterWindowX + panel.tileSize/2;
-        int textY = characterWindowY+characterWindowY+ panel.tileSize;
+        int textY = characterWindowY+ 2*panel.tileSize;
         final int lineHeight = 24;      //same as Font Size
 
         // TITLE
@@ -452,8 +463,10 @@ public class UserInterface {
         graphics2D.drawString("Complete", textX, textY);
         textY += lineHeight;
 
-        graphics2D.drawString("Time Left", textX, textY);
-        textY += lineHeight;
+        if(Timer) {
+            graphics2D.drawString("Time Left", textX, textY);
+            textY += lineHeight;
+        }
 
         graphics2D.drawString("Keys", textX, textY);
         textY += lineHeight;
@@ -475,11 +488,12 @@ public class UserInterface {
         graphics2D.drawString(Info, InfoX, textY);
         textY += lineHeight;
 
-        Info = decimalFormat.format(playTime) +" s";
-        InfoX = (characterWindowX+characterWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds(Info, graphics2D).getWidth() - 20;
-        graphics2D.drawString(Info, InfoX, textY);
-        textY += lineHeight;
-
+        if(Timer) {
+            Info = decimalForCharacter.format(playTime) + " s";
+            InfoX = (characterWindowX + characterWindowWidth) - (int) graphics2D.getFontMetrics().getStringBounds(Info, graphics2D).getWidth() - 20;
+            graphics2D.drawString(Info, InfoX, textY);
+            textY += lineHeight;
+        }
 
         Info = panel.player.Keys +"/3";
         InfoX = (characterWindowX+characterWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds(Info, graphics2D).getWidth() - 20;
@@ -507,7 +521,6 @@ public class UserInterface {
             panel.GameState = panel.transitionOutState; // go to next step (Make screen lighter again; same transition just backwards)
         }
     }
-
     public void drawTransitionOutState(){
         // go out of transition: lighten the screen again
         TransitionCounter++;
@@ -521,13 +534,153 @@ public class UserInterface {
         }
     }
 
+    // OPTION SCREEN
+    public void OptionScreen(){
+        // CREATE A WINDOW
+        final int optionWindowX = panel.tileSize;
+        final int optionWindowY = panel.tileSize;
+        final int optionWindowWidth = panel.tileSize*8;
+        final int optionWindowHeight = panel.tileSize*10;
+        Window(optionWindowX, optionWindowY, optionWindowWidth, optionWindowHeight);
+
+        // TEXT
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
+
+        int textX = optionWindowX + panel.tileSize/2;
+        int textY = optionWindowY+ 2*panel.tileSize;
+        final int lineHeight = 24;      //same as Font Size
+
+        // TITLE
+        String title = "Settings";
+        int titleX = CenterWindowXText(title, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(title, titleX, textY-40);
+
+        switch(optionState) {
+            case 0: option_top(optionWindowX, optionWindowY, optionWindowHeight, optionWindowWidth);
+            break;
+            case 1: break;
+            case 2: break;
+        }
+
+        panel.handler.Enter = false;
+
+    }
+
+    /*
+    OPTION----
+    Time ON/OFF
+    Music
+    Sound FX
+    How to play
+    Restart
+    Save
+    Quit
+
+     MAIN MENU----
+     New game
+     Load
+     Option
+     How to play
+     Credits
+     Exit Game
+
+     Game Over/Game Won-----
+     Retry/Replay
+     Main Menu
+     Quit
+     */
+
+    public void option_top(int optionWindowX, int optionWindowY, int optionWindowHeight, int optionWindowWidth){
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 22F));
+
+        int textX = optionWindowX + panel.tileSize-10;
+        int textY = optionWindowY+ 2*panel.tileSize+12;
+        final int lineHeight = 36;      //same as Font Size
+
+        // LEFT SIDE
+        graphics2D.drawString("Timer", textX, textY);
+        if(command==0){
+            graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                if(Timer)   Timer = false;
+                else Timer = true;
+            }
+        }
+
+        textY += lineHeight;
+        graphics2D.drawString("Music", textX, textY);
+        if(command==1){
+            graphics2D.drawString(">",textX-20, textY);
+        }
+
+        textY += lineHeight;
+        graphics2D.drawString("Sound FX", textX, textY);
+        if(command==2){
+            graphics2D.drawString(">",textX-20, textY);
+        }
+
+        textY += lineHeight;
+        graphics2D.drawString("How to play", textX, textY);
+        if(command==3){
+            graphics2D.drawString(">",textX-20, textY);
+        }
+
+        textY += lineHeight;
+        graphics2D.drawString("Restart", textX, textY);
+        if(command==4){
+            graphics2D.drawString(">",textX-20, textY);
+        }
+
+        textY += lineHeight;
+        graphics2D.drawString("Main Menu", textX, textY);
+        if(command==5){
+            graphics2D.drawString(">",textX-20, textY);
+        }
+
+        textY += lineHeight;
+        graphics2D.drawString("Exit Game", textX, textY);
+        if(command==6){
+            graphics2D.drawString(">",textX-20, textY);
+        }
+
+        // RIGHT SIDE
+        textY = optionWindowY+optionWindowHeight- 30;
+        textX = (optionWindowX+optionWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds("Back", graphics2D).getWidth() - 24;
+        graphics2D.drawString("Back", textX, textY);
+        if(command==7){
+            graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 22F));
+            graphics2D.drawString(".",textX-20, textY-5);
+        }
+
+        // TIMER ON/OFF
+        textY = optionWindowY+ 2*panel.tileSize-2;
+        graphics2D.setStroke(new BasicStroke(3));
+        graphics2D.drawRoundRect(textX,textY,20, 20, 8, 8);
+        if(Timer){
+            graphics2D.fillRoundRect(textX+4,textY+4,12, 12, 3, 3);
+        }
+
+        // MUSIC VOLUME
+        textY += lineHeight-1;
+        textX = (optionWindowX+optionWindowWidth)-153-24;
+        graphics2D.drawRoundRect(textX,textY,153, 16, 6, 6);
+        int volumeWidth = 29*panel.sound.volumeScale;
+        graphics2D.fillRoundRect(textX+4,textY+4,volumeWidth, 8, 3, 3); //145:5 = 29
+
+        // SOUND FX
+        textY += lineHeight;
+        graphics2D.drawRoundRect(textX,textY,153, 16, 6, 6);
+        volumeWidth = 29*panel.soundEffect.volumeScale;
+        graphics2D.fillRoundRect(textX+4,textY+4,volumeWidth, 8, 3, 3);
+    }
+
     // CENTER OF X-COORDINATE
     public int CenterXText(String Text){
         //gets length of written input string
         int TextLength = (int)graphics2D.getFontMetrics().getStringBounds(Text, graphics2D).getWidth();
         return panel.ScreenWidth/2 - TextLength/2;  // Half of length to get it in center
     }
-
     public int CenterWindowXText(String Text, int WindowWidth, int WindowX){
         //gets length of written input string
         int TextLength = (int)graphics2D.getFontMetrics().getStringBounds(Text, graphics2D).getWidth();
@@ -636,7 +789,6 @@ public class UserInterface {
             graphics2D.drawString(">", x- panel.tileSize, y);
         }
     }
-
 
     // GAME OVER SCREEN
     public void GameOverScreen(){

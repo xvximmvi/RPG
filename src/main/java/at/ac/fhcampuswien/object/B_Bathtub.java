@@ -22,10 +22,11 @@ public class B_Bathtub extends GameObject {
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Object/B_Bathtub.png")));
-            utility.scaleImage(image, ObjectWidth, ObjectHeight);
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        utility.scaleImage(image, ObjectWidth, ObjectHeight);
+
         collision = true;
     }
 }

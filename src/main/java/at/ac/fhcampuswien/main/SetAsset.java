@@ -123,7 +123,7 @@ public class SetAsset {
         panel.object[1][9].MapX = 14* panel.tileSize-26;
         panel.object[1][9].MapY = 12* panel.tileSize+10;
 
-        panel.object[1][10] = new C_Chouch(panel);
+        panel.object[1][10] = new C_Couch(panel);
         panel.object[1][10].MapX = panel.tileSize-20;
         panel.object[1][10].MapY = 13*panel.tileSize-25;
 
