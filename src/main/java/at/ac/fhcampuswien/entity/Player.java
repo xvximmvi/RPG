@@ -1035,7 +1035,6 @@ public class Player extends Entity{
         dialogues[i] = "Ouch!!\nI bit on something hard..."; //23
 
     }
-
     // DRAW PLAYER
     public void draw(Graphics2D graphics2D) {
         //draw object with current information
@@ -1101,4 +1100,5 @@ public class Player extends Entity{
         panel.TransitionY = y;
         panel.GameState = panel.transitionState;
     }
+
 }

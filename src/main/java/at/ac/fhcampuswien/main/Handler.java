@@ -150,8 +150,11 @@ public class Handler implements KeyListener {
 
         // DIALOGUE STATE
         else if(panel.GameState == panel.dialogueState){
-            if(keyCode == KeyEvent.VK_SPACE)    panel.GameState = panel.playState;      //End Dialogue
+            if(keyCode == KeyEvent.VK_SPACE){
+                panel.GameState = panel.playState;      //End Dialogue
+            }
             //if(keyCode == KeyEvent.VK_ENTER)    panel.GameState = panel.playState;    //Skip Dialogue
+
         }
 
         // CHARACTER STATE

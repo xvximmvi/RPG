@@ -23,7 +23,7 @@ public class SoundEffect {
         soundeffect[0] = getClass().getResource("/Sound/GameWon.wav");
         soundeffect[1] = getClass().getResource("/Sound/GameOver.wav");
         soundeffect[2] = getClass().getResource("/Sound/Collect.wav");
-        soundeffect[3] = getClass().getResource("/Sound/Dialogue_v1_single.wav");
+        soundeffect[3] = getClass().getResource("/Sound/Dialogue_v1_multi.wav");
         soundeffect[4] = getClass().getResource("/Sound/Door.wav");
         soundeffect[5] = getClass().getResource("/Sound/Choose.wav");
         soundeffect[6] = getClass().getResource("/Sound/Switch.wav");

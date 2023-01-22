@@ -423,6 +423,7 @@ public class UserInterface {
         y += panel.tileSize;
         //graphics2D.drawString(currentDialogue, x, y); //Write Dialogue
 
+
         //Problem: Dialogue to long to fit -> create more Strings to separate dialogue in pieces
         for(String line : currentDialogue.split("\n")){ // .split("\n")  -> knows when to split each dialogue
             //without .split("\n") the drawString doesn't know what \n means and just keeps going without inserting a new line
