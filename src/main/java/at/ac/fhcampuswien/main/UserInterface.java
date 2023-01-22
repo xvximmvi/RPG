@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.main;
 import at.ac.fhcampuswien.object.*;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -557,10 +558,16 @@ public class UserInterface {
         graphics2D.drawString(title, titleX, textY-40);
 
         switch(optionState) {
-            case 0: option_top(optionWindowX, optionWindowY, optionWindowHeight, optionWindowWidth);
+            case 0: Settings(optionWindowX, optionWindowY, optionWindowHeight, optionWindowWidth);
             break;
-            case 1: break;
-            case 2: break;
+            case 1: HowToPlay(optionWindowX, optionWindowY, optionWindowHeight, optionWindowWidth);
+            break;
+            case 2: ExitGame(optionWindowX, optionWindowY, optionWindowWidth);
+            break;
+            case 3: RestartGame(optionWindowX, optionWindowY, optionWindowWidth);
+            break;
+            case 4: MainMenu(optionWindowX, optionWindowY, optionWindowWidth);
+                break;
         }
 
         panel.handler.Enter = false;
@@ -591,7 +598,7 @@ public class UserInterface {
      Quit
      */
 
-    public void option_top(int optionWindowX, int optionWindowY, int optionWindowHeight, int optionWindowWidth){
+    public void Settings(int optionWindowX, int optionWindowY, int optionWindowHeight, int optionWindowWidth){
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 22F));
 
         int textX = optionWindowX + panel.tileSize-10;
@@ -603,8 +610,7 @@ public class UserInterface {
         if(command==0){
             graphics2D.drawString(">",textX-20, textY);
             if(panel.handler.Enter){
-                if(Timer)   Timer = false;
-                else Timer = true;
+                Timer = !Timer;
             }
         }
 
@@ -624,24 +630,40 @@ public class UserInterface {
         graphics2D.drawString("How to play", textX, textY);
         if(command==3){
             graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                optionState = 1;
+                command = 0;
+            }
         }
 
         textY += lineHeight;
         graphics2D.drawString("Restart", textX, textY);
         if(command==4){
             graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                optionState = 3;
+                command = 0;
+            }
         }
 
         textY += lineHeight;
         graphics2D.drawString("Main Menu", textX, textY);
         if(command==5){
             graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                optionState = 4;
+                command = 0;
+            }
         }
 
         textY += lineHeight;
         graphics2D.drawString("Exit Game", textX, textY);
         if(command==6){
             graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                optionState = 2;
+                command = 0;
+            }
         }
 
         // RIGHT SIDE
@@ -651,6 +673,9 @@ public class UserInterface {
         if(command==7){
             graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 22F));
             graphics2D.drawString(".",textX-20, textY-5);
+            if(panel.handler.Enter){
+                panel.GameState = panel.playState;
+            }
         }
 
         // TIMER ON/OFF
@@ -674,7 +699,193 @@ public class UserInterface {
         volumeWidth = 29*panel.soundEffect.volumeScale;
         graphics2D.fillRoundRect(textX+4,textY+4,volumeWidth, 8, 3, 3);
     }
+    public void HowToPlay(int optionWindowX, int optionWindowY, int optionWindowHeight, int optionWindowWidth){
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 20F));
 
+        int textX = optionWindowX + panel.tileSize-10;
+        int textY = optionWindowY+ 3*panel.tileSize;
+        final int lineHeight = 36;      //same as Font Size
+
+        String title = "How to play";
+        int titleX = CenterWindowXText(title, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(title, titleX, textY-40);
+
+        // LEFT SIDE
+        textY +=lineHeight;
+        graphics2D.drawString("Move", textX, textY);
+
+        textY += lineHeight;
+        graphics2D.drawString("Interact", textX, textY);
+
+        textY += lineHeight;
+        graphics2D.drawString("Pause/Play", textX, textY);
+
+        textY += lineHeight;
+        graphics2D.drawString("Character", textX, textY);
+
+        textY += lineHeight;
+        graphics2D.drawString("Settings", textX, textY);
+
+        textY += lineHeight;
+        graphics2D.drawString("Select", textX, textY);
+
+
+        textY = optionWindowY+optionWindowHeight- 30;
+        textX = (optionWindowX+optionWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds("Back", graphics2D).getWidth() - 24;
+        graphics2D.drawString("Back", textX, textY);
+        if(command==0){
+            graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 22F));
+            graphics2D.drawString(".",textX-20, textY-5);
+            if(panel.handler.Enter){
+                optionState = 0;
+                command = 3;
+            }
+        }
+
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 20F));
+        textX = (optionWindowX+optionWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds("W A S D", graphics2D).getWidth() - 24;
+        textY = optionWindowY+ 3*panel.tileSize;
+        textY +=lineHeight;
+        graphics2D.drawString("W A S D", textX, textY);
+        textY += lineHeight;
+        graphics2D.drawString("SPACE", textX, textY);
+        textY += lineHeight;
+        graphics2D.drawString("    P", textX, textY);
+        textY += lineHeight;
+        graphics2D.drawString("    C", textX, textY);
+        textY += lineHeight;
+        graphics2D.drawString("    O", textX, textY);
+        textY += lineHeight;
+        graphics2D.drawString("ENTER", textX, textY);
+    }
+    public void RestartGame(int optionWindowX, int optionWindowY, int optionWindowWidth){
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 20F));
+
+        int textY = optionWindowY+ 3*panel.tileSize;
+
+        String title = "Restart";
+        int titleX = CenterWindowXText(title, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(title, titleX, textY);
+
+        textY += panel.tileSize;
+        String text = "Are your sure you want to\nrestart the Game?";
+        for(String line: text.split("\n")){
+            titleX = CenterWindowXText(line, optionWindowWidth, optionWindowX);
+            graphics2D.drawString(line, titleX, textY);
+            textY += 24;
+        }
+
+        // YES
+        textY += panel.tileSize;
+        text = "Yes";
+        int textX = CenterWindowXText(text, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(text, textX, textY);
+        if(command==0){
+            graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                panel.GameState = panel.playState;
+                panel.handler.Reset = true;
+            }
+        }
+
+        // NO
+        textY += panel.tileSize;
+        text = "No";
+        textX = CenterWindowXText(text, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(text, textX, textY);
+        if(command==1){
+            graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                optionState=0;
+                command = 4;
+            }
+        }
+    }
+    public void ExitGame(int optionWindowX, int optionWindowY, int optionWindowWidth){
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 20F));
+
+        int textY = optionWindowY+ 3*panel.tileSize;
+
+        String title = "Exit Game";
+        int titleX = CenterWindowXText(title, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(title, titleX, textY);
+
+        textY += panel.tileSize;
+        String text = "Are your sure you want to\nExit the Game?";
+        for(String line: text.split("\n")){
+            titleX = CenterWindowXText(line, optionWindowWidth, optionWindowX);
+            graphics2D.drawString(line, titleX, textY);
+            textY += 24;
+        }
+
+        // YES
+        textY += panel.tileSize;
+        text = "Yes";
+        int textX = CenterWindowXText(text, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(text, textX, textY);
+        if(command==0){
+            graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                System.exit(0);
+            }
+        }
+
+        // NO
+        textY += panel.tileSize;
+        text = "No";
+        textX = CenterWindowXText(text, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(text, textX, textY);
+        if(command==1){
+            graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                optionState=0;
+                command = 6;
+            }
+        }
+    }
+    public void MainMenu(int optionWindowX, int optionWindowY,  int optionWindowWidth){
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 20F));
+
+        int textY = optionWindowY+ 3*panel.tileSize;
+
+        String title = "Main Menu";
+        int titleX = CenterWindowXText(title, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(title, titleX, textY);
+
+        textY += panel.tileSize;
+        String text = "Are your sure you want to\nreturn to main menu?";
+        for(String line: text.split("\n")){
+            titleX = CenterWindowXText(line, optionWindowWidth, optionWindowX);
+            graphics2D.drawString(line, titleX, textY);
+            textY += 24;
+        }
+
+        // YES
+        textY += panel.tileSize;
+        text = "Yes";
+        int textX = CenterWindowXText(text, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(text, textX, textY);
+        if(command==0){
+            graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                panel.GameState = panel.titleState;
+                panel.stopMusic();
+            }
+        }
+
+        // NO
+        textY += panel.tileSize;
+        text = "No";
+        textX = CenterWindowXText(text, optionWindowWidth, optionWindowX);
+        graphics2D.drawString(text, textX, textY);
+        if(command==1){
+            graphics2D.drawString(">",textX-20, textY);
+            if(panel.handler.Enter){
+                optionState=0;
+                command = 5;
+            }
+        }
+    }
     // CENTER OF X-COORDINATE
     public int CenterXText(String Text){
         //gets length of written input string

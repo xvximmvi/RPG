@@ -17,6 +17,8 @@ public class Handler implements KeyListener {
     public boolean drawTime = false;
     public boolean Reset = false;
     public boolean Enter = false;
+    public boolean W = false;
+    public boolean S = false;
 
     // HANDLER CONSTRUCTOR
     public Handler(GamePanel panel){
@@ -126,6 +128,8 @@ public class Handler implements KeyListener {
             if(keyCode == KeyEvent.VK_O){
                 panel.playSoundEffect(5);
                 Enter = false;
+                panel.ui.command = 0;
+                panel.ui.optionState = 0;
                 panel.GameState = panel.optionState;
             }
 
@@ -167,12 +171,16 @@ public class Handler implements KeyListener {
 
             if(keyCode == KeyEvent.VK_ENTER) {
                 Enter = true;
+                panel.playSoundEffect(5);
             }
 
             int maxCommand = 0;
-            switch(panel.ui.optionState){
-                case 0: maxCommand = 7;
+            if (panel.ui.optionState == 0) {
+                maxCommand = 7;
+            } else if (panel.ui.optionState == 2 || panel.ui.optionState == 3 || panel.ui.optionState == 4) {
+                maxCommand = 1;
             }
+
             if(keyCode == KeyEvent.VK_W) {
                 panel.ui.command--;
                 panel.playSoundEffect(6);
@@ -183,7 +191,6 @@ public class Handler implements KeyListener {
                 panel.playSoundEffect(6);
                 if(panel.ui.command > maxCommand) panel.ui.command = 0;
             }
-
 
             if(keyCode == KeyEvent.VK_A) {
                 if(panel.ui.optionState == 0){
@@ -212,7 +219,6 @@ public class Handler implements KeyListener {
                 }
             }
         }
-
     }
 
     // KEY RELEASED
