@@ -34,6 +34,8 @@ public class Handler implements KeyListener {
 
         // TITLE STATE
         if(panel.GameState == panel.titleState){
+            panel.playSoundEffect(6);
+
             if (keyCode == KeyEvent.VK_W){
                 panel.ui.command--;
                 if(panel.ui.command < 0) panel.ui.command = 2;
@@ -43,16 +45,20 @@ public class Handler implements KeyListener {
                 if(panel.ui.command > 2) panel.ui.command = 0;
             }
             if(keyCode == KeyEvent.VK_ENTER){
+                panel.playSoundEffect(5);
+
                 if(panel.ui.command == 0){
                     panel.playMusic(1);
                     panel.GameState = panel.playState;
                     Reset=true;
                 }
                 if(panel.ui.command == 1){
+                    panel.playSoundEffect(5);
                     panel.playMusic(1);
                     panel.GameState = panel.playState;
                 }
                 if(panel.ui.command == 2){
+                    panel.playSoundEffect(5);
                     System.exit(0);
                 }
             }
@@ -60,6 +66,8 @@ public class Handler implements KeyListener {
 
         // GAME WON STATE    |   GAME OVER STATE
         if(panel.GameState == panel.GameWonState || panel.GameState == panel.GameOverState){
+            panel.playSoundEffect(6);
+
             if (keyCode == KeyEvent.VK_W){
                 panel.ui.command--;
                 if(panel.ui.command < 0) panel.ui.command = 2;
@@ -69,6 +77,8 @@ public class Handler implements KeyListener {
                 if(panel.ui.command > 2) panel.ui.command = 0;
             }
             if(keyCode == KeyEvent.VK_ENTER){
+                panel.playSoundEffect(5);
+
                 if(panel.ui.command == 0){
                     panel.GameState = panel.playState;
                     Reset = true;
@@ -99,13 +109,17 @@ public class Handler implements KeyListener {
             if (keyCode == KeyEvent.VK_P) {
                 panel.GameState = panel.pauseState;
                 panel.stopMusic();
+                panel.playSoundEffect(5);
                 drawTime = false;
             }
             // DEBUG
             //if (keyCode == KeyEvent.VK_T) drawTime = !drawTime;
 
             // CHARACTER STATE
-            if(keyCode == KeyEvent.VK_C)    panel.GameState = panel.characterState;
+            if(keyCode == KeyEvent.VK_C){
+                panel.playSoundEffect(5);
+                panel.GameState = panel.characterState;
+            }
 
             // ENTER
             if(keyCode == KeyEvent.VK_ENTER)    Enter = true;
@@ -115,6 +129,7 @@ public class Handler implements KeyListener {
         // PAUSE STATE
         else if(panel.GameState == panel.pauseState){
             if (keyCode == KeyEvent.VK_P){
+                panel.playSoundEffect(5);
                 panel.GameState = panel.playState;
                 panel.playMusic(1);
             }
@@ -129,7 +144,10 @@ public class Handler implements KeyListener {
 
         // CHARACTER STATE
         else if(panel.GameState == panel.characterState){
-            if(keyCode == KeyEvent.VK_C)    panel.GameState = panel.playState;
+            if(keyCode == KeyEvent.VK_C) {
+                panel.playSoundEffect(5);
+                panel.GameState = panel.playState;
+            }
         }
 
     }
