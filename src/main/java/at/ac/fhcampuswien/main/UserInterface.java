@@ -421,7 +421,69 @@ public class UserInterface {
     }
 
     public void CharacterScreen(){
-        //Still to come...
+
+        // CREATE A FRAME
+        final int characterWindowX = panel.tileSize;
+        final int characterWindowY = panel.tileSize;
+        final int characterWindowWidth = panel.tileSize*8;
+        final int characterWindowHeight = panel.tileSize*5;
+        Window(characterWindowX, characterWindowY, characterWindowWidth, characterWindowHeight);
+
+        // TEXT
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
+
+        int textX = characterWindowX + panel.tileSize/2;
+        int textY = characterWindowY+characterWindowY+ panel.tileSize;
+        final int lineHeight = 24;      //same as Font Size
+
+        // TITLE
+        String title = "WAY OUT";
+        int titleX = CenterWindowXText(title, characterWindowWidth, characterWindowX);
+        graphics2D.drawString(title, titleX, textY-40);
+
+        // NAMES
+        graphics2D.drawString("Name", textX, textY);
+        textY += lineHeight;
+
+        graphics2D.drawString("Level", textX, textY);
+        textY += lineHeight;
+
+        graphics2D.drawString("Complete", textX, textY);
+        textY += lineHeight;
+
+        graphics2D.drawString("Time Left", textX, textY);
+        textY += lineHeight;
+
+        graphics2D.drawString("Keys", textX, textY);
+        textY += lineHeight;
+
+        // INFORMATION
+        String Info = panel.player.CharacterName;
+        textY = characterWindowY+characterWindowY+ panel.tileSize;
+        int InfoX = (characterWindowX+characterWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds(Info, graphics2D).getWidth() - 20;
+        graphics2D.drawString(Info, InfoX, textY);
+        textY += lineHeight;
+
+        Info = panel.player.Level;
+        InfoX = (characterWindowX+characterWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds(Info, graphics2D).getWidth() - 20;
+        graphics2D.drawString(Info, InfoX, textY);
+        textY += lineHeight;
+
+        Info = (CompletionOfGame*100/panel.player.FullCompletion) + " %";
+        InfoX = (characterWindowX+characterWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds(Info, graphics2D).getWidth() - 20;
+        graphics2D.drawString(Info, InfoX, textY);
+        textY += lineHeight;
+
+        Info = decimalFormat.format(playTime) +" s";
+        InfoX = (characterWindowX+characterWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds(Info, graphics2D).getWidth() - 20;
+        graphics2D.drawString(Info, InfoX, textY);
+        textY += lineHeight;
+
+
+        Info = panel.player.Keys +"/3";
+        InfoX = (characterWindowX+characterWindowWidth) - (int)graphics2D.getFontMetrics().getStringBounds(Info, graphics2D).getWidth() - 20;
+        graphics2D.drawString(Info, InfoX, textY);
     }
 
     // MAP TRANSITION
@@ -464,6 +526,12 @@ public class UserInterface {
         //gets length of written input string
         int TextLength = (int)graphics2D.getFontMetrics().getStringBounds(Text, graphics2D).getWidth();
         return panel.ScreenWidth/2 - TextLength/2;  // Half of length to get it in center
+    }
+
+    public int CenterWindowXText(String Text, int WindowWidth, int WindowX){
+        //gets length of written input string
+        int TextLength = (int)graphics2D.getFontMetrics().getStringBounds(Text, graphics2D).getWidth();
+        return WindowWidth/2 - TextLength/2 + WindowX;  // Half of Window length to get it in center + begin where window begins
     }
 
     // GAME WON SCREEN

@@ -48,14 +48,20 @@ public class Player extends Entity{
     BufferedImage bufferedImage;
 
     public final int ScreenX, ScreenY;  //Coordinate of Screen
-    public boolean BedroomKey = false;
-    public boolean KitchenKey = false;
-    public boolean OutsideKey = false;
+
     int InteractionCounter=0;           //InteractionCounter: slower interaction with objects
     int ObjectCounter = 0;
 
+    // CHARACTER ATTRIBUTES
     public int FullCompletion = 54;
     Boolean[] complete = new Boolean[FullCompletion+1];
+
+    public final String CharacterName = "Mello";
+    public final String Level = "1 - Home";
+    public int Keys=0;
+    public boolean BedroomKey = false;
+    public boolean KitchenKey = false;
+    public boolean OutsideKey = false;
 
     // OBJECT STATE
     public boolean BR_Light_State = false;
@@ -92,6 +98,7 @@ public class Player extends Entity{
         Speed = 4;      //same as in Panel class
         direction = "DOWN";
 
+        Keys = 0;
         BedroomKey = false;
         KitchenKey = false;
         OutsideKey = false;
@@ -236,6 +243,7 @@ public class Player extends Entity{
                                         panel.GameState = panel.dialogueState;
                                         panel.ui.currentDialogue = dialogues[2];
                                         panel.ui.foundKey = true;
+                                        Keys++;
                                         BedroomKey = true;
                                         if(!complete[0]){       // only add one time to Completion
                                             complete[0] = true; //set true, so it doesn't add again on second use
@@ -633,28 +641,28 @@ public class Player extends Entity{
                                                 complete[30] = true;
                                                 panel.ui.CompletionOfGame++;
                                             }
-                                            panel.ui.usedTool = true;
-                                            ObjectCounter = 0;
-
                                             if (!KitchenKey) {
                                                 panel.playSoundEffect(2);
                                                 panel.GameState = panel.dialogueState;
                                                 panel.ui.currentDialogue = dialogues[13];
                                                 panel.ui.foundKey = true;
+                                                Keys++;
                                                 KitchenKey = true;
                                                 if (!complete[31]) {
                                                     complete[31] = true;
                                                     panel.ui.CompletionOfGame++;
                                                 }
                                             }
-                                        }
-                                    } else {
-                                        panel.playSoundEffect(3);
-                                        panel.GameState = panel.dialogueState;
-                                        panel.ui.currentDialogue = dialogues[17];
-                                        if(!complete[32]){
-                                            complete[32] = true;
-                                            panel.ui.CompletionOfGame++;
+                                            panel.ui.usedTool = true;
+                                            ObjectCounter = 0;
+                                        } else {
+                                            panel.playSoundEffect(3);
+                                            panel.GameState = panel.dialogueState;
+                                            panel.ui.currentDialogue = dialogues[17];
+                                            if (!complete[32]) {
+                                                complete[32] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
                                         }
                                     }
                                 }
@@ -978,6 +986,7 @@ public class Player extends Entity{
                                                 panel.playSoundEffect(2);
                                                 OutsideKey = true;
                                                 panel.ui.foundKey = true;
+                                                Keys++;
                                             }
                                         }
                                         ObjectCounter = 0;
@@ -1090,7 +1099,6 @@ public class Player extends Entity{
         panel.TransitionMap = Map;
         panel.TransitionX = x;
         panel.TransitionY = y;
-        panel.playSoundEffect(3);
         panel.GameState = panel.transitionState;
     }
 }
