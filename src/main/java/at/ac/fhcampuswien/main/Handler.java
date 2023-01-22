@@ -17,8 +17,7 @@ public class Handler implements KeyListener {
     public boolean drawTime = false;
     public boolean Reset = false;
     public boolean Enter = false;
-    public boolean W = false;
-    public boolean S = false;
+    public boolean ESCAPE = false;
 
     // HANDLER CONSTRUCTOR
     public Handler(GamePanel panel){
@@ -36,31 +35,43 @@ public class Handler implements KeyListener {
 
         // TITLE STATE
         if(panel.GameState == panel.titleState){
-
-            if (keyCode == KeyEvent.VK_W){
+            if (keyCode == KeyEvent.VK_W) {
                 panel.ui.command--;
                 panel.playSoundEffect(6);
-                if(panel.ui.command < 0) panel.ui.command = 2;
+                if (panel.ui.command < 0) panel.ui.command = 4;
             }
-            if (keyCode == KeyEvent.VK_S){
+            if (keyCode == KeyEvent.VK_S) {
                 panel.ui.command++;
                 panel.playSoundEffect(6);
-                if(panel.ui.command > 2) panel.ui.command = 0;
+                if (panel.ui.command > 4) panel.ui.command = 0;
             }
-            if(keyCode == KeyEvent.VK_ENTER){
+            if (keyCode == KeyEvent.VK_ENTER) {
                 panel.playSoundEffect(5);
+                Enter = false;
 
-                if(panel.ui.command == 0){
+                if (panel.ui.command == 0) {
                     panel.playMusic(1);
                     panel.GameState = panel.playState;
-                    Reset=true;
+                    Reset = true;
+                    panel.ui.command=0;
                 }
-                if(panel.ui.command == 1){
+                if (panel.ui.command == 1) {
                     panel.playSoundEffect(5);
-                    panel.playMusic(1);
-                    panel.GameState = panel.playState;
+                    panel.GameState = panel.menuOptionState;
+                    panel.ui.command=0;
                 }
-                if(panel.ui.command == 2){
+                if (panel.ui.command == 2) {
+                    panel.playSoundEffect(5);
+                    panel.GameState = panel.howToPlayState;
+                    panel.ui.command=0;
+                }
+                if (panel.ui.command == 3) {
+                    panel.playSoundEffect(5);
+                    panel.GameState = panel.creditsState;
+                    panel.ui.command=0;
+                }
+
+                if (panel.ui.command == 4) {
                     panel.playSoundEffect(5);
                     System.exit(0);
                 }
@@ -133,8 +144,6 @@ public class Handler implements KeyListener {
                 panel.GameState = panel.optionState;
             }
 
-            // ENTER
-            if(keyCode == KeyEvent.VK_ENTER)    Enter = true;
 
         }
 
@@ -221,6 +230,60 @@ public class Handler implements KeyListener {
                     }
                 }
             }
+        }
+
+        // MENU OPTION STATE
+        else if(panel.GameState == panel.menuOptionState){
+
+            if(keyCode == KeyEvent.VK_ENTER) {
+                Enter = true;
+                panel.playSoundEffect(5);
+            }
+
+            if(keyCode == KeyEvent.VK_W) {
+                Enter = false;
+                panel.ui.command--;
+                panel.playSoundEffect(6);
+                if(panel.ui.command < 0) panel.ui.command = 3;
+            }
+            if(keyCode == KeyEvent.VK_S) {
+                Enter = false;
+                panel.ui.command++;
+                panel.playSoundEffect(6);
+                if(panel.ui.command > 3) panel.ui.command = 0;
+            }
+
+            if(keyCode == KeyEvent.VK_A) {
+                    if(panel.ui.command == 0 && panel.sound.volumeScale > 0){
+                        panel.sound.volumeScale--;
+                        panel.playSoundEffect(6);
+                    }
+                    if(panel.ui.command == 1 && panel.sound.volumeScale > 0){
+                        panel.soundEffect.volumeScale--;
+                        panel.playSoundEffect(6);
+                    }
+            }
+            if(keyCode == KeyEvent.VK_D) {
+                    if(panel.ui.command == 0 && panel.soundEffect.volumeScale < 5){
+                        panel.sound.volumeScale++;
+                        panel.playSoundEffect(6);
+                    }
+                    if(panel.ui.command == 1 && panel.soundEffect.volumeScale < 5){
+                        panel.soundEffect.volumeScale++;
+                        panel.playSoundEffect(6);
+                    }
+            }
+        }
+
+        else if(panel.GameState == panel.howToPlayState) {
+            if(keyCode == KeyEvent.VK_ESCAPE) {
+                panel.GameState = panel.titleState;
+                panel.playSoundEffect(5);
+            }
+        }
+
+        else if(panel.GameState == panel.creditsState){
+
         }
     }
 

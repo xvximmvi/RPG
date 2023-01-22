@@ -3,7 +3,6 @@ package at.ac.fhcampuswien.main;
 import at.ac.fhcampuswien.object.*;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,6 +79,8 @@ public class UserInterface {
     DecimalFormat decimalForCharacter = new DecimalFormat("#0.0");  //minimize decimals
 
     public int optionState = 0;
+    public int menuState = 0;
+    public boolean HowToPlay = false;
 
     // UI CONSTRUCTOR
     public UserInterface(GamePanel panel){
@@ -268,6 +269,22 @@ public class UserInterface {
         if(panel.GameState == panel.optionState){
             OptionScreen();
         }
+
+        // OPTION STATE ------------------------------------------------------------------
+        if(panel.GameState == panel.optionState){
+            OptionScreen();
+        }
+
+        // MENU OPTION STATE ------------------------------------------------------------------
+        if(panel.GameState == panel.menuOptionState){
+            MenuOptionScreen();
+        }
+
+        // HOW TO PLAY STATE ------------------------------------------------------------------
+        if(panel.GameState == panel.howToPlayState){
+            HowToPlayScreen();
+        }
+
     }
 
     // TILE SCREEN
@@ -281,11 +298,11 @@ public class UserInterface {
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 96F));
         String Text = "WAY OUT";
         int x = CenterXText(Text);
-        int y = panel.tileSize*3;
+        int y = panel.tileSize * 3;
 
         // SHADOW
         graphics2D.setColor(Color.GRAY);
-        graphics2D.drawString(Text,x+5,y+5);
+        graphics2D.drawString(Text, x + 5, y + 5);
 
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
@@ -293,77 +310,329 @@ public class UserInterface {
 
 
         // PLAYER CHARACTER   ------------------------------------------------------------------
-        x = panel.ScreenWidth/2 - (panel.tileSize);
-        y += panel.tileSize*2;
-        graphics2D.drawImage(panel.player.DOWN2, x, y, panel.tileSize*2, panel.tileSize*2, null);
-
+        x = panel.ScreenWidth / 2 - (panel.tileSize);
+        y += panel.tileSize * 2;
+        graphics2D.drawImage(panel.player.DOWN2, x, y, panel.tileSize * 2, panel.tileSize * 2, null);
 
 
         // NEW GAME     ------------------------------------------------------------------
-        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
-        Text = "NEW GAME";
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 28F));
+        Text = "PLAY";
         x = CenterXText(Text);
-        y += panel.tileSize*3.5;
+        y += panel.tileSize * 3;
 
         // SHADOW
         graphics2D.setColor(Color.GRAY);
-        graphics2D.drawString(Text,x+3,y+3);
+        graphics2D.drawString(Text, x + 3, y + 3);
 
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
 
         // CHOOSE OPTION
-        if(command == 0){
+        if (command == 0) {
             graphics2D.setColor(Color.GRAY);
-            graphics2D.drawString(">", x- panel.tileSize+3, y+3);
+            graphics2D.drawString(">", x - 30, y + 3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);
+            graphics2D.drawString(">", x - 30, y);
         }
 
-        // LOAD GAME    ------------------------------------------------------------------
-        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
-        Text = "LOAD GAME";
+        // SETTINGS   ------------------------------------------------------------------
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 28F));
+        Text = "SETTINGS";
         x = CenterXText(Text);
-        y += panel.tileSize;
+        y += 36;
 
         // SHADOW
         graphics2D.setColor(Color.GRAY);
-        graphics2D.drawString(Text,x+3,y+3);
+        graphics2D.drawString(Text, x + 3, y + 3);
 
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
 
         // CHOOSE OPTION
-        if(command == 1){
+        if (command == 1) {
             graphics2D.setColor(Color.GRAY);
-            graphics2D.drawString(">", x- panel.tileSize+3, y+3);
+            graphics2D.drawString(">", x - 30, y + 3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);
+            graphics2D.drawString(">", x - 30, y);
+            if (panel.handler.Enter) {
+                panel.handler.Enter = false;
+                menuState = 1;
+                command = 0;
+            }
+        }
+
+        // HOW TO PLAY    ------------------------------------------------------------------
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 28F));
+        Text = "HOW TO PLAY";
+        x = CenterXText(Text);
+        y += 36;
+
+        // SHADOW
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+
+        // MAIN COLOR
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+
+        // CHOOSE OPTION
+        if (command == 2) {
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(">", x - 30, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(">", x - 30, y);
+            if (panel.handler.Enter) {
+                menuState = 2;
+                command = 0;
+            }
+        }
+
+        // CREDITS    ------------------------------------------------------------------
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 28F));
+        Text = "CREDITS";
+        x = CenterXText(Text);
+        y += 36;
+
+        // SHADOW
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+
+        // MAIN COLOR
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+
+        // CHOOSE OPTION
+        if (command == 3) {
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(">", x - 30, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(">", x - 30, y);
         }
 
         // QUIT     ------------------------------------------------------------------
-        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 40F));
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 28F));
         Text = "QUIT";
         x = CenterXText(Text);
-        y += panel.tileSize;
+        y += 36;
 
         // SHADOW
         graphics2D.setColor(Color.GRAY);
-        graphics2D.drawString(Text,x+3,y+3);
+        graphics2D.drawString(Text, x + 3, y + 3);
 
         // MAIN COLOR
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
 
         // CHOOSE OPTION
-        if(command == 2){
+        if (command == 4) {
             graphics2D.setColor(Color.GRAY);
-            graphics2D.drawString(">", x- panel.tileSize+3, y+3);
+            graphics2D.drawString(">", x - 30, y + 3);
             graphics2D.setColor(Color.WHITE);
-            graphics2D.drawString(">", x- panel.tileSize, y);
+            graphics2D.drawString(">", x - 30, y);
         }
+    }
+    public void MenuOptionScreen(){
+        // BACKGROUND COLOR
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.fillRect(0, 0, panel.ScreenWidth, panel.ScreenHeight);
+
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 70F));
+        String Text = "SETTINGS";
+        int x = CenterXText(Text);
+        int y = panel.tileSize * 3;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 5, y + 5);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 28F));
+        Text = "Music";
+        x = panel.tileSize*2;
+        y += panel.tileSize * 2.5;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        if (command == 0) {
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(">", x - 30, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(">", x - 30, y);
+
+        }
+
+        Text = "SOUND FX";
+        y += 36;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        if (command == 1) {
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(">", x - 30, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(">", x - 30, y);
+        }
+
+        Text = "Timer ON/OFF";
+        y += 36;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        if (command == 2) {
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(">", x - 30, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(">", x - 30, y);
+            if(panel.handler.Enter){
+                panel.handler.Enter = false;
+                Timer = ! Timer;
+            }
+        }
+
+        Text = "Back";
+        x = CenterXText(Text);
+        y = panel.ScreenHeight-panel.tileSize*2;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        if (command == 3) {
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(">", x - 30, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(">", x - 30, y);
+            if(panel.handler.Enter){
+                panel.GameState = panel.titleState;
+                command = 1;
+                panel.handler.Enter=false;
+            }
+        }
+        // MUSIC VOLUME
+        x = panel.tileSize*9;
+        y = panel.tileSize*5-5;
+        graphics2D.drawRoundRect(x,y,153, 22, 6, 6);
+        int volumeWidth = 29*panel.sound.volumeScale;
+        graphics2D.fillRoundRect(x+4,y+4,volumeWidth, 14, 3, 3); //145:5 = 29
+
+        // SOUND FX
+        y += 40;
+        graphics2D.drawRoundRect(x,y,153, 22, 6, 6);
+        volumeWidth = 29*panel.soundEffect.volumeScale;
+        graphics2D.fillRoundRect(x+4,y+4,volumeWidth, 14, 3, 3);
+
+
+        // TIMER
+        y += 38;
+        x = panel.tileSize*10+12;
+        graphics2D.setStroke(new BasicStroke(3));
+        graphics2D.drawRoundRect(x, y,28, 28, 8, 8);
+        if(Timer){
+            graphics2D.fillRoundRect(x+4,y+4,20, 20, 3, 3);
+        }
+    }
+    public void HowToPlayScreen(){
+        graphics2D.setColor(Color.BLACK);
+        graphics2D.fillRect(0, 0, panel.ScreenWidth, panel.ScreenHeight);
+
+            graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 70F));
+            String Text = "SETTINGS";
+            int x = CenterXText(Text);
+            int y = panel.tileSize * 3;
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(Text, x + 5, y + 5);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(Text, x, y);
+
+            graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 28F));
+            Text = "Move ";
+            x = panel.tileSize * 2;
+            y += panel.tileSize * 2.5;
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(Text, x + 3, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(Text, x, y);
+            Text = "Interact";
+            y += 36;
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(Text, x + 3, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(Text, x, y);
+            Text = "Pause/Play";
+            y += 36;
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(Text, x + 3, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(Text, x, y);
+            Text = "Character";
+            y += 36;
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(Text, x + 3, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(Text, x, y);
+            Text = "Settings";
+            y += 36;
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(Text, x + 3, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(Text, x, y);
+            Text = "Select";
+            y += 36;
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(Text, x + 3, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(Text, x, y);
+
+            Text = "Back with ESC";
+            x = CenterXText(Text);
+            y = panel.ScreenHeight-panel.tileSize-24;
+            graphics2D.setColor(Color.GRAY);
+            graphics2D.drawString(Text, x + 3, y + 3);
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.drawString(Text, x, y);
+
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 28F));
+        Text = "W A S D ";
+        x = panel.tileSize * 9;
+        y = panel.tileSize * 5 + 24;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        Text = "SPACE";
+        y += 36;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        Text = "     P";
+        y += 36;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        Text = "     C";
+        y += 36;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        Text = "     O";
+        y += 36;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        Text = "ENTER";
+        y += 36;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 3, y + 3);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
     }
 
     // PAUSE SCREEN
@@ -549,9 +818,7 @@ public class UserInterface {
         graphics2D.setColor(Color.WHITE);
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 24F));
 
-        int textX = optionWindowX + panel.tileSize/2;
         int textY = optionWindowY+ 2*panel.tileSize;
-        final int lineHeight = 24;      //same as Font Size
 
         // TITLE
         String title = "Settings";
@@ -574,30 +841,6 @@ public class UserInterface {
         panel.handler.Enter = false;
 
     }
-
-    /*
-    OPTION----
-    Time ON/OFF
-    Music
-    Sound FX
-    How to play
-    Restart
-    Save
-    Quit
-
-     MAIN MENU----
-     New game
-     Load
-     Option
-     How to play
-     Credits
-     Exit Game
-
-     Game Over/Game Won-----
-     Retry/Replay
-     Main Menu
-     Quit
-     */
 
     public void Settings(int optionWindowX, int optionWindowY, int optionWindowHeight, int optionWindowWidth){
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 22F));
