@@ -86,7 +86,7 @@ public class Player extends Entity{
     int ObjectCounter = 0;
 
     // CHARACTER ATTRIBUTES
-    public int FullCompletion = 54;
+    public int FullCompletion = 56;
     Boolean[] complete = new Boolean[FullCompletion+1];
 
     public final String CharacterName = "Mello";
@@ -211,6 +211,7 @@ public class Player extends Entity{
             panel.object[2][14] = null;
             panel.object[2][15] = null;
             panel.object[2][16] = null;
+            panel.ui.CompletionOfGame = 0;
 
             panel.ui.playTime = panel.ui.DefaultPlayTime;
             handler.Reset =false;
@@ -373,20 +374,32 @@ public class Player extends Entity{
                     else if(panel.currentMap == 1){
                         switch (ObjectName) {
                             case "BottomDoor":
-                                if (OutsideKey && handler.INTERACT) {
-                                    panel.playSoundEffect(0);
-                                    panel.GameState = panel.GameWonState;
-                                    if(!complete[8]){
-                                        complete[8] = true;
-                                        panel.ui.CompletionOfGame++;
-                                    }
-                                } else if (!OutsideKey && handler.INTERACT) {  //if no Key in possession
-                                    panel.playSoundEffect(3);
-                                    panel.GameState = panel.dialogueState;
-                                    panel.ui.currentDialogue = dialogues[5];
-                                    if(!complete[9]){
-                                        complete[9] = true;
-                                        panel.ui.CompletionOfGame++;
+                                if(handler.INTERACT) {
+                                    if (OutsideKey) {
+                                        panel.playSoundEffect(0);
+                                        panel.GameState = panel.GameWonState;
+                                        if (!complete[8]) {
+                                            complete[8] = true;
+                                            panel.ui.CompletionOfGame++;
+                                        }
+                                    } else {  //if no Key in possession
+                                        if(KitchenKey){
+                                            panel.playSoundEffect(3);
+                                            panel.GameState = panel.dialogueState;
+                                            panel.ui.currentDialogue = dialogues[24];
+                                            if (!complete[55]) {
+                                                complete[55] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
+                                        } else {
+                                            panel.playSoundEffect(3);
+                                            panel.GameState = panel.dialogueState;
+                                            panel.ui.currentDialogue = dialogues[5];
+                                            if (!complete[9]) {
+                                                complete[9] = true;
+                                                panel.ui.CompletionOfGame++;
+                                            }
+                                        }
                                     }
                                 }
                                 break;
@@ -690,7 +703,7 @@ public class Player extends Entity{
                                             }
                                             panel.ui.usedTool = true;
                                             ObjectCounter = 0;
-                                        } else {
+                                        } else if(!panel.ui.usedTool) {
                                             panel.playSoundEffect(3);
                                             panel.GameState = panel.dialogueState;
                                             panel.ui.currentDialogue = dialogues[17];
@@ -707,7 +720,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
-                                            panel.playSoundEffect(3);
+                                            panel.playSoundEffect(5);
                                             panel.object[2][7] = new B_Bathtub_Interact();
                                             panel.object[2][7].MapX = 11 * panel.tileSize;
                                             panel.object[2][7].MapY = 6 * panel.tileSize - 24;
@@ -740,7 +753,7 @@ public class Player extends Entity{
                             case "Fridge":
                             if (handler.INTERACT) {
                                 ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                     panel.playSoundEffect(5);
                                     panel.object[3][23] = new K_Fridge_Interact();
                                     panel.object[3][23].MapX = panel.tileSize-4;
@@ -760,7 +773,7 @@ public class Player extends Entity{
                             case "Fridge_INTERACT":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                             if(panel.ui.usedEmptyPot && !panel.ui.collectSoupCan) {
                                                 panel.GameState = panel.dialogueState;
                                                 panel.ui.currentDialogue = dialogues[18];
@@ -799,7 +812,7 @@ public class Player extends Entity{
                             case "Oven":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
                                         panel.object[3][24] = new K_Oven_Interact();
                                         panel.object[3][24].MapX = 5*panel.tileSize;
@@ -817,7 +830,7 @@ public class Player extends Entity{
                             case "Oven_INTERACT":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                         if(!panel.ui.collectEmptyPot || panel.ui.collectSoupPlate ) {   //Nothing collected jet or Oven is finished (Soup is made)
                                             panel.playSoundEffect(5);
                                             panel.object[3][9] = new K_Oven();
@@ -885,7 +898,7 @@ public class Player extends Entity{
                             case "Sink":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
                                         panel.object[3][25] = new K_Sink_Interact();
                                         panel.object[3][25].MapX = 8*panel.tileSize;
@@ -903,7 +916,7 @@ public class Player extends Entity{
                             case "Sink_INTERACT":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
                                         panel.object[3][10] = new K_Sink();
                                         panel.object[3][10].MapX = 8*panel.tileSize;
@@ -921,7 +934,7 @@ public class Player extends Entity{
                             case "Shelf":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                         if(panel.ui.collectEmptyPot) {
                                             panel.playSoundEffect(5);
                                             panel.object[3][26] = new K_Shelf_Interact();
@@ -958,7 +971,7 @@ public class Player extends Entity{
                             case "Shelf_INTERACT":
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
-                                    if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
+                                    if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                          if(panel.ui.usedSoupCan && !panel.ui.collectEmptyPlate) {
                                              if(!complete[50]){
                                                  complete[50] = true;
@@ -1010,16 +1023,26 @@ public class Player extends Entity{
                                                 panel.object[3][29] = new K_EmptyPlate();
                                                 panel.object[3][29].MapX = 6 * panel.tileSize - 25;
                                                 panel.object[3][29].MapY = 11 * panel.tileSize + 24;
-                                                if (!complete[54]) {
-                                                    complete[54] = true;
-                                                    panel.ui.CompletionOfGame++;
+                                                if(!OutsideKey) {
+                                                    panel.GameState = panel.dialogueState;
+                                                    panel.ui.currentDialogue = dialogues[23];
+                                                    panel.playSoundEffect(2);
+                                                    OutsideKey = true;
+                                                    panel.ui.foundKey = true;
+                                                    Keys++;
+                                                    if (!complete[54]) {
+                                                        complete[54] = true;
+                                                        panel.ui.CompletionOfGame++;
+                                                    }
+                                                } else {
+                                                    panel.playSoundEffect(3);
+                                                    panel.GameState = panel.dialogueState;
+                                                    panel.ui.currentDialogue = dialogues[25];
+                                                    if (!complete[56]) {
+                                                        complete[56] = true;
+                                                        panel.ui.CompletionOfGame++;
+                                                    }
                                                 }
-                                                panel.GameState = panel.dialogueState;
-                                                panel.ui.currentDialogue = dialogues[23];
-                                                panel.playSoundEffect(2);
-                                                OutsideKey = true;
-                                                panel.ui.foundKey = true;
-                                                Keys++;
                                             }
                                         }
                                         ObjectCounter = 0;
@@ -1051,6 +1074,7 @@ public class Player extends Entity{
         dialogues[i] = "oh! I found a screwdriver.\nMaybe I can use it for something..."; i++;
         dialogues[i] = "Hello Nemo.";   i++;
         dialogues[i] = "Why is the kitchen locked?\nI'm so hungry...";    i++;
+        dialogues[24] = "The key doesn't fit here...";
 
         // BATHROOM
         dialogues[i] = "I found another key.";   i++;
@@ -1066,7 +1090,7 @@ public class Player extends Entity{
         dialogues[i] = "Here are all our plates."; i++;
         dialogues[i] = "I like to stand while I eat..."; i++;
         dialogues[i] = "Ouch!!\nI bit on something hard..."; //23
-
+        dialogues[25] = "I'll wash the plate later.";
     }
 
     // DRAW PLAYER
