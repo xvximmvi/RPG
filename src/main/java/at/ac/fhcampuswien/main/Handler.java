@@ -334,12 +334,12 @@ public class Handler implements KeyListener {
 
             if(keyCode == KeyEvent.VK_W) {
                 panel.playSoundEffect(5);
-                y -= 10;
+                if(y != 0)  y += 12;
             }
 
             if(keyCode == KeyEvent.VK_S) {
                 panel.playSoundEffect(5);
-                y += 10;
+                if(y >= -1212) y -= 12;
             }
 
         }

@@ -688,7 +688,7 @@ public class UserInterface {
 
         // CREDITS
         String credits = """
-                Program by
+                Game by
 
                 Klea Kupi-Herbst
                 Philipp Glatz
@@ -696,6 +696,15 @@ public class UserInterface {
                 Richard Libres
                 Zahra Mousavi
 
+
+
+
+
+                Project Leader &
+                Program Supervision
+                
+                Klea Kupi-Herbst
+                
 
 
 
