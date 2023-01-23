@@ -188,6 +188,8 @@ public class Player extends Entity{
             panel.ui.foundKey = false;
             panel.ui.foundTool = false;
             panel.ui.usedTool = false;
+            BR_Light_State = false;
+            panel.object[0][13] = null;
 
             //KITCHEN
             panel.ui.collectEmptyPot = false;
@@ -423,7 +425,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
-                                        panel.playSoundEffect(3);
+                                        panel.playSoundEffect(5);
                                         panel.object[1][13] = new C_Lamp_ON();
                                         panel.object[1][13].MapX = 2 * panel.tileSize + 20;
                                         panel.object[1][13].MapY = 3 * panel.tileSize + 30;
@@ -440,7 +442,7 @@ public class Player extends Entity{
                                 if (handler.INTERACT) {
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
-                                        panel.playSoundEffect(3);
+                                        panel.playSoundEffect(5);
                                         panel.object[1][12] = new C_Lamp();
                                         panel.object[1][12].MapX = 2 * panel.tileSize + 20;
                                         panel.object[1][12].MapY = 3 * panel.tileSize + 30;
@@ -760,7 +762,6 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                             if(panel.ui.usedEmptyPot && !panel.ui.collectSoupCan) {
-                                                panel.playSoundEffect(3);
                                                 panel.GameState = panel.dialogueState;
                                                 panel.ui.currentDialogue = dialogues[18];
                                                 if(!complete[36]){
@@ -785,7 +786,7 @@ public class Player extends Entity{
                                                 panel.object[3][8].MapX = panel.tileSize;
                                                 panel.object[3][8].MapY = 3 * panel.tileSize;
                                                 panel.object[3][23] = null;
-                                                if(!complete[38]){
+                                                if (!complete[38]) {
                                                     complete[38] = true;
                                                     panel.ui.CompletionOfGame++;
                                                 }
@@ -1013,7 +1014,6 @@ public class Player extends Entity{
                                                     complete[54] = true;
                                                     panel.ui.CompletionOfGame++;
                                                 }
-                                                panel.playSoundEffect(3);
                                                 panel.GameState = panel.dialogueState;
                                                 panel.ui.currentDialogue = dialogues[23];
                                                 panel.playSoundEffect(2);

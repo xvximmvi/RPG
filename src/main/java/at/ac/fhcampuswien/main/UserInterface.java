@@ -1057,6 +1057,7 @@ public class UserInterface {
             graphics2D.drawString(".",textX-20, textY-5);
             if(panel.handler.Enter){
                 panel.GameState = panel.playState;
+                command = 0;
             }
         }
 

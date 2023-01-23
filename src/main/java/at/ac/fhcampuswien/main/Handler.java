@@ -218,6 +218,7 @@ public class Handler implements KeyListener {
             if(keyCode == KeyEvent.VK_O) {
                 panel.playSoundEffect(5);
                 panel.GameState = panel.playState;
+                panel.ui.command = 0;
             }
 
             if(keyCode == KeyEvent.VK_ENTER) {
