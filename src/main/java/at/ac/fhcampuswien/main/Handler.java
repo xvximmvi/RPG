@@ -251,7 +251,7 @@ public class Handler implements KeyListener {
                         panel.sound.setVolume();     //need to change ongoing music. Call setVolume while changing
                         panel.playSoundEffect(6);
                     }
-                    if(panel.ui.command == 2 && panel.sound.volumeScale > 0){
+                    if(panel.ui.command == 2 && panel.soundEffect.volumeScale > 0){
                         panel.soundEffect.volumeScale--;
                         panel.playSoundEffect(6);
                     }
@@ -259,7 +259,7 @@ public class Handler implements KeyListener {
             }
             if(keyCode == KeyEvent.VK_D) {
                 if(panel.ui.optionState == 0){
-                    if(panel.ui.command == 1 && panel.soundEffect.volumeScale < 5){
+                    if(panel.ui.command == 1 && panel.sound.volumeScale < 5){
                         panel.sound.volumeScale++;
                         panel.sound.setVolume();     //need to change ongoing music. Call setVolume while changing
                         panel.playSoundEffect(6);
@@ -299,13 +299,13 @@ public class Handler implements KeyListener {
                         panel.sound.setVolume();
                         panel.playSoundEffect(6);
                     }
-                    if(panel.ui.command == 1 && panel.sound.volumeScale > 0){
+                    if(panel.ui.command == 1 && panel.soundEffect.volumeScale > 0){
                         panel.soundEffect.volumeScale--;
                         panel.playSoundEffect(6);
                     }
             }
             if(keyCode == KeyEvent.VK_D) {
-                    if(panel.ui.command == 0 && panel.soundEffect.volumeScale < 5){
+                    if(panel.ui.command == 0 && panel.sound.volumeScale < 5){
                         panel.sound.volumeScale++;
                         panel.sound.setVolume();
                         panel.playSoundEffect(6);
