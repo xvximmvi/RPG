@@ -17,7 +17,8 @@ public class Handler implements KeyListener {
     public boolean drawTime = false;
     public boolean Reset = false;
     public boolean Enter = false;
-    public boolean ESCAPE = false;
+    public boolean Scroll = false;
+    public int y = 0;
 
     // HANDLER CONSTRUCTOR
     public Handler(GamePanel panel){
@@ -283,6 +284,21 @@ public class Handler implements KeyListener {
         }
 
         else if(panel.GameState == panel.creditsState){
+            if(keyCode == KeyEvent.VK_ESCAPE) {
+                panel.GameState = panel.titleState;
+                panel.playSoundEffect(5);
+                panel.ui.command=3;
+            }
+
+            if(keyCode == KeyEvent.VK_W) {
+                panel.playSoundEffect(5);
+                y -= 10;
+            }
+
+            if(keyCode == KeyEvent.VK_S) {
+                panel.playSoundEffect(5);
+                y += 10;
+            }
 
         }
     }
@@ -300,5 +316,13 @@ public class Handler implements KeyListener {
 
         // INTERACTION
         if(keyCode == KeyEvent.VK_SPACE)    INTERACT = false; //Key for interaction (objects, ...)
+
+        if(panel.GameState == panel.creditsState){
+            if(keyCode == KeyEvent.VK_SPACE){
+                panel.playSoundEffect(5);
+                Scroll = false;
+            }
+
+        }
     }
 }

@@ -1,6 +1,9 @@
 package at.ac.fhcampuswien.main;
 
-import javax.swing.JFrame;
+import com.sun.tools.javac.Main;
+
+import javax.swing.*;
+import java.util.Objects;
 
 //CLASS CONTENT
 /*
@@ -10,13 +13,17 @@ import javax.swing.JFrame;
  */
 
 public class Game {
+    public static JFrame window;
+
     public static void main(String[] args){
 
         //WINDOW SETTINGS
-        JFrame window = new JFrame();       //first create window
+        window = new JFrame();       //first create window
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //lets the window properly close when user clicks the close ("x") button
         window.setResizable(false);         //no resizing of the window
         window.setTitle("WAY OUT");      //Title of the Game
+
+        new Game().setIcon();
 
         // ADD PANEL
         GamePanel panel = new GamePanel();
@@ -31,5 +38,10 @@ public class Game {
         // START GAME
         panel.setUpGame();                  //start setting up the Game
         panel.startThread();               //start thread
+    }
+
+    public void setIcon(){
+        ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("MC/MC_F2.png")));
+        window.setIconImage(imageIcon.getImage());
     }
 }

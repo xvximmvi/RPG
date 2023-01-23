@@ -80,7 +80,6 @@ public class UserInterface {
 
     public int optionState = 0;
     public int menuState = 0;
-    public boolean HowToPlay = false;
 
     // UI CONSTRUCTOR
     public UserInterface(GamePanel panel){
@@ -283,6 +282,12 @@ public class UserInterface {
         // HOW TO PLAY STATE ------------------------------------------------------------------
         if(panel.GameState == panel.howToPlayState){
             HowToPlayScreen();
+        }
+
+        // CREDITS STATE
+        if(panel.GameState == panel.creditsState){
+            CreditsScreen();
+
         }
 
     }
@@ -633,6 +638,69 @@ public class UserInterface {
         graphics2D.drawString(Text, x + 3, y + 3);
         graphics2D.setColor(Color.WHITE);
         graphics2D.drawString(Text, x, y);
+    }
+    public void CreditsScreen(){
+        // BACKGROUND COLOR
+        graphics2D.setColor(new Color(0,0,0));
+        graphics2D.fillRect(0, 0, panel.ScreenWidth, panel.ScreenHeight);
+
+        int y = panel.handler.y;
+
+        // GAME TITLE       ------------------------------------------------------------------
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 96F));
+        String Text = "WAY OUT";
+        int x = CenterXText(Text);
+        y += panel.tileSize * 3;
+        graphics2D.setColor(Color.GRAY);
+        graphics2D.drawString(Text, x + 5, y + 5);
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.drawString(Text, x, y);
+        y += panel.tileSize * 3;
+
+        graphics2D.setFont(graphics2D.getFont().deriveFont(Font.PLAIN, 22F));
+
+
+        String credits = "Program by\n\n"
+                + "Klea Kupi-Herbst\n"
+                + "Philipp Glatz\n"
+                + "Stella Gross\n"
+                + "Richard Libres\n"
+                + "Zahra Mousavi\n"
+                + "\n\n\n\n\n\n"
+                + "Music by\n\n"
+                + "Philipp Glatz\n"
+                + "\n\n\n\n\n\n"
+                + "Art by\n\n"
+                + "Stella Gross\n"
+                + "\n\n\n\n\n\n"
+                + "Gameplay by\n\n"
+                + "Richard Libres\n"
+                + "\n\n\n\n\n\n"
+                + "FH Campus Wien\n\n"
+                + "Computer Science and Digital Communication\n"
+                + "Year Group: CE25\n\n"
+                + "2022";
+
+        for(String line : credits.split("\n")){
+            x = CenterXText(line);
+            graphics2D.drawString(line, x,y);
+            y += 24;
+        }
+
+        String text;
+        text = "Scroll:\n  W/S";
+        x = 24;
+        y = panel.ScreenHeight- panel.tileSize;
+        for(String line : text.split("\n")){
+            graphics2D.drawString(line, x,y);
+            y += 24;
+        }
+
+        text = "Back with ESC";
+        int TextLength = (int)graphics2D.getFontMetrics().getStringBounds(text, graphics2D).getWidth();
+        x = panel.ScreenWidth-TextLength-24;
+        y = panel.ScreenHeight- 26;
+        graphics2D.drawString(text, x,y);
     }
 
     // PAUSE SCREEN
