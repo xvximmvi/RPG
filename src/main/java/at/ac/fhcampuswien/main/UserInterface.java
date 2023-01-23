@@ -1272,7 +1272,6 @@ public class UserInterface {
         }
     }
 
-
     // CENTER OF X-COORDINATE
     public int CenterXText(String Text){
         //gets length of written input string
