@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class C_Clock extends GameObject{
-    GamePanel panel;
-    public C_Clock(GamePanel panel){
+
+    public C_Clock(){
 
         name = "Clock";
         ObjectWidth = 48*2;      //Size in Pixels

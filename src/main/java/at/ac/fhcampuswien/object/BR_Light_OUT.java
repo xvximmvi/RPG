@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BR_Light_OUT extends GameObject{
-    GamePanel panel;
-    public BR_Light_OUT(GamePanel panel){
+
+    public BR_Light_OUT(){
 
         name = "Light_OUT";
         ObjectWidth = 48+7;     //Size in Pixels

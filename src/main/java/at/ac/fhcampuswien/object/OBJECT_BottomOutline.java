@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class OBJECT_BottomOutline extends GameObject{
-    GamePanel panel;
-    public OBJECT_BottomOutline(GamePanel panel){
+
+    public OBJECT_BottomOutline(){
 
         name = "BottomOutline";
         ObjectWidth = 288;      //Size in Pixels

@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BR_Bookshelf extends GameObject{
-    GamePanel panel;
-    public BR_Bookshelf(GamePanel panel){
+
+    public BR_Bookshelf(){
 
         name = "Bookshelf";
         ObjectWidth = 48*5+20;      //Size in Pixels

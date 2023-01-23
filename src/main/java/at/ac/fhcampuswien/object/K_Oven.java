@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_Oven extends GameObject {
-    GamePanel panel;
 
-    public K_Oven(GamePanel panel){
+    public K_Oven(){
 
         name = "Oven";
         ObjectWidth = 30*4;       //Size in Pixels

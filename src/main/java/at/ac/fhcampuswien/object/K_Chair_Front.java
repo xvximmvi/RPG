@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_Chair_Front extends GameObject {
-    GamePanel panel;
 
-    public K_Chair_Front(GamePanel panel){
+    public K_Chair_Front(){
 
         name = "Chair_Front";
         ObjectWidth = 16*4+15;       //Size in Pixels

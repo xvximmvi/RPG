@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_Fridge_Interact extends GameObject {
-    GamePanel panel;
 
-    public K_Fridge_Interact(GamePanel panel){
+    public K_Fridge_Interact(){
 
         name = "Fridge_INTERACT";
         ObjectWidth = 27*4;       //Size in Pixels

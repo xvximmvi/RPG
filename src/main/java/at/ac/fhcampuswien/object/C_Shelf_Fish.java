@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class C_Shelf_Fish extends GameObject{
-    GamePanel panel;
-    public C_Shelf_Fish(GamePanel panel){
+
+    public C_Shelf_Fish(){
 
         name = "ShelfFish";
         ObjectWidth = 48+40;      //Size in Pixels

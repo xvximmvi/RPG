@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_Flower extends GameObject {
-    GamePanel panel;
 
-    public K_Flower(GamePanel panel){
+    public K_Flower(){
 
         name = "Flower";
         ObjectWidth = 10*5;       //Size in Pixels

@@ -1,18 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-import at.ac.fhcampuswien.main.Utility;
-import at.ac.fhcampuswien.object.GameObject;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class B_BigBox extends GameObject {
-    GamePanel panel;
 
-    public B_BigBox(GamePanel panel){
+    public B_BigBox(){
 
         name = "BigBox";
         ObjectWidth = 16*4+15;       //Size in Pixels

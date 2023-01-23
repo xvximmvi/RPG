@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_Sink_Interact extends GameObject {
-    GamePanel panel;
 
-    public K_Sink_Interact(GamePanel panel){
+    public K_Sink_Interact(){
 
         name = "Sink_INTERACT";
         ObjectWidth = 32*4;       //Size in Pixels

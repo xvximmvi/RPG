@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_EmptyPlate extends GameObject {
-    GamePanel panel;
 
-    public K_EmptyPlate(GamePanel panel){
+    public K_EmptyPlate(){
 
         name = "EmptyPlate";
         ObjectWidth = 14*4;       //Size in Pixels

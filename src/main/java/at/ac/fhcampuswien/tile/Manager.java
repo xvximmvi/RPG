@@ -22,7 +22,6 @@ import java.util.Objects;
         - Bedroom Tiles
         - Corridor Tiles
         - Bathroom Tiles
-        - Kitchen Tiles
 
     TILE IMAGE SETUP
         - scale Image for improved rendering performance
@@ -115,8 +114,6 @@ public class Manager {
         setup(43, "B_WO_LBC", true);
         setup(44, "B_WO_B", true);
         setup(45, "B_WO_RBC", true);
-
-        // KITCHEN
     }
 
     // TILE IMAGE SETUP

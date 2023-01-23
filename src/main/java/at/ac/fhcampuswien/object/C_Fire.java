@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class C_Fire extends GameObject{
-    GamePanel panel;
-    public C_Fire(GamePanel panel){
+
+    public C_Fire(){
 
         name = "Fire";
         ObjectWidth = 48*3;      //Size in Pixels

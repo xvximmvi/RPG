@@ -1,15 +1,13 @@
  package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class C_Couch extends GameObject{
-    GamePanel panel;
-    public C_Couch(GamePanel panel){
+
+    public C_Couch(){
 
         name = "Couch";
         ObjectWidth = 48*2+35;      //Size in Pixels

@@ -7,7 +7,11 @@ import java.net.URL;
 /*
     SOUND FILES
     OPEN FILE
-    SOUND PLAY
+        - Open sound file
+        - define Volume
+    SOUND PLAY / LOOP / STOP
+    SET VOLUME
+        - choose from -80f (no Sound) to 6f
  */
 
 public class SoundEffect {
@@ -45,14 +49,15 @@ public class SoundEffect {
     }
 
     public void setVolume(){
-        switch(volumeScale){
-            case 0: volume = -80f;  break;
-            case 1: volume = -20f;  break;
-            case 2: volume = -12f;  break;
-            case 3: volume = -5f;   break;
-            case 4: volume = 1f;    break;
-            case 5: volume = 6f;    break;
+        switch (volumeScale) {
+            //play with variables till changes seem same
+            case 0 -> volume = -80f;
+            case 1 -> volume = -20f;
+            case 2 -> volume = -12f;
+            case 3 -> volume = -5f;
+            case 4 -> volume = 1f;
+            case 5 -> volume = 6f;
         }
-        floatControl.setValue(volume);
+        floatControl.setValue(volume);  //set new Volume
     }
 }

@@ -6,8 +6,43 @@ import java.awt.event.KeyListener;
 // CLASS CONTENT
 /*
     KEY TYPED
+
     KEY PRESSED
+        - TITLE STATE
+            > W / S
+            > ENTER
+        - GAME WON / OVER STATE
+            > W / S
+            > ENTER
+        - PLAY STATE
+            > W A S D
+            > SPACE
+            > P
+            > C
+            > O
+        - PAUSE STATE
+            > P
+        - DIALOGUE STATE
+            > SPACE
+        - CHARACTER STATE
+            > C
+        - OPTION STATE
+            > O
+            > W A S D
+            > ENTER
+        - MENU OPTION STATE
+            > W A S D
+            > ENTER
+        - HOW TO PLAY STATE
+            > ESCAPE
+        - CREDITS STATE
+            > ESCAPE
+            > W / S
+
     KEY RELEASED
+       -  PLAY STATE
+            > W A S D
+            > SPACE
  */
 
 public class Handler implements KeyListener {
@@ -17,7 +52,6 @@ public class Handler implements KeyListener {
     public boolean drawTime = false;
     public boolean Reset = false;
     public boolean Enter = false;
-    public boolean Scroll = false;
     public int y = 0;
 
     // HANDLER CONSTRUCTOR
@@ -51,6 +85,7 @@ public class Handler implements KeyListener {
                 Enter = false;
 
                 if (panel.ui.command == 0) {
+                    panel.stopMusic();
                     panel.playMusic(1);
                     panel.GameState = panel.playState;
                     Reset = true;
@@ -101,6 +136,7 @@ public class Handler implements KeyListener {
                 if(panel.ui.command == 1){
                     panel.GameState = panel.titleState;
                     panel.stopMusic();
+                    panel.playMusic(2);
                 }
                 if(panel.ui.command == 2){
                     System.exit(0);
@@ -125,6 +161,7 @@ public class Handler implements KeyListener {
                 panel.GameState = panel.pauseState;
                 panel.stopMusic();
                 panel.playSoundEffect(5);
+                panel.playMusic(2);
                 drawTime = false;
             }
             // DEBUG
@@ -153,6 +190,7 @@ public class Handler implements KeyListener {
             if (keyCode == KeyEvent.VK_P){
                 panel.playSoundEffect(5);
                 panel.GameState = panel.playState;
+                panel.stopMusic();
                 panel.playMusic(1);
             }
 
@@ -257,6 +295,7 @@ public class Handler implements KeyListener {
             if(keyCode == KeyEvent.VK_A) {
                     if(panel.ui.command == 0 && panel.sound.volumeScale > 0){
                         panel.sound.volumeScale--;
+                        panel.sound.setVolume();
                         panel.playSoundEffect(6);
                     }
                     if(panel.ui.command == 1 && panel.sound.volumeScale > 0){
@@ -267,6 +306,7 @@ public class Handler implements KeyListener {
             if(keyCode == KeyEvent.VK_D) {
                     if(panel.ui.command == 0 && panel.soundEffect.volumeScale < 5){
                         panel.sound.volumeScale++;
+                        panel.sound.setVolume();
                         panel.playSoundEffect(6);
                     }
                     if(panel.ui.command == 1 && panel.soundEffect.volumeScale < 5){
@@ -276,6 +316,7 @@ public class Handler implements KeyListener {
             }
         }
 
+        // HOW TO PLAY STATE
         else if(panel.GameState == panel.howToPlayState) {
             if(keyCode == KeyEvent.VK_ESCAPE) {
                 panel.GameState = panel.titleState;
@@ -283,6 +324,7 @@ public class Handler implements KeyListener {
             }
         }
 
+        // CREDITS STATE
         else if(panel.GameState == panel.creditsState){
             if(keyCode == KeyEvent.VK_ESCAPE) {
                 panel.GameState = panel.titleState;
@@ -316,13 +358,5 @@ public class Handler implements KeyListener {
 
         // INTERACTION
         if(keyCode == KeyEvent.VK_SPACE)    INTERACT = false; //Key for interaction (objects, ...)
-
-        if(panel.GameState == panel.creditsState){
-            if(keyCode == KeyEvent.VK_SPACE){
-                panel.playSoundEffect(5);
-                Scroll = false;
-            }
-
-        }
     }
 }

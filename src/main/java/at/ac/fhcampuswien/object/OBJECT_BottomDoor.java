@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class OBJECT_BottomDoor extends GameObject{
-    GamePanel panel;
-    public OBJECT_BottomDoor(GamePanel panel){
+
+    public OBJECT_BottomDoor(){
 
         name = "BottomDoor";
         ObjectWidth = 3*48+30;      //Size in Pixels

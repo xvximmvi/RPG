@@ -9,6 +9,7 @@ import java.util.Objects;
 /*
     WINDOW SETTINGS
     ADD PANEL
+    SET ICON
     START GAME
  */
 
@@ -23,6 +24,7 @@ public class Game {
         window.setResizable(false);         //no resizing of the window
         window.setTitle("WAY OUT");      //Title of the Game
 
+        // ICON
         new Game().setIcon();
 
         // ADD PANEL
@@ -40,6 +42,7 @@ public class Game {
         panel.startThread();               //start thread
     }
 
+    // SET ICON
     public void setIcon(){
         ImageIcon imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("MC/MC_F2.png")));
         window.setIconImage(imageIcon.getImage());

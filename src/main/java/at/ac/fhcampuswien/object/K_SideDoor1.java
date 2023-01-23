@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_SideDoor1 extends GameObject{
-    GamePanel panel;
-    public K_SideDoor1(GamePanel panel){
+
+    public K_SideDoor1(){
 
         name = "K_SideDoor1";
         ObjectWidth = 4*3;      //Size in Pixels

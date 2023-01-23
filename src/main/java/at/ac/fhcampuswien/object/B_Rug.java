@@ -1,18 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-import at.ac.fhcampuswien.main.Utility;
-import at.ac.fhcampuswien.object.GameObject;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class B_Rug extends GameObject {
-    GamePanel panel;
 
-    public B_Rug(GamePanel panel){
+    public B_Rug(){
 
         name = "B_Rug";
         ObjectWidth = 40*4;       //Size in Pixels

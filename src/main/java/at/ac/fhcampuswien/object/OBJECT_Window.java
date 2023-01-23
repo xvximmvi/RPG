@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class OBJECT_Window extends GameObject{
-    GamePanel panel;
-    public OBJECT_Window(GamePanel panel){
+
+    public OBJECT_Window(){
 
         name = "Bed";
         ObjectWidth = 48*2;         //Size in Pixels

@@ -36,10 +36,43 @@ import java.util.Objects;
     OBJECT INTERACTION
         - check index
         - set interaction with objects
+        - BEDROOM
+            1. Nightstand: collect key
+            2. Door: go to Corridor
+        - CORRIDOR
+            1. Shelf: Pick up screwdriver
+            2. Bathroom Door (Left Door): go to Bathroom
+        - BATHROOM
+            1. Bathtub: let water out & collect key
+            2. Door: go back to corridor
+        - CORRIDOR
+            3. Kitchen Door (Right Door): go to Kitchen
+        - Kitchen
+            1. Shelf: Pick up Pot
+            2. Oven: turn on oven
+            3. Oven: place pot on oven
+            4. Fridge: take out soup
+            5. Oven: put soup in pot
+            6. Shelf: take out plate
+            7. Oven: put soup in plate
+            8. Table: place soup plate on table
+            9. Table: eat soup & collect key
+            10. Door: go back to corridor
+        - CORRIDOR
+            4. Outside Door (Bottom Door): Escape Home- WIN!
 
     DRAW PLAYER
         - draw current sprite image
         - stop screen an edge of map
+
+    LIST OF ALL DIALOGUES
+        - BEDROOM
+        - CORRIDOR
+        - BATHROOM
+        - KITCHEN
+
+    SWITCH MAP
+        - Set new position
  */
 
 public class Player extends Entity{
@@ -220,7 +253,7 @@ public class Player extends Entity{
     // OBJECT INTERACTION
     public void Interaction(int index) {
 
-        OBJECT_Key key = new OBJECT_Key(panel); //OBJECT_Key Class
+        OBJECT_Key key = new OBJECT_Key(); //OBJECT_Key Class
         bufferedImage = key.image;              //image of Key Class
 
         // Index as confirmation of collision
@@ -254,7 +287,7 @@ public class Player extends Entity{
                                         //Turn Light on and off
                                         BR_Light_State = !BR_Light_State;   //change Light State
                                         if (BR_Light_State) {             //if turning on -> instantiate new Object (Light_ON)
-                                            panel.object[0][13] = new BR_Light_ON(panel);
+                                            panel.object[0][13] = new BR_Light_ON();
                                             panel.object[0][13].MapX = 11 * panel.tileSize - 2;
                                             panel.object[0][13].MapY = 4 * panel.tileSize - 23;
                                             if(!complete[1]){
@@ -391,7 +424,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
-                                        panel.object[1][13] = new C_Lamp_ON(panel);
+                                        panel.object[1][13] = new C_Lamp_ON();
                                         panel.object[1][13].MapX = 2 * panel.tileSize + 20;
                                         panel.object[1][13].MapY = 3 * panel.tileSize + 30;
                                         panel.object[1][12] = null;
@@ -408,7 +441,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>8) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(3);
-                                        panel.object[1][12] = new C_Lamp(panel);
+                                        panel.object[1][12] = new C_Lamp();
                                         panel.object[1][12].MapX = 2 * panel.tileSize + 20;
                                         panel.object[1][12].MapY = 3 * panel.tileSize + 30;
                                         panel.object[1][13] = null;
@@ -560,7 +593,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
-                                        panel.object[2][14] = new B_Sink_Interact(panel);
+                                        panel.object[2][14] = new B_Sink_Interact();
                                         panel.object[2][14].MapX = 3 * panel.tileSize - 3;
                                         panel.object[2][14].MapY = 3 * panel.tileSize + 20;
                                         panel.object[2][10] = null;
@@ -578,7 +611,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
-                                        panel.object[2][10] = new B_Sink(panel);
+                                        panel.object[2][10] = new B_Sink();
                                         panel.object[2][10].MapX = 3 * panel.tileSize - 3;
                                         panel.object[2][10].MapY = 3 * panel.tileSize + 20;
                                         panel.object[2][14] = null;
@@ -596,7 +629,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>9) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
-                                        panel.object[2][15] = new B_Toilet_Interact(panel);
+                                        panel.object[2][15] = new B_Toilet_Interact();
                                         panel.object[2][15].MapX = 13 * panel.tileSize;
                                         panel.object[2][15].MapY = 12 * panel.tileSize + 20;
                                         panel.object[2][12] = null;
@@ -614,7 +647,7 @@ public class Player extends Entity{
                                     ObjectCounter++;            //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if(ObjectCounter>9) {       //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
-                                        panel.object[2][12] = new B_Toilet(panel);
+                                        panel.object[2][12] = new B_Toilet();
                                         panel.object[2][12].MapX = 13 * panel.tileSize;
                                         panel.object[2][12].MapY = 12 * panel.tileSize + 20;
                                         panel.object[2][15] = null;
@@ -633,7 +666,7 @@ public class Player extends Entity{
                                     if (ObjectCounter > 9) {        //Ugliest fucking solution to ever exist
                                         if (panel.ui.foundTool) {
                                             panel.playSoundEffect(5);
-                                            panel.object[2][16] = new B_Bathtub(panel);
+                                            panel.object[2][16] = new B_Bathtub();
                                             panel.object[2][16].MapX = 11 * panel.tileSize;
                                             panel.object[2][16].MapY = 6 * panel.tileSize - 24;
                                             panel.object[2][7] = null;
@@ -673,7 +706,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 9) {           //Ugliest fucking solution to ever exist
                                             panel.playSoundEffect(3);
-                                            panel.object[2][7] = new B_Bathtub_Interact(panel);
+                                            panel.object[2][7] = new B_Bathtub_Interact();
                                             panel.object[2][7].MapX = 11 * panel.tileSize;
                                             panel.object[2][7].MapY = 6 * panel.tileSize - 24;
                                             panel.object[2][16] = null;
@@ -707,7 +740,7 @@ public class Player extends Entity{
                                 ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                 if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                     panel.playSoundEffect(5);
-                                    panel.object[3][23] = new K_Fridge_Interact(panel);
+                                    panel.object[3][23] = new K_Fridge_Interact();
                                     panel.object[3][23].MapX = panel.tileSize-4;
                                     panel.object[3][23].MapY = 3 * panel.tileSize;
                                     panel.object[3][8] = null;
@@ -748,7 +781,7 @@ public class Player extends Entity{
                                                     }
                                                 }
                                                 panel.playSoundEffect(5);
-                                                panel.object[3][8] = new K_Fridge(panel);
+                                                panel.object[3][8] = new K_Fridge();
                                                 panel.object[3][8].MapX = panel.tileSize;
                                                 panel.object[3][8].MapY = 3 * panel.tileSize;
                                                 panel.object[3][23] = null;
@@ -767,7 +800,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
-                                        panel.object[3][24] = new K_Oven_Interact(panel);
+                                        panel.object[3][24] = new K_Oven_Interact();
                                         panel.object[3][24].MapX = 5*panel.tileSize;
                                         panel.object[3][24].MapY = 4 * panel.tileSize;
                                         panel.object[3][9] = null;
@@ -786,7 +819,7 @@ public class Player extends Entity{
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                         if(!panel.ui.collectEmptyPot || panel.ui.collectSoupPlate ) {   //Nothing collected jet or Oven is finished (Soup is made)
                                             panel.playSoundEffect(5);
-                                            panel.object[3][9] = new K_Oven(panel);
+                                            panel.object[3][9] = new K_Oven();
                                             panel.object[3][9].MapX = 5 * panel.tileSize;
                                             panel.object[3][9].MapY = 4 * panel.tileSize;
                                             panel.object[3][24] = null;
@@ -797,7 +830,7 @@ public class Player extends Entity{
                                         } else {
                                             if(!panel.ui.collectSoupCan) {                  //Empty Pot but no soup
                                                 panel.playSoundEffect(5);
-                                                panel.object[3][27] = new K_EmptyPot(panel);
+                                                panel.object[3][27] = new K_EmptyPot();
                                                 panel.object[3][27].MapX = 5 * panel.tileSize + 8;
                                                 panel.object[3][27].MapY = 4 * panel.tileSize + 4;
                                                 if(!complete[41]){
@@ -809,7 +842,7 @@ public class Player extends Entity{
                                                 if (!panel.ui.collectEmptyPlate) {  //Put Soup in Pot
                                                     if (!panel.ui.usedSoupCan) {
                                                         panel.playSoundEffect(5);
-                                                        panel.object[3][28] = new K_SoupPot(panel);
+                                                        panel.object[3][28] = new K_SoupPot();
                                                         panel.object[3][28].MapX = 5 * panel.tileSize + 8;
                                                         panel.object[3][28].MapY = 4 * panel.tileSize + 4;
                                                         panel.object[3][27] = null;
@@ -829,7 +862,7 @@ public class Player extends Entity{
                                                     }
                                                 } else {      //Put Soup in Plate
                                                     panel.playSoundEffect(5);
-                                                    panel.object[3][27] = new K_EmptyPot(panel);
+                                                    panel.object[3][27] = new K_EmptyPot();
                                                     panel.object[3][27].MapX = 5 * panel.tileSize + 8;
                                                     panel.object[3][27].MapY = 4 * panel.tileSize + 4;
                                                     panel.object[3][28] = null;
@@ -853,7 +886,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
-                                        panel.object[3][25] = new K_Sink_Interact(panel);
+                                        panel.object[3][25] = new K_Sink_Interact();
                                         panel.object[3][25].MapX = 8*panel.tileSize;
                                         panel.object[3][25].MapY = 4 * panel.tileSize-4;
                                         panel.object[3][10] = null;
@@ -871,7 +904,7 @@ public class Player extends Entity{
                                     ObjectCounter++;                    //Problem: Object switches to fast. One KeyPress = many Interactions at once
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                         panel.playSoundEffect(5);
-                                        panel.object[3][10] = new K_Sink(panel);
+                                        panel.object[3][10] = new K_Sink();
                                         panel.object[3][10].MapX = 8*panel.tileSize;
                                         panel.object[3][10].MapY = 4 * panel.tileSize-4;
                                         panel.object[3][25] = null;
@@ -890,7 +923,7 @@ public class Player extends Entity{
                                     if (ObjectCounter > 8) {           //Ugliest fucking solution to ever exist
                                         if(panel.ui.collectEmptyPot) {
                                             panel.playSoundEffect(5);
-                                            panel.object[3][26] = new K_Shelf_Interact(panel);
+                                            panel.object[3][26] = new K_Shelf_Interact();
                                             panel.object[3][26].MapX = 8 * panel.tileSize + 32 * 4;
                                             panel.object[3][26].MapY = 4 * panel.tileSize;
                                             panel.object[3][11] = null;
@@ -934,7 +967,7 @@ public class Player extends Entity{
                                              panel.ui.collectEmptyPlate = true;
                                         } else {
                                              panel.playSoundEffect(5);
-                                             panel.object[3][11] = new K_Shelf(panel);
+                                             panel.object[3][11] = new K_Shelf();
                                              panel.object[3][11].MapX = 8 * panel.tileSize + 32 * 4;
                                              panel.object[3][11].MapY = 4 * panel.tileSize;
                                              panel.object[3][26] = null;
@@ -963,7 +996,7 @@ public class Player extends Entity{
                                         } else {
                                             if (!panel.ui.usedSoupPlate) {
                                                 panel.playSoundEffect(5);
-                                                panel.object[3][29] = new K_SoupPlate(panel);
+                                                panel.object[3][29] = new K_SoupPlate();
                                                 panel.object[3][29].MapX = 6 * panel.tileSize - 25;
                                                 panel.object[3][29].MapY = 11 * panel.tileSize + 24;
                                                 if (!complete[53]) {
@@ -973,7 +1006,7 @@ public class Player extends Entity{
                                                 panel.ui.usedSoupPlate = true;
                                             } else {
                                                 panel.playSoundEffect(5);
-                                                panel.object[3][29] = new K_EmptyPlate(panel);
+                                                panel.object[3][29] = new K_EmptyPlate();
                                                 panel.object[3][29].MapX = 6 * panel.tileSize - 25;
                                                 panel.object[3][29].MapY = 11 * panel.tileSize + 24;
                                                 if (!complete[54]) {
@@ -1035,6 +1068,7 @@ public class Player extends Entity{
         dialogues[i] = "Ouch!!\nI bit on something hard..."; //23
 
     }
+
     // DRAW PLAYER
     public void draw(Graphics2D graphics2D) {
         //draw object with current information
@@ -1100,5 +1134,4 @@ public class Player extends Entity{
         panel.TransitionY = y;
         panel.GameState = panel.transitionState;
     }
-
 }

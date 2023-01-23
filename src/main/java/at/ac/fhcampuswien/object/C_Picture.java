@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class C_Picture extends GameObject{
-    GamePanel panel;
+
     public C_Picture(GamePanel panel){
 
         name = "Picture";

@@ -66,13 +66,10 @@ public class GamePanel extends JPanel implements Runnable{
     // MAP SETTINGS
     public final int maxMap = 4;
     public int currentMap = 0;
-
     public int maxMapCol = 16;
     public int maxMapRow = 16;
-
     public int MapWidth = tileSize*maxMapCol;
     public int MapHeight = tileSize*maxMapRow;
-
     public int TransitionMap, TransitionX, TransitionY;
 
     // FPS
@@ -109,8 +106,6 @@ public class GamePanel extends JPanel implements Runnable{
     public final int howToPlayState = 11;
     public final int creditsState = 12;
 
-
-
     // GAME PANEL CONSTRUCTOR
     public GamePanel() {
         this.setPreferredSize(new Dimension(ScreenWidth, ScreenHeight));    //set the size of the class (JPanel)
@@ -125,7 +120,7 @@ public class GamePanel extends JPanel implements Runnable{
     // SETUP GAME
     public void setUpGame(){
         asset.setObjectBedroom();
-        //playMusic(1);       //Start Theme Music
+        playMusic(2);
         GameState = titleState;
     }
 

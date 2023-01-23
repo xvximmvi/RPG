@@ -3,6 +3,8 @@ package at.ac.fhcampuswien.entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+//Was supposed to be filled with different characters, monsters & NPCs but none of the were needed for the game.
+
 public class Entity {   //This stores variables that will be used in players, monsters and NPCs
 
     // MAP COORDINATES
@@ -22,7 +24,7 @@ public class Entity {   //This stores variables that will be used in players, mo
     public int AreaDefaultX, AreaDefaultY;
     public boolean collisionOn = false;
 
-    String dialogues[] = new String[30];
+    String[] dialogues = new String[30];
 
 
     // CHARACTER ATTRIBUTES

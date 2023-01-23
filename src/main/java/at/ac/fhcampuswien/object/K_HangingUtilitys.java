@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_HangingUtilitys extends GameObject {
-    GamePanel panel;
 
-    public K_HangingUtilitys(GamePanel panel){
+    public K_HangingUtilitys(){
 
         name = "HangingUtilitys";
         ObjectWidth = 24*4;       //Size in Pixels

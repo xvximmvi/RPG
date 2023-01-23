@@ -3,6 +3,8 @@ package at.ac.fhcampuswien.main;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+// This Class was meant to get bigger, but I completely forgot this class existed.
+
 public class Utility {
     public BufferedImage scaleImage(BufferedImage original, int width, int height) {
         BufferedImage scaledImage = new BufferedImage(width, height, original.getType());     //instantiate BufferedImage

@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BATHROOM_DOOR extends GameObject{
-    GamePanel panel;
-    public BATHROOM_DOOR(GamePanel panel){
+
+    public BATHROOM_DOOR(){
 
         name = "Bathroom_Door";
         ObjectWidth = 48*2;      //Size in Pixels

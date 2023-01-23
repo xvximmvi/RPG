@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BR_Ball extends GameObject{
-    GamePanel panel;
-    public BR_Ball(GamePanel panel){
+
+    public BR_Ball(){
 
         name = "Ball";
         ObjectWidth = 48;       //Size in Pixels

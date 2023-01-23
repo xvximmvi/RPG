@@ -1,16 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class K_Table extends GameObject {
-    GamePanel panel;
 
-    public K_Table(GamePanel panel){
+    public K_Table(){
 
         name = "Table";
         ObjectWidth = 46*7;       //Size in Pixels

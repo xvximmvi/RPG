@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BR_Carpet extends GameObject{
-    GamePanel panel;
-    public BR_Carpet(GamePanel panel){
+
+    public BR_Carpet(){
 
         name = "Carpet";
         ObjectWidth = 48*7;      //Size in Pixels

@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BR_ToyHorse extends GameObject{
-    GamePanel panel;
-    public BR_ToyHorse(GamePanel panel){
+
+    public BR_ToyHorse(){
 
         name = "ToyHorse";
         ObjectWidth = 48*2+20;      //Size in Pixels

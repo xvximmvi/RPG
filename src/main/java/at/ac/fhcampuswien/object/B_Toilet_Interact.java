@@ -1,18 +1,13 @@
 package at.ac.fhcampuswien.object;
 
-import at.ac.fhcampuswien.main.GamePanel;
-import at.ac.fhcampuswien.main.Utility;
-import at.ac.fhcampuswien.object.GameObject;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
 public class B_Toilet_Interact extends GameObject {
-    GamePanel panel;
 
-    public B_Toilet_Interact(GamePanel panel){
+    public B_Toilet_Interact(){
 
         name = "Toilet_INTERACT";
         ObjectWidth = 19*4+30;       //Size in Pixels

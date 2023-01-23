@@ -10,13 +10,17 @@ import java.net.URL;
 /*
     SOUND FILES
     OPEN FILE
+        - Open sound file
+        - define Volume
     SOUND PLAY / LOOP / STOP
+    SET VOLUME
+        - choose from -80f (no Sound) to 6f
  */
 
 public class Sound {
 
     Clip clip;
-    URL sound[] = new URL[10];
+    URL[] sound = new URL[10];
     FloatControl floatControl;
     public int volumeScale = 3;
     float volume;
@@ -26,6 +30,7 @@ public class Sound {
     public Sound(){
         sound[0] = getClass().getResource("/Sound/MainMelody_v1.wav");
         sound[1] = getClass().getResource("/Sound/MainMelody_v2.wav");
+        sound[2] = getClass().getResource("/Sound/MenuMelody.wav");
     }
 
     // OPEN FILE
@@ -35,6 +40,8 @@ public class Sound {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream((sound[i]));
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
+
+            // VOLUME
             floatControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);    //FloatControl accepts from -80f to 6f (-80 = no sound)
             setVolume();
         }catch (Exception e){
@@ -54,14 +61,15 @@ public class Sound {
     }
 
     public void setVolume(){
-        switch(volumeScale){
-            case 0: volume = -80f;  break;
-            case 1: volume = -20f;  break;
-            case 2: volume = -12f;  break;
-            case 3: volume = -5f;   break;
-            case 4: volume = 1f;    break;
-            case 5: volume = 6f;    break;
+        switch (volumeScale) {
+            //play with variables till changes seem same
+            case 0 -> volume = -80f;
+            case 1 -> volume = -20f;
+            case 2 -> volume = -12f;
+            case 3 -> volume = -5f;
+            case 4 -> volume = 1f;
+            case 5 -> volume = 6f;
         }
-        floatControl.setValue(volume);
+        floatControl.setValue(volume);  //set new Volume
     }
 }
