@@ -569,7 +569,7 @@ public class UserInterface {
 
         // RIGHT SIDE       ------------------------------------------------------------------
         graphics2D.setFont(graphics2D.getFont().deriveFont(Font.BOLD, 70F));
-        String Text = "SETTINGS";
+        String Text = "HOW TO PLAY";
         int x = CenterXText(Text);
         int y = panel.tileSize * 3;
         graphics2D.setColor(Color.GRAY);
