@@ -759,7 +759,7 @@ public class Player extends Entity{
                                     panel.object[3][23].MapX = panel.tileSize-4;
                                     panel.object[3][23].MapY = 3 * panel.tileSize;
                                     panel.object[3][8] = null;
-                                    if(MapY>(6* panel.tileSize-(panel.tileSize / 2)) && MapX<((panel.tileSize+26*4)-(panel.tileSize / 2)))
+                                    if(MapY>(6*panel.tileSize-(panel.tileSize / 2)) && MapX<((panel.tileSize+26*4)-(panel.tileSize / 2)))
                                         MapY = panel.tileSize *8 - (panel.tileSize / 2);
                                     if(!complete[35]){
                                         complete[35] = true;

@@ -153,8 +153,6 @@ public class SetAsset {
         panel.object[1][18] = new OBJECT_SideDoor1();
         panel.object[1][18].MapX = 16* panel.tileSize - 6;
         panel.object[1][18].MapY = 9* panel.tileSize+5*3;
-
-
     }
 
     public void setObjectBathroom(){

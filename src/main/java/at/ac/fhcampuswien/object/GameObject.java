@@ -12,6 +12,10 @@ import java.awt.image.BufferedImage;
     DRAW OBJECTS
         - Recalculate Screen-Coordinates
         - Stop moving camera at edge of map
+
+    LINK OF USED OBJECT TILESET:
+    https://penzilla.itch.io/
+    https://dreamypixelart.itch.io/
  */
 
 public class GameObject {

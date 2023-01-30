@@ -114,7 +114,6 @@ public class UserInterface {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-
     }
 
     // PRINT
@@ -221,16 +220,16 @@ public class UserInterface {
                 graphics2D.setColor(Color.BLACK);
                 graphics2D.drawString("Move: WASD", panel.tileSize+2, panel.tileSize+2);
                 graphics2D.drawString("Interact: SPACE", panel.tileSize+2, panel.tileSize + 30+2);
-                graphics2D.drawString("Dialogue: ENTER", panel.tileSize+2, panel.tileSize + 60+2);
+                graphics2D.drawString("Option: O", panel.tileSize+2, panel.tileSize + 60+2);
                 graphics2D.drawString("Pause/Play: P", panel.tileSize+2, panel.tileSize + 90+2);
                 graphics2D.setColor(Color.WHITE);
                 graphics2D.drawString("Move: WASD", panel.tileSize, panel.tileSize);
                 graphics2D.drawString("Interact: SPACE", panel.tileSize, panel.tileSize + 30);
-                graphics2D.drawString("Dialogue: ENTER", panel.tileSize, panel.tileSize + 60);
+                graphics2D.drawString("Option: O", panel.tileSize, panel.tileSize + 60);
                 graphics2D.drawString("Pause/Play: P", panel.tileSize, panel.tileSize + 90);
 
                 TutorialCounter++;
-                if (TutorialCounter > 240) {   //180 Frames (60 Frames per sec -> 3 sec)
+                if (TutorialCounter > 240) {   //240 Frames (60 Frames per sec -> 4 sec)
                     TutorialCounter = 0;
                     TutorialOn = false;
                     Goal = true;

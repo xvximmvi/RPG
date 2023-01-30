@@ -162,7 +162,7 @@ public class Manager {
             }
             bufferedReader.close();     //After Matrix ended -> stop reading
 
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
     }
